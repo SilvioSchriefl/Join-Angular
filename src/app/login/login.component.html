@@ -1,0 +1,30 @@
+<div class="content">
+    <div class="login_div">
+        <span class="header">Log in</span>
+        <img src="/assets/img/Vector 5.png" alt="">
+        <form (ngSubmit)="logIn()">
+            <div class="input_field">
+                <input type="email" name="email" placeholder="Email" [(ngModel)]="email">
+                <img src="/assets/img/letter-icon.png" alt="">
+            </div>
+            <div class="input_field">
+                <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
+                <img src="/assets/img/lock-icon.png" alt="">
+            </div>
+            
+            <div class="remember_me" >
+                <input type="checkbox" id="myCheckbox" [(ngModel)]="checkBox_value" (change)="handleValueChange($event)" [ngModelOptions]="{standalone: true}" > 
+                <label for="myCheckbox">Remember me</label>
+             
+            </div>
+
+
+            <div class="button_div">
+                <button class="blue_botton" type="submit">Log in</button>
+                <button class="white_botton">Guest Log in</button>
+            </div>
+        </form>
+    </div>
+    <div  [class.show_request_status]="auth.request_successful" class="request_successful">Hello {{auth.user?.user}}</div>
+    <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error" class="request_successful" style="background-color: red;">Email or password incorrect</div>
+</div>

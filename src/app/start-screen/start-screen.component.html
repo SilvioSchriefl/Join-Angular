@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="logo-box">
+        <img src="/assets/img/Capa_dark.png" alt="" class="dark-img">
+        <img src="/assets/img/Capa_white_whitout.png" alt="" class="white-img">
+        <img src="/assets/img/Capa_point.png" alt="" class="point-img">
+    </div>
+    <div class="mobile-start-animation">
+        <img class="mobile-logo-animation" src="assets/img/menu-logo.png">
+    </div>
+    
+</div>
+<div class="join_user"  *ngIf="router.url === '/login'" >
+    <span>Not a Join user?</span>
+    <button (click)="signUp()" class="blue_botton" >Sign up</button>
+    
+</div>
+<router-outlet class="content" ></router-outlet>

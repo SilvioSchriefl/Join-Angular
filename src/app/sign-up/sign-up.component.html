@@ -1,0 +1,43 @@
+<div class="content">
+
+    <div (click)="backToLogin()" class="arrow_back">
+        <img src="/assets/img/arrow-left.png" alt="">
+    </div>
+
+
+
+    <span class="header">Sign up</span>
+    <form (ngSubmit)="signUp()">
+        <div class="input_field">
+            <input type="text" placeholder="First and last name" [(ngModel)]="user_name" [ngModelOptions]="{standalone: true}" maxlength="30">
+            <img src="/assets/img/person-icon.png" alt="">
+        </div>
+        <div class="input_field">
+            <input type="email" placeholder="Email" [(ngModel)]="user_email" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')" maxlength="40">
+            <img src="/assets/img/letter-icon.png" alt="">
+            <span class="error" *ngIf="!email_valid" >Please enter a valid email address</span>
+        </div>
+        <div class="input_field">
+            <input type="password" placeholder="Password" [(ngModel)]="password1" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')">
+            <img src="/assets/img/lock-icon.png" alt="">
+        </div>
+        <div class="input_field">
+            <input type="password" placeholder="Confirm Password" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')">
+            <img src="/assets/img/lock-icon.png" alt="">
+            <span  *ngIf="!password_match" class="error">Ups! your password don’t match</span>
+        </div>
+
+        <div class="buttons">
+            <div class="checkbox">
+                <input type="checkbox" id="myCheckbox" [(ngModel)]="checkBox_value" (change)="handleValueChange()" [ngModelOptions]="{standalone: true}">
+                <label for="myCheckbox">
+                    <span>I accept the </span>
+                    <a href="">Privacy policy </a>
+                </label>
+            </div>
+            <button [class.invalid]="!password_match || !email_valid || !acceept_policy || !user_name" type="submit" style="width: max-content;" class="blue_botton">Sign up</button>
+        </div>
+    </form>
+    <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error" class="request_successful" style="background-color: red;">error during registration</div>
+    <div  [class.show_request_status]="auth.request_successful" class="request_successful">You Signed Up successfully</div>
+</div>
