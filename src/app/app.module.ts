@@ -12,7 +12,10 @@ import { AuthService } from './auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MainComponent } from './main/main.component'
+import { MainComponent } from './main/main.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent } from './header/header.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { MainComponent } from './main/main.component'
     StartScreenComponent,
     LoginComponent,
     SignUpComponent,
-    MainComponent
+    MainComponent,
+    SidebarComponent,
+    HeaderComponent,
+
   ],
   imports: [
     BrowserModule,

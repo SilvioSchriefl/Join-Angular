@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { InterceptorService } from '../interceptor.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,16 +26,16 @@ export class SignUpComponent {
     public router: Router,
     public auth: AuthService,
     public interceptor: InterceptorService,
+    public userService: UserService,
   ) { }
 
-  test1() {
-
-  }
 
 
   async signUp() {
-    await this.auth.signUp(this.user_email, this.password1, this.user_name)
+    this.userService.setInitialsAndUserColor(this.user_name)
+    await this.auth.signUp(this.user_email, this.password1, this.user_name, this.userService.user_color, this.userService.user_initials)
     if (this.auth.request_successful) {
+      
       setTimeout(() => {
         this.router.navigateByUrl('/login');
       }, 2000);

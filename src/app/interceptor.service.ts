@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class InterceptorService {
 
-  token!: string
+  
   
 
   constructor(
@@ -20,14 +20,17 @@ export class InterceptorService {
   
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-
+    let token = ''
     let token_local = localStorage.getItem('token');
-    if(this.auth.token) this.token = this.auth.token;
-    if(token_local) this.token = token_local
-    if (this.token) {
+    console.log(token_local);
+    if(this.auth.token) token = this.auth.token;
+    if(token_local) token = token_local
+    if (token.length > 0) {	
+      console.log(token, this.auth.token);
       request = request.clone({
-        setHeaders: { Authorization: `Token ${this.token}` }
-      });
+        setHeaders: { Authorization: `Token ${token}` }
+      });  
+      
     }
 
     return next.handle(request).pipe(catchError((err) => {
