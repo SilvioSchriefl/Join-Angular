@@ -14,6 +14,7 @@ export class AuthService {
   remember_me!: boolean
   request_error: boolean = false
   request_successful: boolean = false
+  error_type: string = ''
 
 
   constructor(
@@ -47,18 +48,20 @@ export class AuthService {
 
   async setLocalStorage(response: any) {
     localStorage.setItem('token', response.token);
-    localStorage.setItem('user', response.user_name);
+    localStorage.setItem('user_name', response.user_name);
     localStorage.setItem('user_id', response.user_id);
     localStorage.setItem('email', response.email);
+    localStorage.setItem('color', response.color);
+    localStorage.setItem('initials', response.initials);
   }
 
 
-  async signUp(email: string, password: string, name: string, color:string, initials:string) {
+  async signUp(email: string, password: string, name: string, color: string, initials: string) {
     const url = environment.baseUrl + 'sign_up/';
     const body = {
       "email": email,
       "password": password,
-      "username": name,
+      "user_name": name,
       "color": color,
       "initials": initials,
     };
@@ -66,8 +69,9 @@ export class AuthService {
       await lastValueFrom(this.http.post(url, body));
       this.request_successful = true;
       setTimeout(() => this.request_successful = false, 3000);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.error.email[0]) this.error_type = 'Email already in use'
+      else this.error_type = 'Error creating user'
       this.request_error = true;
       setTimeout(() => this.request_error = false, 3000);
     }
@@ -95,9 +99,11 @@ export class AuthService {
 
   removeDataFromLocalStorage() {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('user_name');
     localStorage.removeItem('user_id');
     localStorage.removeItem('email');
+    localStorage.removeItem('color');
+    localStorage.removeItem('initials');
     this.token = ''
   }
 }

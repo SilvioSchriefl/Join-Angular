@@ -25,6 +25,6 @@
             </div>
         </form>
     </div>
-    <div  [class.show_request_status]="auth.request_successful" class="request_successful">Hello {{userService.user?.user}}</div>
+    <div  [class.show_request_status]="auth.request_successful" class="request_successful">Hello {{userService.user?.user_name}}</div>
     <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error" class="request_successful" style="background-color: red;">Email or password incorrect</div>
 </div>

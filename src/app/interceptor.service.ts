@@ -22,17 +22,13 @@ export class InterceptorService {
 
     let token = ''
     let token_local = localStorage.getItem('token');
-    console.log(token_local);
     if(this.auth.token) token = this.auth.token;
     if(token_local) token = token_local
     if (token.length > 0) {	
-      console.log(token, this.auth.token);
       request = request.clone({
         setHeaders: { Authorization: `Token ${token}` }
-      });  
-      
+      });      
     }
-
     return next.handle(request).pipe(catchError((err) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
