@@ -1,0 +1,25 @@
+<div class="sidebar">
+    <div class="header">
+        <div class="blue_botton ">
+            <div class="add_button">
+                <span>Add new contact</span>
+                <img src="/assets/img/person_add.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="contact_list">
+        <div class="contact_div" *ngFor="let user of userService.all_users; let i = index">
+            <div class="contact_line" *ngIf="checkForNewFirstLetter(user.user_name, i)">
+                <span>{{getLetter(user.user_name)}}</span>
+            </div>
+            <div  class="contact">
+                <div class="circle" [style.background-color]="user.color"><span>{{user.initials}}</span> </div>
+                <div class="user_email_name">
+                    <div class="name">{{user.user_name}}</div>
+                    <div class="email">{{user.email}}</div>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+</div>

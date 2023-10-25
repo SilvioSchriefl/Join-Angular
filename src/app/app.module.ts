@@ -15,6 +15,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MainComponent } from './main/main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
+import { SummaryComponent } from './summary/summary.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 
 @NgModule({
@@ -26,6 +28,8 @@ import { HeaderComponent } from './header/header.component';
     MainComponent,
     SidebarComponent,
     HeaderComponent,
+    SummaryComponent,
+    ContactsComponent,
 
   ],
   imports: [

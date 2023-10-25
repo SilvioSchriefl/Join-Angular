@@ -1,0 +1,75 @@
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.logo {
+  width: 100px;
+  height: 120px;
+}
+
+.link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 10px;
+  font-size: 16px;
+  width: 100%;
+  transition: 150ms;
+  height: 46px;
+}
+.link img {
+  width: 25px;
+}
+.link:hover {
+  background-color: #091931;
+}
+.link:hover img {
+  filter: brightness(0) invert(1);
+}
+.link:hover span {
+  color: white;
+}
+
+.link_main {
+  gap: 15px;
+  padding-top: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.note {
+  cursor: pointer;
+  position: absolute;
+  bottom: 50px;
+  color: #A8A8A8;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.link_child {
+  padding-left: 50px;
+  color: #CDCDCD;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+}
+.link_child img {
+  height: 25px;
+}
+
+.link_active {
+  background-color: #091931;
+}
+.link_active img {
+  filter: brightness(0) invert(1);
+}
+.link_active span {
+  color: white;
+}/*# sourceMappingURL=sidebar.component.css.map */

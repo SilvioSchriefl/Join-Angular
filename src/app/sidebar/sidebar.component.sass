@@ -14,22 +14,30 @@
     cursor: pointer
     display: flex
     align-items: center
-    justify-content: flex-start
     color: white
     gap: 10px
     font-size: 16px
+    width: 100%
+    transition: 150ms
+    height: 46px
 
     img
         width: 25px
+    &:hover
+        background-color: #091931
+        img
+            filter: brightness(0) invert(1)
+        span
+            color: white
        
 
 .link_main 
+  
     gap: 15px
     padding-top: 150px
     display: flex
     flex-direction: column
     align-items: flex-start
-    margin-left: 50px
 
 .note
     cursor: pointer
@@ -39,3 +47,22 @@
     font-size: 16px
     display: flex
     flex-direction: column
+
+.link_child
+    padding-left: 50px
+    color: #CDCDCD
+    align-items: center
+    display: flex
+    gap: 10px
+    img
+        height: 25px
+
+   
+        
+
+.link_active 
+    background-color: #091931
+    img
+        filter: brightness(0) invert(1)
+    span
+        color: white

@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     let token = localStorage.getItem('token');
     if (token) {
       this.guard.authenticated = true;
-      this.route.navigate(['/main']);
+      this.route.navigate(['/main/summary']);
     }
   }
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     if (this.auth.request_successful) {
       this.guard.authenticated = true;
       setTimeout(() => {
-        this.route.navigateByUrl('/main');
+        this.route.navigateByUrl('/main/summary');
       }, 2500);
     }
     else {

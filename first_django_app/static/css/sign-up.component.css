@@ -50,8 +50,13 @@
 
 .error {
   position: absolute;
-  top: 34px;
+  top: 48px;
   left: 0;
+  color: red;
+  font-size: 12px;
+}
+
+.error_policy {
   color: red;
   font-size: 12px;
 }
@@ -81,7 +86,7 @@
   border-radius: 20px;
   font-size: 20px;
   font-weight: 400;
-  padding: 0 25px;
+  padding: 12px 25px;
   color: white;
 }
 

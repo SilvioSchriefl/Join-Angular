@@ -1,7 +1,6 @@
 $checkbox-border: 2px solid #2A3647
 $checkbox-background: #fff
 
-
 #myCheckbox
     border: $checkbox-border
     border-radius: 3px !important
@@ -12,7 +11,6 @@ $checkbox-background: #fff
 body
     margin: 0
     font-family: 'Nunito Sans', sans-serif
-    line-height: 48px !important
     overflow: hidden
 
 button
@@ -52,6 +50,9 @@ form
     width: 422px
 
 .blue_botton
+    display: flex
+    align-items: center
+    justify-content: center
     background-color: #2A3647
     border-radius: 10px
     color: white
@@ -91,3 +92,23 @@ form
         position: absolute
         right: 10px
         top: calc( 50% - 10px )
+
+.mat-typography
+    line-height: unset
+
+
+*
+    scrollbar-width: auto
+    scrollbar-color: #d4d4d4 #ffffff
+
+  
+*::-webkit-scrollbar
+    width: 16px
+
+*::-webkit-scrollbar-track
+    background: #ffffff
+
+*::-webkit-scrollbar-thumb
+    background-color: #d4d4d4
+    border-radius: 10px
+    border: 3px solid #ffffff
