@@ -8,8 +8,17 @@ import { UserService } from '../user.service';
 })
 export class ContactsComponent implements OnInit {
 
+
+  show_contact = false;
   letter: string = '';
   sort_letter: string = '';
+  user_details = {
+    user: '',
+    email: '',
+    phone: '',
+    initials: '',
+    color: ''
+  }
 
   constructor(public userService: UserService) { }
 
@@ -34,4 +43,12 @@ export class ContactsComponent implements OnInit {
     return name.charAt(0).toUpperCase()
   }
 
+
+  showContact(i: number) {
+    this.show_contact = true
+    this.user_details.user = this.userService.all_users[i].user_name
+    this.user_details.email = this.userService.all_users[i].email
+    this.user_details.initials = this.userService.all_users[i].initials
+    this.user_details.color = this.userService.all_users[i].color
+}
 }

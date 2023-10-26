@@ -5,6 +5,7 @@
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 2;
 }
 
 .header {
@@ -15,6 +16,7 @@
   height: 100px;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1019607843);
+  z-index: 1;
 }
 
 .content {
@@ -24,7 +26,9 @@
 }
 
 .router {
-  position: absolute;
-  left: 231px;
-  top: 100px;
+  position: relative;
+  margin-left: 232px;
+  margin-top: 100px;
+  width: calc(100% - 232px);
+  height: calc(100vh - 100px) l;
 }/*# sourceMappingURL=main.component.css.map */

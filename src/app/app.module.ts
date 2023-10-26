@@ -17,6 +17,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { PopupsComponent } from './popups/popups.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ContactsComponent } from './contacts/contacts.component';
     HeaderComponent,
     SummaryComponent,
     ContactsComponent,
+    PopupsComponent,
 
   ],
   imports: [

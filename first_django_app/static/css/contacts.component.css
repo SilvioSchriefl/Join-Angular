@@ -2,10 +2,9 @@
   height: calc(100vh - 100px);
   width: 456px;
   background-color: white;
-  position: fixed;
-  left: 232px;
   overflow-y: auto;
   box-shadow: 4px 0px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .add_button {
@@ -23,6 +22,7 @@
   align-items: center;
   position: sticky;
   top: 0;
+  width: 100%;
 }
 
 .circle {
@@ -58,6 +58,7 @@
 }
 
 .contact {
+  width: 100%;
   Padding: 15px 24px 15px 24px;
   gap: 35px;
   height: 78px;
@@ -89,4 +90,122 @@
   font-size: 20px;
   font-weight: 400;
   margin-bottom: 8px;
+}
+
+.content {
+  display: flex;
+}
+
+.headline {
+  gap: 30px;
+  width: max-content;
+  position: absolute;
+  top: 100px;
+  left: calc(50% - 267px);
+  display: flex;
+  align-items: center;
+}
+.headline span:nth-child(1) {
+  font-size: 61px;
+  font-weight: 700;
+}
+.headline span:nth-child(3) {
+  font-size: 27px;
+  font-weight: 400;
+}
+
+.contact_detail_main {
+  position: relative;
+  width: calc(100% - 456px);
+  display: none;
+}
+
+.detail {
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 267px);
+}
+
+.circle_detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+  border: 3px solid white;
+  color: white;
+  font-size: 47px;
+  font-weight: 500;
+}
+
+.circle_name {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+}
+
+.name_edit {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+.name_edit span:nth-child(1) {
+  font-size: 47px;
+  font-weight: 500;
+}
+
+.edit_delete {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.edit_delete_child {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.edit_delete_child img {
+  width: 18px;
+}
+.edit_delete_child span {
+  font-size: 16px;
+  font-weight: 400;
+}
+.edit_delete_child:hover {
+  color: #007CEE;
+}
+.edit_delete_child:hover img {
+  filter: brightness(0) saturate(100%) invert(34%) sepia(34%) saturate(3597%) hue-rotate(190deg) brightness(98%) contrast(107%);
+}
+
+.email_phone {
+  gap: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.email_phone span:nth-child(1) {
+  font-size: 16px;
+  font-weight: 700;
+}
+.email_phone span:nth-child(2) {
+  color: #007CEE;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.information {
+  margin-top: 54px;
+  gap: 21px;
+  display: flex;
+  flex-direction: column;
+}
+.information span:nth-child(1) {
+  font-size: 20px;
+}
+
+.show_contact_details {
+  display: flex;
 }/*# sourceMappingURL=contacts.component.css.map */

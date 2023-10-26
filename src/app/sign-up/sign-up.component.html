@@ -38,7 +38,7 @@
                 <span  *ngIf="this.policy_denied" class="error_policy">Required</span>
             </div>
             
-            <button [class.invalid]="!password_match || !email_valid || !acceept_policy || !user_name" type="submit" style="width: max-content;" class="blue_botton">Sign up</button>
+            <button [class.invalid]="!password_match || !email_valid || !acceept_policy || !user_name" type="submit" style="width: max-content;" class="blue_button">Sign up</button>
         </div>
     </form>
     <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error" class="request_successful" style="background-color: red;">{{auth.error_type}}</div>

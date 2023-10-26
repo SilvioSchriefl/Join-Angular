@@ -1,0 +1,87 @@
+@mixin flex()
+    display: flex
+    justify-content: center
+    align-items: center
+
+.shadow
+    position: absolute
+    top: 0
+    left: 0
+    opacity: 1
+    width: 100vw
+    height: 100vh
+    background-color: rgba(0, 0, 0, 0.5)
+    z-index: 3
+
+.show_shadow
+    z-index: 3
+    transition: 200ms 
+    opacity: 1
+
+.popup_main
+    overflow: hidden
+    border-radius: 30px
+    height: 594px
+    display: flex
+    position: absolute
+    top: calc(50% - 297px)
+    left: calc( 50% - 630px )
+
+.blue_side
+    padding-left: 50px
+    gap: 12px
+    box-sizing: border-box
+    justify-content: center
+    align-items: flex-start
+    height: 100%
+    width: 460px
+    display: flex
+    flex-direction: column
+    background-color: #2A3647
+    color: #fff
+    img:nth-child(1)
+        width: 55px
+        height: 66px
+    span:nth-child(2)
+        font-size: 61px
+        font-weight: 700
+    span:nth-child(3)
+        font-size: 27px
+        font-weight: 400
+
+.white_side
+    padding-left: 32px
+    box-sizing: border-box
+    height: 100%
+    background-color: #fff
+    width: 800px
+    display: flex
+    align-items: center
+
+.input_div
+    gap: 32px
+    width: 422px
+    display: flex
+    flex-direction: column
+
+.circle_detail
+    background-color: blue
+    @include flex()
+    width: 120px
+    height: 120px
+    border-radius: 100%
+    border: 3px solid white
+    color: white
+    font-size: 47px
+    font-weight: 500
+
+.button_div
+    display: flex
+    gap: 25px
+
+.circle_input
+    gap: 32px
+    align-items: center
+    display: flex
+    
+    
