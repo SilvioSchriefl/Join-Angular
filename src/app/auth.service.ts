@@ -53,6 +53,7 @@ export class AuthService {
     localStorage.setItem('email', response.email);
     localStorage.setItem('color', response.color);
     localStorage.setItem('initials', response.initials);
+    localStorage.setItem('phone', response.phone);
   }
 
 
@@ -104,6 +105,7 @@ export class AuthService {
     localStorage.removeItem('email');
     localStorage.removeItem('color');
     localStorage.removeItem('initials');
+    localStorage.removeItem('phone');
     this.token = ''
   }
 }

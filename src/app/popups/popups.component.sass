@@ -7,22 +7,25 @@
     position: absolute
     top: 0
     left: 0
-    opacity: 1
     width: 100vw
     height: 100vh
-    background-color: rgba(0, 0, 0, 0.5)
-    z-index: 3
+    z-index: -1
 
 .show_shadow
     z-index: 3
-    transition: 200ms 
     opacity: 1
+    background-color: rgba(0, 0, 0, 0.3)
+
+.show_popup
+    animation: slide_in 300ms ease-in-out
+    display: flex !important
+    transition: 300ms
 
 .popup_main
     overflow: hidden
     border-radius: 30px
     height: 594px
-    display: flex
+    display: none
     position: absolute
     top: calc(50% - 297px)
     left: calc( 50% - 630px )
@@ -50,6 +53,7 @@
         font-weight: 400
 
 .white_side
+    position: relative
     padding-left: 32px
     box-sizing: border-box
     height: 100%
@@ -63,9 +67,23 @@
     width: 422px
     display: flex
     flex-direction: column
+    input
+        width: 100%
 
 .circle_detail
-    background-color: blue
+    box-shadow: 0px 0px 4px 0px #0000001A
+    background-color: #D1D1D1
+    @include flex()
+    width: 120px
+    height: 120px
+    border-radius: 100%
+    border: 3px solid white
+    color: white
+    font-size: 47px
+    font-weight: 500
+
+.circle_detail_edit
+    box-shadow: 0px 0px 4px 0px #0000001A
     @include flex()
     width: 120px
     height: 120px
@@ -83,5 +101,66 @@
     gap: 32px
     align-items: center
     display: flex
-    
-    
+
+.error
+    position: absolute
+    top: 48px
+    left: 0
+    color: red
+    font-size: 12px
+
+.request_successful
+    display: none
+    position: absolute
+    bottom: 0
+    left: calc( 50% - 116px )
+    background-color: #2A3647
+    box-shadow: 0px 0px 4px 0px #0000001A
+    border-radius: 20px
+    font-size: 20px
+    font-weight: 400
+    padding: 12px 25px
+    color: white
+
+.show_request_status
+    display: block
+    animation: slight_in_bottom 0.5s ease-in-out
+    bottom: 10%
+
+.hide_request_status
+    animation: slight_out_bottom 0.5s ease-in-out
+
+.invalid
+    background-color: #686868
+    &:hover
+        background-color: #686868
+        cursor: not-allowed
+        box-shadow: none
+
+@keyframes slide_in
+    0%
+        transform: translateX(200%)
+        opacity: 0
+
+    100%
+        transform: translateX(0%)
+        opacity: 1
+
+@keyframes slight_in_bottom
+    0%
+        opacity: 0
+        bottom: 0
+
+    100%
+        opacity: 1
+        bottom: 10%
+
+@keyframes slight_out_bottom
+    0%
+        opacity: 1
+        bottom: 10%
+        display: block
+
+    100%
+        opacity: 0
+        bottom: 0

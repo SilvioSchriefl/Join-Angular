@@ -21,6 +21,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     window.addEventListener('click', (event) => {
       if (this.menu_open) this.menu_open = false;
+      if (this.userService.open_add_user) this.userService.open_add_user = false;
+      if (this.userService.open_edit_user) this.userService.open_edit_user = false;
+      if (this.userService.open_delete_user) this.userService.open_delete_user = false;
     })
     let user_name = localStorage.getItem('user_name')
     if (user_name) {

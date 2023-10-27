@@ -43,11 +43,16 @@
     background: none
     display: flex
     flex-direction: column
-    .name
-        font-size: 20px
     .email
         font-size: 16px
-        color: #007CEE
+        color: #29ABE2
+
+.name
+    display: flex
+    flex-direction: column
+    font-size: 20px
+    span:nth-child(2)
+        font-size: 12px
 
 .contact_div
     transition: 150ms
@@ -69,6 +74,11 @@
     &:hover
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%)
 
+.active_contact
+    color: #fff
+    background-color: #2A3647
+    pointer-events: none
+
 .contact_list
     display: flex
     flex-direction: column
@@ -87,6 +97,7 @@
 
 .content
     display: flex
+
 
 .headline
     gap: 30px
@@ -136,10 +147,20 @@
         font-size: 47px
         font-weight: 500
 
+.invalid
+    pointer-events: none
+    color: #D1D1D1
+    img
+        filter: brightness(0) saturate(100%) invert(90%) sepia(0%) saturate(4715%) hue-rotate(176deg) brightness(94%) contrast(93%)
+
+
 .edit_delete
     display: flex
     align-items: center
     gap: 18px
+    span:nth-child(3)
+        font-size: 18px
+        color: #29ABE2
 
 .edit_delete_child
     gap: 8px
@@ -152,7 +173,7 @@
         font-size: 16px
         font-weight: 400
     &:hover
-        color: #007CEE
+        color: #29ABE2
         img
             filter: brightness(0) saturate(100%) invert(34%) sepia(34%) saturate(3597%) hue-rotate(190deg) brightness(98%) contrast(107%)
 
@@ -164,7 +185,7 @@
         font-size: 16px
         font-weight: 700
     span:nth-child(2)
-        color: #007CEE
+        color: #29ABE2
         font-size: 16px
         font-weight: 400
 
@@ -186,5 +207,3 @@
 
     100%
         transform: translateX(0%)
-
-

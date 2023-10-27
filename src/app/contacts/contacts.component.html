@@ -1,7 +1,7 @@
 <div class="content">
     <div class="sidebar">
         <div class="header">
-            <div class="blue_button ">
+            <div class="blue_button " (click)="openPopup('add')" (click)="stopPropagation($event)">
                 <div class="add_button">
                     <span>Add new contact</span>
                     <img src="/assets/img/person_add.png" alt="">
@@ -9,14 +9,20 @@
             </div>
         </div>
         <div class="contact_list">
-            <div class="contact_div" *ngFor="let user of userService.all_users; let i = index" >
-                <div class="contact_line" *ngIf="checkForNewFirstLetter(user.user_name, i)">
+            <div class="contact_div" *ngFor="let user of userService.all_users; let i = index">
+                <div class="contact_line"
+                    *ngIf="checkForNewFirstLetter(user.user_name, i) && user.email != userService.user.email">
                     <span>{{getLetter(user.user_name)}}</span>
                 </div>
-                <div class="contact" (click)="showContact(i)">
+                <div class="contact" (click)="showContact(i)"
+                    [class.active_contact]="userService.user_details.email == user.email"
+                    *ngIf="user.email != userService.user.email">
                     <div class="circle" [style.background-color]="user.color"><span>{{user.initials}}</span> </div>
                     <div class="user_email_name">
-                        <div class="name">{{user.user_name}}</div>
+                        <div class="name">
+                            <span>{{user.user_name}}</span>
+                            <span *ngIf="!user.contact">(Registered user)</span>
+                        </div>
                         <div class="email">{{user.email}}</div>
                     </div>
                 </div>
@@ -31,19 +37,24 @@
         </div>
         <div class="detail">
             <div class="circle_name">
-                <div class="circle_detail" [style.background-color]="this.user_details.color" >{{this.user_details.initials}}</div>
+                <div class="circle_detail" [style.background-color]="userService.user_details.color">
+                    {{userService.user_details.initials}}</div>
                 <div class="name_edit">
-                    <span>{{this.user_details.user}}</span>
+                   
+                        <span>{{userService.user_details.user}}</span>
+                       
+                
+
                     <div class="edit_delete">
-                        <div class="edit_delete_child">
+                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="stopPropagation($event)" [class.invalid]="!userService.user_details.contact">
                             <img src="/assets/img/edit.png" alt="">
                             <span>Edit</span>
                         </div>
-                        <div class="edit_delete_child">
+                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="stopPropagation($event)" [class.invalid]="!userService.user_details.contact">
                             <img src="/assets/img/delete.png" alt="">
                             <span>Delete</span>
                         </div>
-
+                        <span *ngIf="!userService.user_details.contact">Registered user</span>
                     </div>
                 </div>
             </div>
@@ -51,11 +62,13 @@
                 <span>Contact Information</span>
                 <div class="email_phone">
                     <span>Email</span>
-                    <span>{{this.user_details.email}}</span>
+                
+                    <a class="email-link" href="mailto:{{userService.user_details.email}}">{{userService.user_details.email}}</a>
                 </div>
                 <div class="email_phone">
                     <span>Phone</span>
-                    <span>685047876450</span>
+                    <span>{{userService.user_details.phone}}</span>
+                    <span style="font-size: 16px" *ngIf="!userService.user_details.phone">No number assigned</span>
                 </div>
             </div>
         </div>
