@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 @Component({
   selector: 'app-header',
@@ -9,22 +10,17 @@ import { UserService } from '../user.service';
 })
 export class HeaderComponent implements OnInit {
 
-  menu_open: boolean = false;
+  
 
   constructor(
     public auth: AuthService,
     public userService: UserService,
+    public gblFunctions: GlobalFunctionsService
   ) { }
 
 
 
   ngOnInit() {
-    window.addEventListener('click', (event) => {
-      if (this.menu_open) this.menu_open = false;
-      if (this.userService.open_add_user) this.userService.open_add_user = false;
-      if (this.userService.open_edit_user) this.userService.open_edit_user = false;
-      if (this.userService.open_delete_user) this.userService.open_delete_user = false;
-    })
     let user_name = localStorage.getItem('user_name')
     if (user_name) {
       let user = {
@@ -36,14 +32,11 @@ export class HeaderComponent implements OnInit {
         initials: localStorage.getItem('initials'),
       }
       this.userService.user = user
-      console.log(user);
-
     }
   }
 
   toggleLogoutMenu() {
-    this.menu_open = !this.menu_open;
-    console.log(this.menu_open);
+    this.gblFunctions.menu_open = !this.gblFunctions.menu_open;
   }
 
 

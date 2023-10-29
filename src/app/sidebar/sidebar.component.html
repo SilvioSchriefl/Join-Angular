@@ -11,7 +11,7 @@
             <span>Summary</span>
         </div>
     </div>
-    <div class="link" [class.link_active]="route.url === '/main/add_task'">
+    <div class="link" [class.link_active]="route.url === '/main/add_task'" (click)="navigateTo('add_task')">
         <div class="link_child">
             <img src="/assets/img/add-task.png" alt="">
             <span>Add Task</span>

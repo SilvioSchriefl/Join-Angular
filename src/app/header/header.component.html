@@ -6,7 +6,7 @@
            {{userService.user.initials}}
         </div>
     </div>
-    <div class="logout" [class.show_menu]="menu_open"  >
+    <div class="logout" [class.show_menu]="gblFunctions.menu_open"  >
         <span>Legal Notice</span>
         <span>Privacy Policy</span>
         <span (click)="auth.logOut()" >Log out</span>

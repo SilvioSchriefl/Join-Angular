@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-popups',
@@ -14,12 +15,14 @@ export class PopupsComponent {
   constructor(
     private auth: AuthService,
     public userService: UserService,
+    public taskService: TaskService
   ) { }
 
  
 
 
   closePopup() {
+    this.userService.open_add_category = false
     this.userService.open_edit_user = false
     this.userService.open_delete_user = false
     this.userService.open_add_user = false
@@ -48,6 +51,8 @@ export class PopupsComponent {
     if(this.userService.open_add_user) this.userService.addContact()
     if(this.userService.open_edit_user) this.userService.editContact()
     if(this.userService.open_delete_user) this.userService.deleteContact()
+    if(this.userService.open_delete_user) this.userService.deleteContact()
+    if(this.userService.open_add_category) this.taskService.addCategory()
   }
 
 }

@@ -1,9 +1,13 @@
-<div class="shadow" [class.show_shadow]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user ">
-    <div class="popup_main" (click)="stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user ">
+<div class="shadow" [class.show_shadow]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+    <div class="popup_main" (click)="stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
         <div class="blue_side">
             <img src="/assets/img/Capa 2.png">
-            <span>Add Contact</span>
+            <span *ngIf="userService.open_add_category">Add Category</span>
+            <span *ngIf="userService.open_delete_user">Delete Contact</span>
+            <span *ngIf="userService.open_edit_user">Edit Contact</span>
+            <span *ngIf="userService.open_add_user">Add Contact</span>
             <span *ngIf="userService.open_add_user" >Tasks are better with a team!</span>
+            <span *ngIf="userService.open_add_category" >Tasks are better with a category!</span>
             <img src="/assets/img/Vector 5.png">
         </div>
         <div class="white_side">
@@ -11,16 +15,19 @@
                 <img src="/assets/img/close.png">
             </div>
             <div class="circle_input">
+
                 <div *ngIf="userService.open_add_user" class="circle_detail">
                     <img src="/assets/img/person.png" alt="">
                 </div>
-
+                <div *ngIf="userService.open_add_category" class="circle_detail">
+                    <img src="/assets/img/category.png" alt="">
+                </div>
                 <div *ngIf="userService.open_edit_user || userService.open_delete_user" class="circle_detail_edit" [style.background-color]="userService.user_details.color">
                     <span>{{userService.user_details.initials}}</span>
                 </div>
 
 
-                <div class="input_div">
+                <div class="input_div" *ngIf="userService.open_add_user || userService.open_edit_user || userService.open_delete_user; else elseBlock">
                     <div class="input_field">
                         <input type="text" placeholder="Name" [(ngModel)]="userService.user_name" (focus)="inputFocus('name')" [disabled]="userService.open_delete_user">
                         <img src="/assets/img/person-icon.png" alt="">
@@ -44,9 +51,28 @@
                           <span *ngIf="userService.open_delete_user" >Delete</span>
                           <img src="/assets/img/check.png" alt="">
                         </div>
-                        
                     </div>
                 </div>
+
+
+                <ng-template #elseBlock>
+                    <div  class="input_div">
+                    <div class="input_field">
+                        <input type="text" placeholder="Title" [(ngModel)]="userService.category_title" (focus)="inputFocus('name')" maxlength="30">
+                        <img src="/assets/img/edit_square.png" alt="">
+                        <span class="error" *ngIf="userService.user_name_empty" >This field is required</span>
+                    </div>
+                    <div class="button_div">
+                        <div class="white_button" (click)="closePopup()">Cancel</div>
+                        <div class="blue_button" (click)="handleAction()" [class.invalid]="  !userService.category_title">
+                          <span>Create category</span> 
+                          <img src="/assets/img/check.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                </ng-template>
+
+                
             </div>
             <div [class.show_request_status]="userService.request_error" [class.hide_request_status]="!userService.request_error" class="request_successful" style="background-color: red;">{{userService.error_type}}</div>
             <div  [class.show_request_status]="userService.request_successful" class="request_successful">

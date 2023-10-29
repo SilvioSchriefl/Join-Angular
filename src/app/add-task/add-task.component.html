@@ -1,0 +1,140 @@
+<div class="task_main">
+    <div class="headline">Add Task</div>
+    <div class="task_side">
+        <div class="input_title">
+            <div class="title"><span>Title</span><span style="color: red">*</span></div>
+            <input type="text" placeholder="Enter a title">
+        </div>
+        <div class="input_title">
+            <span>Description</span>
+            <textarea placeholder="Enter a Description" [(ngModel)]="description"></textarea>
+        </div>
+        <div class="input_title">
+            <span>Assigned to</span>
+
+
+            <div *ngIf="!open_dropdown" class="dropdown_menu" (click)="toggleDropDownMenu('contact')"
+                (click)="gblFunctions.stopPropagation($event)">
+                <span>Select contacts to assign</span>
+                <div class="dropdown" (click)="toggleDropDownMenu('contact')"
+                    (click)="gblFunctions.stopPropagation($event)">
+                    <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
+                </div>
+            </div>
+
+            <div *ngIf="open_dropdown" class="input_title" (click)="gblFunctions.stopPropagation($event)">
+                <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
+                    (ngModelChange)="handleValueChange($event)">
+                <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
+                    <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
+                </div>
+            </div>
+
+
+
+            <div class="contact_main" *ngIf="open_dropdown">
+                <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
+                <div class="contacts_scroll_div">
+                    <div class="contact_div" [class.selected]="contact.selected"
+                        *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
+                        <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
+                        {{contact.user_name}}
+                        <input type="checkbox" class="checkbox" [checked]="contact.selected"
+                            (change)="handleValueChange($event)">
+                    </div>
+                </div>
+                <footer>
+                    <div class="blue_button" (click)="openAddContact()" (click)="gblFunctions.stopPropagation($event)">
+                        <span>Add new contact</span>
+                        <img src="/assets/img/person_add.png">
+                    </div>
+                </footer>
+            </div>
+            <div class="selected_contacts">
+                <div *ngFor="let contact of selected_contacts; let i = index">
+                    <div class="circle" [style.background-color]="contact.color" style="margin-left: -14px;">
+                        {{contact.initials}}</div>
+                </div>
+            </div>
+            <div class="required">
+                <span style="color: red">*</span>
+                <span>This field is required</span>
+            </div>
+        </div>
+
+    </div>
+    <img class="parting line" src="/assets/img/Vector 4.png">
+
+    <!---------------------------------------------------------------task right side-------------------------------------------------------------------->
+
+    <div class="task_side">
+        <div class="input_title">
+            <div class="title"><span>Due Date</span><span style="color: red">*</span></div>
+            <input type="date" [(ngModel)]="date" [min]="min_date">
+        </div>
+        <div class="input_title">
+            <span>Prio</span>
+            <div class="prio_main">
+                <div class="prio" (click)="setPrio('urgent')" [class.urgent]="prio == 'urgent'">
+                    <span>Urgent</span>
+                    <img src="/assets/img/prioUrgent.png">
+                </div>
+                <div class="prio" (click)="setPrio('medium')" [class.medium]="prio == 'medium'">
+                    <span>Medium</span>
+                    <img src="/assets/img/prioMedium.png">
+                </div>
+                <div class="prio" (click)="setPrio('low')" [class.low]="prio == 'low'">
+                    <span>Low</span>
+                    <img src="/assets/img/prioLow.png">
+                </div>
+            </div>
+        </div>
+        <div class="input_title">
+            <div class="title"><span>Category</span><span style="color: red">*</span></div>
+            <div class="dropdown_menu">
+                <span>Select task category</span>
+                <div class="dropdown" (click)="toggleDropDownMenu('category')">
+                    <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValueC">
+                </div>
+            </div>
+
+            <div *ngIf="open_category" class="contact_main">
+                <span class="no_contact" *ngIf="taskService.all_categorys.length == 0">No categorys</span>
+                <div class="contacts_scroll_div">
+                    <div class="category_div" *ngFor="let category of taskService.all_categorys; let i = index">
+                        {{ category.title }}
+                        <div class="delete_category_main">
+                            <div class="category_color" [style.background]="category.color"></div>
+                            <div class="delete" (click)="deleteCategory(i)">
+                                <img src="/assets/img/delete.png">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+                </div>
+                <footer>
+                    <div class="blue_button" (click)="openAddCategory()" (click)="gblFunctions.stopPropagation($event)">
+                        <span>Add new category</span>
+                        <img src="/assets/img/person_add.png">
+                    </div>
+                </footer>
+            </div>
+
+        </div>
+        <div class="input_title">
+            <span>Subtasks</span>
+            <input type="text">
+            <div class="add">
+                <img src="/assets/img/add.png">
+            </div>
+            <div class="send_buttons">
+                <div class="white_button">Clear</div>
+                <div class="blue_button">
+                    Create Task
+                    <img src="/assets/img/check.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

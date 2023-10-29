@@ -13,6 +13,7 @@ export class UserService {
   open_add_user: boolean = false;
   open_edit_user: boolean = false;
   open_delete_user: boolean = false;
+  open_add_category: boolean = false;
   user_name: string = '';
   user_email: string = '';
   user_phone: string = '';
@@ -22,6 +23,7 @@ export class UserService {
   email_valid: boolean = true;
   user_name_empty: boolean = false;
   all_contacts: any = [];
+  category_title: string = ''
   user_details = {
     user: '',
     email: '',
@@ -60,11 +62,8 @@ export class UserService {
     const url = environment.baseUrl + 'users/';
     try {
       let response = await lastValueFrom(this.http.get(url));
-      console.log(response);
       this.all_users = response
-      console.log(this.all_users);
     } catch (error) {
-      console.log(error);
     }
     await this.getContacts()
   }
@@ -128,11 +127,16 @@ export class UserService {
 
 
   handleError(error: any) {
-    if (error.error.email == "Email already in use") this.error_type = error.error.email;
-    else this.error_type = 'Error creating contact'
+    if (this.open_add_user) {
+      if (error.error.email) this.error_type = error.error.email;
+      else this.error_type = 'Error creating contact'
+    }
+    if(this.open_delete_user) {
+      if (error.error.detail) this.error_type = error.error.detail;
+      else this.error_type = 'Error delete contact'
+    }
     this.request_error = true;
     setTimeout(() => this.request_error = false, 2000);
-    console.log(error);
   }
 
 
@@ -168,9 +172,23 @@ export class UserService {
   }
 
 
-  deleteContact() {
+  async deleteContact() {
     let i = this.user_details.index
+    const url = environment.baseUrl + 'contact/' + this.user_details.id + '/'
+    try{
+        await lastValueFrom(this.http.delete(url));
+       this.request_successful = true;
+       setTimeout(() => {
+         this.request_successful = false
+         this.open_delete_user = false
+         this.all_users.splice(i, 1)
+         this.sortUserByLetter()
+       }, 2000);
+    }
+    catch (error: any) {
+      this.handleError(error)
   }
+}
 
 
   updateUserDetail(response: any) {

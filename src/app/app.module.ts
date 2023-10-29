@@ -18,6 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PopupsComponent } from './popups/popups.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { PopupsComponent } from './popups/popups.component';
     SummaryComponent,
     ContactsComponent,
     PopupsComponent,
+    AddTaskComponent,
 
   ],
   imports: [

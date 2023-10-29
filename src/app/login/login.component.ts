@@ -45,11 +45,9 @@ export class LoginComponent implements OnInit {
     else {
       console.log(' login failed');
     }
-
-
-
   }
 
+  
   handleValueChange(event: Event) {
     this.auth.remember_me = this.checkBox_value
   }

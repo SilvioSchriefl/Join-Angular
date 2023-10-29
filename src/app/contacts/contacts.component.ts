@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 @Component({
   selector: 'app-contacts',
@@ -14,7 +15,10 @@ export class ContactsComponent implements OnInit {
   sort_letter: string = '';
 
 
-  constructor(public userService: UserService) { }
+  constructor(
+    public userService: UserService,
+    public gblFunctions: GlobalFunctionsService
+    ) { }
 
 
   async ngOnInit() {
@@ -64,11 +68,5 @@ export class ContactsComponent implements OnInit {
       if (popup == 'edit') this.userService.open_edit_user = true
       if (popup == 'delete') this.userService.open_delete_user = true
     }
-
-  }
-
-
-  stopPropagation(event: Event) {
-    event.stopPropagation();
-  };
+  }  
 }

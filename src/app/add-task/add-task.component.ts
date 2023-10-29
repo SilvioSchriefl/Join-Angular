@@ -1,0 +1,116 @@
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../user.service';
+import { GlobalFunctionsService } from '../global-functions.service';
+import { TaskService } from '../task.service';
+
+@Component({
+  selector: 'app-add-task',
+  templateUrl: './add-task.component.html',
+  styleUrls: ['./add-task.component.sass']
+})
+export class AddTaskComponent implements OnInit {
+
+  description: string = '';
+  title: string = ''
+  date: string = ''
+  min_date: string = ''
+  prio: string = ''
+  checkBox_value: boolean = false
+  selected_contacts: any = []
+  selected_contact_index: number = 0
+  rotationValue: string = 'rotate(0deg)'
+  search_value: string = ''
+  all_contacts: any = []
+  open_category: boolean = false
+  open_dropdown: boolean = false
+  rotationValueC: string = 'rotate(0deg)';
+  
+
+
+  constructor(
+    public userService: UserService,
+    public gblFunctions: GlobalFunctionsService,
+    public taskService: TaskService
+  ) {
+
+  }
+
+  async ngOnInit() {
+    await this.taskService.getCategorys()
+    this.getCurrentDate()
+    await this.userService.getUsers()
+    this.all_contacts = this.userService.all_users
+  }
+
+  getCurrentDate() {
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    this.date = `${year}-${month}-${day}`;
+    this.min_date = this.date
+  }
+
+
+  selectContact(i: number) {
+    let contact = this.userService.all_users[i];
+    if (this.selected_contacts.includes(contact)) {
+      const index = this.selected_contacts.indexOf(contact);
+      if (index > -1) {
+        this.selected_contacts.splice(index, 1);
+      }
+      contact.selected = false;
+    } else {
+      this.selected_contacts.push(contact);
+      contact.selected = true;
+    }
+  }
+
+
+  toggleDropDownMenu(menu: string) {
+    if (menu == 'contact') {
+      if (!this.open_dropdown) this.open_dropdown = true;
+      else {
+        this.all_contacts = this.userService.all_users
+        this.open_dropdown = false;
+        this.search_value = ''
+      }
+      if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
+      else this.rotationValue = 'rotate(0deg)'
+    }
+    if (menu == 'category') {
+      if (!this.open_category) this.open_category = true
+      else this.open_category = false
+      if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
+      else this.rotationValueC = 'rotate(0deg)'
+    }
+  }
+
+
+  handleValueChange(value: any) {
+    this.all_contacts = this.userService.all_users.filter((user: { user_name: string }) =>
+      user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
+    );
+  }
+
+
+  setPrio(prio: string) {
+    this.prio = prio
+  }
+
+
+  openAddContact() {
+    this.userService.open_add_user = true
+  }
+
+
+  openAddCategory() {
+    this.userService.category_title = ''
+    this.userService.open_add_category = true
+  }
+
+
+  deleteCategory(i:number) {
+    this.taskService.deleteCategory(i)
+  }
+}
