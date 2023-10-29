@@ -275,7 +275,6 @@ footer {
   margin-bottom: 2px;
   position: relative;
   gap: 16px;
-  transition: 550ms !important;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -284,9 +283,8 @@ footer {
   border-radius: 10px;
   height: 56px;
   padding: 7px 16px;
-  transition: 550ms;
   justify-content: space-between;
-  background: transparent;
+  background: #fff;
 }
 .category_div:hover {
   background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%);

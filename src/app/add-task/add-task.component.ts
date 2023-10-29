@@ -24,7 +24,12 @@ export class AddTaskComponent implements OnInit {
   open_category: boolean = false
   open_dropdown: boolean = false
   rotationValueC: string = 'rotate(0deg)';
-  
+  selected_category: any = []
+  subtasks:any = []
+  subtask_title:string = ''
+  edit_subtask: boolean = false
+  edited_subtask_title:string = ''
+
 
 
   constructor(
@@ -110,7 +115,44 @@ export class AddTaskComponent implements OnInit {
   }
 
 
-  deleteCategory(i:number) {
+  deleteCategory(i: number) {
     this.taskService.deleteCategory(i)
+  }
+
+
+  setCategory(i: number) {
+    this.selected_category = this.taskService.all_categorys[i]
+    this.open_category = false
+    if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
+    else this.rotationValueC = 'rotate(0deg)'
+  }
+
+
+  addSubtask() {
+    if(this.subtask_title.length > 0) {
+      let subtask = {
+        title: this.subtask_title,
+        done: false
+      }
+      this.subtasks.push(subtask)
+      this.subtask_title = ''
+    }
+  }
+
+
+  deleteSubtask(i:number) {
+    this.subtasks.splice(i, 1)
+  }
+
+
+  openEditSubtask(i:number) {
+    this.subtasks[i].selected = true
+    this.edited_subtask_title = this.subtasks[i].title
+  }
+
+
+  saveEditSubtask(i:number) {
+    this.subtasks[i].title = this.edited_subtask_title
+    this.subtasks[i].selected = false
   }
 }

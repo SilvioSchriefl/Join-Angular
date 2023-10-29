@@ -51,7 +51,6 @@
     position: relative
     z-index: 1
 
-
 .dropdown
     z-index: 1
     @include flex
@@ -76,7 +75,6 @@
     transition: 150ms
     &:hover
         background-color: #EEEEEE
-
 
 .prio_main
     display: flex
@@ -110,7 +108,7 @@
         background-color: #EEEEEE
 
 .send_buttons
-    top: 180px
+    top: 240px
     position: absolute
     right: 0
     display: flex
@@ -151,9 +149,8 @@
     color: #fff
     transition: 150ms
     background-color: #091931
-    &:hover 
+    &:hover
         background: #2A3647 !important
-
 
 .contact_div
     box-sizing: border-box
@@ -205,7 +202,7 @@
 
     img
         filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(14%) hue-rotate(294deg) brightness(102%) contrast(102%)
-    
+
 .medium
     color: #fff
     background: #FFA800
@@ -221,9 +218,6 @@
 
     img
         filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(14%) hue-rotate(294deg) brightness(102%) contrast(102%)
-
-
-
 
 footer
     box-sizing: border-box
@@ -242,7 +236,6 @@ footer
     margin-bottom: 2px
     position: relative
     gap: 16px
-    transition: 550ms !important
     cursor: pointer
     display: flex
     align-items: center
@@ -251,9 +244,8 @@ footer
     border-radius: 10px
     height: 56px
     padding: 7px 16px
-    transition: 550ms
     justify-content: space-between
-    background: transparent
+    background: #fff
     &:hover
         background: linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%)
 
@@ -274,13 +266,56 @@ footer
         background: #29ABE2
         img
             filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(339deg) brightness(105%) contrast(101%)
-        
 
+.dropdown_with_color
 
-  
-  
+    display: flex
+    gap: 10px
 
+.subtask_main
+    max-height: 100px
 
+.subtask_scroll
+    height: 100%
+    overflow: auto
 
+.subtask
+    border-radius: 10px
+    padding: 5px 10px
+    display: flex
+    align-items: center
+    justify-content: space-between
+    background-color: #F6F7F8
+    transition: 150ms
+    &:hover
+        background-color: #EEEEEE
 
+.subtask_img
+    display: flex
+    align-items: center
+    gap: 5px
+    img
+        cursor: pointer
 
+.input
+    position: relative
+    input
+        height: 32px 
+        padding: 4px, 16px, 4px, 16px
+        border-radius: 0px
+        width: 100%
+        border-bottom: 1px solid #29ABE2
+        border-top: 0
+        border-left: 0
+        border-right: 0
+        justify: space-between
+
+.subtask_img_input
+    position: absolute
+    right: 0
+    top: 0
+    display: flex
+    align-items: center
+    gap: 5px
+    img
+        cursor: pointer
