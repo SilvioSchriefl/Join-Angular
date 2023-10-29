@@ -6,7 +6,7 @@
 
         <div class="input_title">
             <div class="title"><span>Title</span><span style="color: red">*</span></div>
-            <input type="text" placeholder="Enter a title">
+            <input type="text" placeholder="Enter a title" [(ngModel)]="task_title">
         </div>
 
         <!---------------------------------------------------------------DESCRIPTION---------------------------------------------------------->
@@ -45,7 +45,7 @@
                     <div class="contact_div" [class.selected]="contact.selected"
                         *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
                         <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                        {{contact.user_name}}
+                        {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
                         <input type="checkbox" class="checkbox" [checked]="contact.selected"
                             (change)="handleValueChange($event)">
                     </div>
@@ -192,8 +192,8 @@
             <!-------------------------------------------------------------------CREATE BUTTON--------------------------------------------------------------->
 
             <div class="send_buttons">
-                <div class="white_button">Clear</div>
-                <div class="blue_button">
+                <div (click)="clearAll()" class="white_button">Clear</div>
+                <div class="blue_button" (click)="createTask()">
                     Create Task
                     <img src="/assets/img/check.png" alt="">
                 </div>

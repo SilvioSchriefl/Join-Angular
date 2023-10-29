@@ -25,10 +25,11 @@ export class AddTaskComponent implements OnInit {
   open_dropdown: boolean = false
   rotationValueC: string = 'rotate(0deg)';
   selected_category: any = []
-  subtasks:any = []
-  subtask_title:string = ''
+  subtasks: any = []
+  subtask_title: string = ''
   edit_subtask: boolean = false
-  edited_subtask_title:string = ''
+  edited_subtask_title: string = ''
+  task_title: string = ''
 
 
 
@@ -129,7 +130,7 @@ export class AddTaskComponent implements OnInit {
 
 
   addSubtask() {
-    if(this.subtask_title.length > 0) {
+    if (this.subtask_title.length > 0) {
       let subtask = {
         title: this.subtask_title,
         done: false
@@ -140,19 +141,35 @@ export class AddTaskComponent implements OnInit {
   }
 
 
-  deleteSubtask(i:number) {
+  deleteSubtask(i: number) {
     this.subtasks.splice(i, 1)
   }
 
 
-  openEditSubtask(i:number) {
+  openEditSubtask(i: number) {
     this.subtasks[i].selected = true
     this.edited_subtask_title = this.subtasks[i].title
   }
 
 
-  saveEditSubtask(i:number) {
+  saveEditSubtask(i: number) {
     this.subtasks[i].title = this.edited_subtask_title
     this.subtasks[i].selected = false
+  }
+
+
+  clearAll() {
+    this.selected_category = []
+    this.selected_contacts = []
+    this.task_title = ''
+    this.description = ''
+    this.date = this.min_date
+    this.prio = ''
+    this.subtasks = []
+  }
+
+
+  createTask() {
+    
   }
 }
