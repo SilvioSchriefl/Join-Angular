@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -7,8 +8,14 @@ import { Component } from '@angular/core';
 })
 export class MainComponent {
 
+  
+
+ 
 
   logout() {
     localStorage.removeItem('token');
   }
+
+
+  
 }

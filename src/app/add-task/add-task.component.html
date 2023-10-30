@@ -1,4 +1,4 @@
-<div class="task_main">
+<div #mainContainer class="task_main">
     <div class="headline">Add Task</div>
     <div class="task_side">
 
@@ -20,45 +20,46 @@
 
         <div class="input_title">
             <span>Assigned to</span>
-            <div *ngIf="!open_dropdown" class="dropdown_menu" (click)="toggleDropDownMenu('contact')"
-                (click)="gblFunctions.stopPropagation($event)">
+            <div *ngIf="!open_dropdown" (click)="gblFunctions.stopPropagation($event)" class="dropdown_menu"
+                (click)="toggleDropDownMenu('contact')">
                 <span>Select contacts to assign</span>
-                <div class="dropdown" (click)="toggleDropDownMenu('contact')"
-                    (click)="gblFunctions.stopPropagation($event)">
+                <div class="dropdown">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
             </div>
 
-            <div *ngIf="open_dropdown" class="input_title" (click)="gblFunctions.stopPropagation($event)">
+            <div *ngIf="open_dropdown" class="input_title_hide" (click)="gblFunctions.stopPropagation($event)">
                 <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
                     (ngModelChange)="handleValueChange($event)">
                 <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
-            </div>
-
-
-
-            <div class="contact_main" *ngIf="open_dropdown">
-                <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
-                <div class="contacts_scroll_div">
-                    <div class="contact_div" [class.selected]="contact.selected"
-                        *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
-                        <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                        {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
-                        <input type="checkbox" class="checkbox" [checked]="contact.selected"
-                            (change)="handleValueChange($event)">
+                <div class="contact_main" *ngIf="open_dropdown" (click)="gblFunctions.stopPropagation($event)"
+                    [class.show_element]="open_dropdown" [class.hide_element]="!open_dropdown">
+                    <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
+                    <div class="contacts_scroll_div">
+                        <div class="contact_div" [class.selected]="contact.selected"
+                            *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
+                            <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
+                            {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
+                            <input type="checkbox" class="checkbox" [checked]="contact.selected"
+                                (change)="handleValueChange($event)">
+                        </div>
                     </div>
+                    <footer>
+                        <div class="blue_button" (click)="openAddContact()"
+                            (click)="gblFunctions.stopPropagation($event)">
+                            <span>Add new contact</span>
+                            <img src="/assets/img/person_add.png">
+                        </div>
+                    </footer>
                 </div>
-                <footer>
-                    <div class="blue_button" (click)="openAddContact()" (click)="gblFunctions.stopPropagation($event)">
-                        <span>Add new contact</span>
-                        <img src="/assets/img/person_add.png">
-                    </div>
-                </footer>
             </div>
+
+
+
             <div class="selected_contacts">
-                <div *ngFor="let contact of selected_contacts; let i = index">
+                <div *ngFor="let contact of selected_contacts_list; let i = index">
                     <div class="circle" [style.background-color]="contact.color" style="margin-left: -14px;">
                         {{contact.initials}}</div>
                 </div>
@@ -107,7 +108,8 @@
 
         <div class="input_title">
             <div class="title"><span>Category</span><span style="color: red">*</span></div>
-            <div class="dropdown_menu" (click)="toggleDropDownMenu('category')">
+            <div class="dropdown_menu" (click)="toggleDropDownMenu('category')"
+                (click)="gblFunctions.stopPropagation($event)">
                 <span *ngIf="selected_category.length == 0">Select task category</span>
                 <span>{{selected_category.title}}</span>
                 <div class="dropdown_with_color">
@@ -162,7 +164,7 @@
                             {{subtask.title}}
                             <div class="subtask_img">
                                 <div class="delete" (click)="deleteSubtask(i)">
-                                    <img src="/assets/img/delete.png" >
+                                    <img src="/assets/img/delete.png">
                                 </div>
                                 <img src="/assets/img/Vector 19.png">
                                 <div class="delete" (click)="openEditSubtask(i)">
@@ -171,10 +173,10 @@
                             </div>
                         </div>
                         <div *ngIf="subtask.selected" class="input">
-                            <input  type="text" [(ngModel)]="edited_subtask_title">
+                            <input type="text" [(ngModel)]="edited_subtask_title">
                             <div class="subtask_img_input">
                                 <div class="delete" (click)="deleteSubtask(i)">
-                                    <img src="/assets/img/delete.png" >
+                                    <img src="/assets/img/delete.png">
                                 </div>
                                 <img src="/assets/img/Vector 19.png">
                                 <div class="delete" (click)="saveEditSubtask(i)">
@@ -182,7 +184,7 @@
                                 </div>
                             </div>
                         </div>
-                      
+
                     </li>
 
                 </ul>
@@ -200,4 +202,8 @@
             </div>
         </div>
     </div>
-</div>
+    <div [class.show_request_status]="taskService.request_error"
+        [class.hide_request_status]="!taskService.request_error" class="request_successful"
+        style="background-color: red;">{{taskService.error_type}}</div>
+    <div [class.show_request_status]="taskService.request_successful" class="request_successful">Task created
+        successfully</div>

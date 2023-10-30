@@ -23,6 +23,16 @@ export class ContactsComponent implements OnInit {
 
   async ngOnInit() {
     await this.userService.getUsers()
+    this.userService.user_details  = {
+      user: '',
+      email: '',
+      phone: '',
+      initials: '',
+      color: '',
+      id: '',
+      contact: false,
+      index: 0
+    }
   }
 
 
@@ -61,7 +71,7 @@ export class ContactsComponent implements OnInit {
     this.userService.user_email = ''
     this.userService.user_phone = ''
     if (popup == 'add') this.userService.open_add_user = true
-    if (popup == 'edit' || 'delete') {
+    if (popup == 'edit' || popup == 'delete') {
       this.userService.user_name = this.userService.user_details.user
       this.userService.user_email = this.userService.user_details.email
       this.userService.user_phone = this.userService.user_details.phone

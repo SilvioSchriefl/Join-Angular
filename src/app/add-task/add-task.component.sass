@@ -31,6 +31,15 @@
     display: flex
     flex-direction: column
 
+.input_title_hide
+    border-radius: 10px
+    gap: 8px
+    position: relative
+    display: flex
+    flex-direction: column
+    overflow: hidden
+  
+
 .title
     display: flex
 
@@ -319,3 +328,27 @@ footer
     gap: 5px
     img
         cursor: pointer
+
+
+
+.show_element
+    animation: slide-up 0.3s ease-in-out
+
+.hide_element
+    animation: slide-down 0.3s ease-in-out
+
+
+@keyframes slide-up 
+    0%
+        transform: translateY(-100%)
+
+    100%
+        transform: translateY(0%)
+
+@keyframes slide-down 
+    0%
+        transform: translateY(0%)
+
+    100%
+        transform: translateY(-100%)
+

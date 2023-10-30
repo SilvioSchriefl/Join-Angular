@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
 import { TaskService } from '../task.service';
@@ -10,6 +10,8 @@ import { TaskService } from '../task.service';
 })
 export class AddTaskComponent implements OnInit {
 
+ 
+
   description: string = '';
   title: string = ''
   date: string = ''
@@ -17,7 +19,8 @@ export class AddTaskComponent implements OnInit {
   prio: string = ''
   checkBox_value: boolean = false
   selected_contacts: any = []
-  selected_contact_index: number = 0
+  selected_contacts_list: any = []
+  selected_users: any = []
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
   all_contacts: any = []
@@ -36,10 +39,10 @@ export class AddTaskComponent implements OnInit {
   constructor(
     public userService: UserService,
     public gblFunctions: GlobalFunctionsService,
-    public taskService: TaskService
-  ) {
-
-  }
+    public taskService: TaskService,
+    private elRef: ElementRef
+   
+  ) {}
 
   async ngOnInit() {
     await this.taskService.getCategorys()
@@ -47,6 +50,14 @@ export class AddTaskComponent implements OnInit {
     await this.userService.getUsers()
     this.all_contacts = this.userService.all_users
   }
+
+
+  @HostListener('document:click', ['$event'])
+  onClick(event: Event) {
+    if (this.open_dropdown) this.open_dropdown = false;
+    if (this.open_category) this.open_category = false;
+  }
+
 
   getCurrentDate() {
     const currentDate = new Date();
@@ -59,34 +70,45 @@ export class AddTaskComponent implements OnInit {
 
 
   selectContact(i: number) {
+    this.handleTaskView(i)
+    let array = []
     let contact = this.userService.all_users[i];
-    if (this.selected_contacts.includes(contact)) {
-      const index = this.selected_contacts.indexOf(contact);
-      if (index > -1) {
-        this.selected_contacts.splice(index, 1);
-      }
-      contact.selected = false;
+    if (contact.contact) array = this.selected_contacts
+    else array = this.selected_users
+    if (array.includes(contact)) {
+      const index = array.indexOf(contact);
+      array.splice(index, 1);
     } else {
-      this.selected_contacts.push(contact);
-      contact.selected = true;
+      array.push(contact.id);
+    }
+  }
+
+
+  handleTaskView(i: number) {
+    let contact = this.userService.all_users[i];
+    if (this.selected_contacts_list.includes(contact)) {
+      const index = this.selected_contacts_list.indexOf(contact);
+      this.selected_contacts_list.splice(index, 1);
+      this.userService.all_users[i].selected = false
+    } else {
+      this.userService.all_users[i].selected = true
+      this.selected_contacts_list.push(contact);
     }
   }
 
 
   toggleDropDownMenu(menu: string) {
     if (menu == 'contact') {
-      if (!this.open_dropdown) this.open_dropdown = true;
-      else {
+      this.open_dropdown = !this.open_dropdown;
+      if (this.open_dropdown) {
         this.all_contacts = this.userService.all_users
-        this.open_dropdown = false;
         this.search_value = ''
       }
       if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
       else this.rotationValue = 'rotate(0deg)'
     }
     if (menu == 'category') {
-      if (!this.open_category) this.open_category = true
-      else this.open_category = false
+      this.open_category = !this.open_category
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
       else this.rotationValueC = 'rotate(0deg)'
     }
@@ -137,6 +159,8 @@ export class AddTaskComponent implements OnInit {
       }
       this.subtasks.push(subtask)
       this.subtask_title = ''
+      console.log(this.subtasks);
+
     }
   }
 
@@ -161,6 +185,8 @@ export class AddTaskComponent implements OnInit {
   clearAll() {
     this.selected_category = []
     this.selected_contacts = []
+    this.selected_users = []
+    this.selected_contacts_list = []
     this.task_title = ''
     this.description = ''
     this.date = this.min_date
@@ -170,6 +196,18 @@ export class AddTaskComponent implements OnInit {
 
 
   createTask() {
-    
+    let body = {
+      title: this.task_title,
+      description: this.description,
+      due_date: this.date,
+      status: 'todo',
+      custom_users: this.selected_users,
+      contacts: this.selected_contacts,
+      category: +this.selected_category.id,
+      subtasks: this.subtasks,
+      prio: this.prio,
+    }
+    this.taskService.addTask(body)
+    this.clearAll()
   }
 }

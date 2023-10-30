@@ -64,6 +64,7 @@ export class UserService {
       let response = await lastValueFrom(this.http.get(url));
       this.all_users = response
     } catch (error) {
+      console.log(error);
     }
     await this.getContacts()
   }
@@ -131,7 +132,7 @@ export class UserService {
       if (error.error.email) this.error_type = error.error.email;
       else this.error_type = 'Error creating contact'
     }
-    if(this.open_delete_user) {
+    if (this.open_delete_user) {
       if (error.error.detail) this.error_type = error.error.detail;
       else this.error_type = 'Error delete contact'
     }
@@ -175,20 +176,20 @@ export class UserService {
   async deleteContact() {
     let i = this.user_details.index
     const url = environment.baseUrl + 'contact/' + this.user_details.id + '/'
-    try{
-        await lastValueFrom(this.http.delete(url));
-       this.request_successful = true;
-       setTimeout(() => {
-         this.request_successful = false
-         this.open_delete_user = false
-         this.all_users.splice(i, 1)
-         this.sortUserByLetter()
-       }, 2000);
+    try {
+      await lastValueFrom(this.http.delete(url));
+      this.request_successful = true;
+      setTimeout(() => {
+        this.request_successful = false
+        this.open_delete_user = false
+        this.all_users.splice(i, 1)
+        this.sortUserByLetter()
+      }, 2000);
     }
     catch (error: any) {
       this.handleError(error)
+    }
   }
-}
 
 
   updateUserDetail(response: any) {
