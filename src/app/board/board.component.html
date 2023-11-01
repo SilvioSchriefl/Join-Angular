@@ -22,14 +22,35 @@
                     To do
                     <img src="/assets/img/plus-button-darkblue.png">
                 </div>
-                <div class="task_main">
-                    test
+                <div *ngIf="task_status_todo.length == 0" class="empty_status">No tasks To do</div>
+                <div class="task_main" *ngFor="let task of task_status_todo; let i = index">
+                    <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>   
+                    <span>{{task.title}}</span>
+                    <span>{{task.description}}</span>
+                    <div class="subtask">
+                        <div class="subtask_progress_bar">
+                            <div class="subtask_progress" [style.width]="getSubtaskProgressPercent(i)" ></div>
+                        </div>
+                        {{getSubtaskProgress(i)}}/{{task.subtasks.length}} 
+                        <span>Subtasks</span> 
+                    </div>
+                    <div class="assigned_contacts">
+                        <div *ngFor="let contact of getAssignendContacts(i)">
+                            {{contact.user_name}}
+                        </div>
+                    </div>
+                    
                 </div>
+                
             </div>
             <div class="task_status">
                 <div class="status_text">
                     In progress
                     <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+                <div *ngIf="task_status_in_progress.length == 0" class="empty_status">No tasks To do</div>
+                <div class="task_main" *ngFor="let task of task_status_in_progress; let i = index">
+                    <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>   
                 </div>
             </div>
             <div class="task_status">
@@ -37,11 +58,19 @@
                     Await feedback
                     <img src="/assets/img/plus-button-darkblue.png">
                 </div>
+                <div *ngIf="task_status_await.length == 0" class="empty_status">No tasks To do</div>
+                <div class="task_main" *ngFor="let task of task_status_await; let i = index">
+                    <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>   
+                </div>
             </div>
             <div class="task_status">
                 <div class="status_text">
                     Done
                     <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+                <div *ngIf="task_status_done.length == 0" class="empty_status">No tasks To do</div>
+                <div class="task_main" *ngFor="let task of task_status_done; let i = index">
+                    <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>   
                 </div>
             </div>
         </div>

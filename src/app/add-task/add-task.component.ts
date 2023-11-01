@@ -230,7 +230,8 @@ export class AddTaskComponent implements OnInit {
       status: 'todo',
       custom_users: this.selected_users,
       contacts: this.selected_contacts,
-      category: +this.selected_category.id,
+      category_title: this.selected_category.title,
+      category_color: this.selected_category.color,
       subtasks: this.subtasks,
       prio: this.prio,
     }
