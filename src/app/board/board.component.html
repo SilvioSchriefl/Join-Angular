@@ -1,1 +1,48 @@
-<p>board works!</p>
+
+    <div class="board_content">
+        <div class="header">
+            <div class="headline">Board</div>
+            <div class="search">
+                <div class="input">
+                    <input type="text" placeholder="Find task" [(ngModel)]="search_text">
+                    <div class="input_img">
+                        <img src="/assets/img/Vector 3.png" alt="">
+                        <img src="/assets/img/search.png" alt="">
+                    </div>
+                </div>
+                <div class="blue_button">
+                    Add task
+                    <img src="/assets/img/add (1).png">
+                </div>
+            </div>
+        </div>
+        <div class="status_main">
+            <div class="task_status">
+                <div class="status_text">
+                    To do
+                    <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+                <div class="task_main">
+                    test
+                </div>
+            </div>
+            <div class="task_status">
+                <div class="status_text">
+                    In progress
+                    <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+            </div>
+            <div class="task_status">
+                <div class="status_text">
+                    Await feedback
+                    <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+            </div>
+            <div class="task_status">
+                <div class="status_text">
+                    Done
+                    <img src="/assets/img/plus-button-darkblue.png">
+                </div>
+            </div>
+        </div>
+    </div>

@@ -172,7 +172,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 *::-webkit-scrollbar {
-  width: 16px;
+  width: 8px;
 }
 
 *::-webkit-scrollbar-track {
@@ -182,7 +182,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 *::-webkit-scrollbar-thumb {
   background-color: #d4d4d4;
   border-radius: 10px;
-  border: 3px solid #ffffff;
+  border: 0px solid #ffffff;
 }
 
 input::-webkit-outer-spin-button,
@@ -218,4 +218,51 @@ input[type=number] {
 }
 .close:hover img {
   filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
+
+.request_successful {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 116px);
+  background-color: #2A3647;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1019607843);
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 12px 25px;
+  color: white;
+}
+
+.show_request_status {
+  display: block;
+  animation: slight_in_bottom 0.5s ease-in-out;
+  bottom: 10%;
+  z-index: 10;
+}
+
+.hide_request_status {
+  animation: slight_out_bottom 0.5s ease-in-out;
+}
+
+@keyframes slight_in_bottom {
+  0% {
+    opacity: 0;
+    bottom: 0;
+  }
+  100% {
+    opacity: 1;
+    bottom: 10%;
+  }
+}
+@keyframes slight_out_bottom {
+  0% {
+    opacity: 1;
+    bottom: 10%;
+    display: block;
+  }
+  100% {
+    opacity: 0;
+    bottom: 0;
+  }
 }/*# sourceMappingURL=styles.css.map */

@@ -173,6 +173,7 @@
     display: flex
     align-items: center
     cursor: pointer
+    transition: 150ms
     img
         width: 18px
     span
@@ -181,7 +182,8 @@
     &:hover
         color: #29ABE2
         img
-            filter: brightness(0) saturate(100%) invert(34%) sepia(34%) saturate(3597%) hue-rotate(190deg) brightness(98%) contrast(107%)
+            transition: 150ms
+            filter: invert(56%) sepia(95%) saturate(1065%) hue-rotate(165deg) brightness(92%) contrast(92%)
 
 .email_phone
     gap: 15px
@@ -204,6 +206,7 @@
         font-size: 20px
 
 .show_contact_details
+   
     display: flex
     animation: slide_in 0.4s ease-in-out
 

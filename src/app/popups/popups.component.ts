@@ -48,9 +48,9 @@ export class PopupsComponent {
 
 
   handleAction() {
+    if ( this.userService.request_successful || this.userService.request_error) return
     if(this.userService.open_add_user) this.userService.addContact()
     if(this.userService.open_edit_user) this.userService.editContact()
-    if(this.userService.open_delete_user) this.userService.deleteContact()
     if(this.userService.open_delete_user) this.userService.deleteContact()
     if(this.userService.open_add_category) this.taskService.addCategory()
   }

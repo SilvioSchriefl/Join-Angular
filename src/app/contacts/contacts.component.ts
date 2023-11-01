@@ -10,7 +10,7 @@ import { GlobalFunctionsService } from '../global-functions.service';
 export class ContactsComponent implements OnInit {
 
 
-  show_contact = false;
+
   letter: string = '';
   sort_letter: string = '';
 
@@ -22,7 +22,7 @@ export class ContactsComponent implements OnInit {
 
 
   async ngOnInit() {
-    await this.userService.getUsers()
+    await this.userService.getUsersAndContacts()
     this.userService.user_details  = {
       user: '',
       email: '',
@@ -54,7 +54,7 @@ export class ContactsComponent implements OnInit {
 
 
   showContact(i: number) {
-    this.show_contact = true
+    this.userService.show_contact = true
     this.userService.user_details.user = this.userService.all_users[i].user_name
     this.userService.user_details.email = this.userService.all_users[i].email
     this.userService.user_details.initials = this.userService.all_users[i].initials
@@ -64,6 +64,8 @@ export class ContactsComponent implements OnInit {
     this.userService.user_details.user_contact = this.userService.all_users[i].user_contact
     this.userService.user_details.created_by = this.userService.all_users[i].created_by
     this.userService.user_details.index = i
+    console.log(i);
+    
   }
 
 

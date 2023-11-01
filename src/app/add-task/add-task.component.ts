@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class AddTaskComponent implements OnInit {
 
 
-
+  delete_index: number = 0;
   description: string = '';
   date: string = ''
   min_date: string = ''
@@ -35,6 +35,7 @@ export class AddTaskComponent implements OnInit {
   task_title: string = ''
   title_error: boolean = false
   category_error: boolean = false
+  deleted: boolean = false
 
 
 
@@ -49,7 +50,7 @@ export class AddTaskComponent implements OnInit {
   async ngOnInit() {
     await this.taskService.getCategorys()
     this.getCurrentDate()
-    await this.userService.getUsers()
+    await this.userService.getUsersAndContacts()
     this.all_contacts = this.userService.all_users
   }
 
@@ -83,7 +84,9 @@ export class AddTaskComponent implements OnInit {
     this.handleTaskView(i)
     let array = []
     let contact = this.userService.all_users[i];
-    if (contact.contact) array = this.selected_contacts
+    
+    
+    if (contact.user_contact) array = this.selected_contacts
     else array = this.selected_users
     if (array.includes(contact)) {
       const index = array.indexOf(contact);
@@ -91,6 +94,8 @@ export class AddTaskComponent implements OnInit {
     } else {
       array.push(contact.id);
     }
+    console.log(this.selected_contacts);
+    
   }
 
 
@@ -138,6 +143,9 @@ export class AddTaskComponent implements OnInit {
 
 
   openAddContact() {
+    this.userService.user_name = ''
+    this.userService.user_email = ''
+    this.userService.user_phone = ''
     this.userService.open_add_user = true
   }
 
@@ -149,7 +157,13 @@ export class AddTaskComponent implements OnInit {
 
 
   deleteCategory(i: number) {
-    this.taskService.deleteCategory(i)
+    this.delete_index = i
+    this.deleted = true
+    setTimeout(() => {
+      this.taskService.deleteCategory(i)
+      this.deleted = false
+    }, 190);
+    
   }
 
 

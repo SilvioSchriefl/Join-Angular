@@ -38,8 +38,10 @@
     display: flex
     flex-direction: column
     overflow: hidden
-    margin-top: -8px
-  
+    
+
+.add_shadow
+    box-shadow: 0px 0px 9px 3px #0000000A
 
 .title
     position: relative
@@ -135,12 +137,13 @@
     margin: 0 50px
 
 .contacts_scroll_div
+    overflow-x: hidden
     box-sizing: border-box
     z-index: 0
     padding-top: 25px
     display: flex
     flex-direction: column
-    overflow: auto
+    overflow-y: auto
     height: calc(100% - 30px)
 
 .contact_main
@@ -154,7 +157,8 @@
     border-bottom-right-radius: 10px
     border-bottom-left-radius: 10px
     padding-bottom: 40px
-    box-shadow: 0px 0px 9px 3px #0000000A
+    
+   
     
 
 .selected
@@ -358,6 +362,10 @@ footer
         cursor: not-allowed
         box-shadow: none
   
+.deleted
+    animation: slide-right  200ms ease-in-out
+    transform:  translateX(100%)
+    
 
 
     
@@ -374,4 +382,13 @@ footer
 
     100%
         transform: translateY(-100%)
+
+@keyframes slide-right 
+    0%
+        transform:  translateX(0)
+        
+    100%
+        transform:  translateX(100%)
+        
+        
 

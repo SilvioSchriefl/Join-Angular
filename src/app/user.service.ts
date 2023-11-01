@@ -2,12 +2,13 @@ import { Injectable, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from './enviroments/enviroments';
 import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  show_contact: boolean = false;
   user: any
   all_users: any
   open_add_user: boolean = false;
@@ -61,27 +62,20 @@ export class UserService {
   }
 
 
-  async getUsers() {
-    const url = environment.baseUrl + 'users/';
-    try {
-      let response = await lastValueFrom(this.http.get(url));
-      this.all_users = response
-    } catch (error) {
-      console.log(error);
-    }
-    await this.getContacts()
-  }
+  async getUsersAndContacts() {
+    const usersUrl = environment.baseUrl + 'users/';
+    const contactsUrl = environment.baseUrl + 'contacts/';
 
-
-  async getContacts() {
-    const url = environment.baseUrl + 'contacts/';
     try {
-      let response = await lastValueFrom(this.http.get(url))
-      this.all_contacts = response
+
+      const usersResponse = await lastValueFrom(this.http.get(usersUrl));
+      const contactsResponse = await lastValueFrom(this.http.get(contactsUrl));
+      this.all_users = usersResponse;
+      this.all_contacts = contactsResponse;
       this.all_contacts.forEach((contact: any) => {
-        this.all_users.push(contact)
+        this.all_users.push(contact);
       });
-      this.sortUserByLetter()
+      this.sortUserByLetter();
     } catch (error) {
       console.log(error);
     }
@@ -110,18 +104,10 @@ export class UserService {
       };
       try {
         await this.saveContact(url, body);
-        this.loadContacts()
       } catch (error: any) {
         this.handleError(error);
       }
     }
-  }
-
-
-  
-  async loadContacts() {
-    const url = environment.baseUrl + 'contacts/'
-    await lastValueFrom(this.http.get(url));
   }
 
 
@@ -161,6 +147,7 @@ export class UserService {
       "user_name": this.user_name,
       "color": this.user_details.color,
       "initials": this.getInitials(this.user_name),
+      "created_by": this.user_details.created_by
     };
     try {
       let response = await lastValueFrom(this.http.put(url, body));
@@ -174,29 +161,29 @@ export class UserService {
       }, 2000);
     } catch (error: any) {
       this.handleError(error)
+      console.log(error);
+      
     }
   }
 
 
   async deleteContact() {
-    let i = this.user_details.index
+    console.log('test');
     
-    const url = environment.baseUrl + 'delete_contact/' + this.user_details.id + '/'
+    let i = this.user_details.index;
+    let url = environment.baseUrl + 'delete_contact/' + this.user_details.id + '/';
     try {
       await lastValueFrom(this.http.delete(url));
-      
       this.request_successful = true;
       setTimeout(() => {
-        this.request_successful = false
-        this.open_delete_user = false
-        console.log(this.user_details, this.all_users)
-        this.all_users.splice(i, 1)
-        this.sortUserByLetter()
-        
+        this.all_users.splice(i, 1);
+        this.request_successful = false;
+        this.open_delete_user = false;
+        this.show_contact = false;
+        this.sortUserByLetter();
       }, 2000);
-    }
-    catch (error: any) {
-      this.handleError(error)
+    } catch (error: any) {
+      this.handleError(error);
     }
   }
 
@@ -212,12 +199,11 @@ export class UserService {
     if (this.user_details.user !== '') {
       let users = this.all_users.filter((user: { user_contact: boolean; }) => user.user_contact === false);
       let creator_id = this.user_details.created_by;
-      let user_index = users.findIndex((user:any) => user.id === creator_id);
+      let user_index = users.findIndex((user: any) => user.id === creator_id);
       this.creator = users[user_index];
-      console.log(this.creator)
-      this.creator_index = this.all_users.findIndex((user:any) => user.email === this.creator.email)
+      this.creator_index = this.all_users.findIndex((user: any) => user.email === this.creator.email)
       if (user_index !== -1) return users[user_index].user_name;
-      else  return 'Benutzer nicht gefunden'; // Oder einen anderen Standardwert 
+      else return 'Benutzer nicht gefunden'; // Oder einen anderen Standardwert 
     }
   }
 }

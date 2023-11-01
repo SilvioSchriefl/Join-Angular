@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <div *ngIf="open_dropdown" class="input_title_hide" (click)="gblFunctions.stopPropagation($event)">
+            <div *ngIf="open_dropdown" class="input_title_hide" (click)="gblFunctions.stopPropagation($event)" [class.add_shadow]="open_dropdown">
                 <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
                     (ngModelChange)="handleValueChange($event)">
                 <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
@@ -109,11 +109,11 @@
         <!--------------------------------------------------------------CATEGORY------------------------------------------------------------------------->
 
 
-        <div class="title">
+        <div class="title" style="margin-bottom: -8px">
             <span>Category</span><span style="color: red">*</span>
             <span class="d_none" [class.show_required]="category_error">This field is required</span>
         </div>
-        <div class="input_title_hide">
+        <div class="input_title_hide" [class.add_shadow]="open_category">
 
             <div class="dropdown_menu" (click)="toggleDropDownMenu('category')" (click)="removeError('category')"
                 (click)="gblFunctions.stopPropagation($event)">
@@ -128,17 +128,17 @@
                     </div>
                 </div>
             </div>
-            <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main">
+            <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main" >
                 <span class="no_contact" *ngIf="taskService.all_categorys.length == 0">No categorys</span>
                 <div class="contacts_scroll_div">
-                    <div (click)="setCategory(i)" class="category_div" (click)="gblFunctions.stopPropagation($event)"
-                        *ngFor="let category of taskService.all_categorys; let i = index">
+                    <div (click)="setCategory(i)" class="category_div" [class.deleted]="deleted && delete_index == i"  (click)="gblFunctions.stopPropagation($event)" *ngFor="let category of taskService.all_categorys; let i = index">
                         {{ category.title }}
                         <div class="delete_category_main">
-                            <div class="category_color" [style.background]="category.color"></div>
-                            <div class="delete" (click)="deleteCategory(i)">
+                           
+                            <div class="delete" (click)="deleteCategory(i)" *ngIf="userService.user.user_id == category.created_by" (click)="gblFunctions.stopPropagation($event)">
                                 <img src="/assets/img/delete.png">
                             </div>
+                            <div class="category_color" [style.background]="category.color"></div>
                         </div>
                     </div>
                 </div>
@@ -206,9 +206,9 @@
             </div>
         </div>
     </div>
-    <div [class.show_request_status]="taskService.request_error"
-        [class.hide_request_status]="!taskService.request_error" class="request_successful"
-        style="background-color: red;">{{taskService.error_type}}</div>
-    <div [class.show_request_status]="taskService.request_successful" class="request_successful">Task created
+    <div [class.show_request_status]="userService.request_error && !userService.open_add_category && !userService.open_add_user"
+        [class.hide_request_status]="!userService.request_error" class="request_successful"
+        style="background-color: red;">{{taskService.userService.error_type}}</div>
+    <div [class.show_request_status]="userService.request_successful && !userService.open_add_category && !userService.open_add_user" class="request_successful">Task created
         successfully</div>
 </div>

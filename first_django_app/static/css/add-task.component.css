@@ -30,7 +30,21 @@
   flex-direction: column;
 }
 
+.input_title_hide {
+  border-radius: 10px;
+  gap: 8px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.add_shadow {
+  box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.0392156863);
+}
+
 .title {
+  position: relative;
   display: flex;
 }
 
@@ -127,7 +141,7 @@
 }
 
 .send_buttons {
-  top: 180px;
+  top: 530px;
   position: absolute;
   right: 0;
   display: flex;
@@ -136,7 +150,7 @@
 
 .required {
   position: absolute;
-  top: 210px;
+  top: 260px;
   font-size: 16px;
   z-index: 0;
 }
@@ -146,12 +160,13 @@
 }
 
 .contacts_scroll_div {
+  overflow-x: hidden;
   box-sizing: border-box;
   z-index: 0;
   padding-top: 25px;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
   height: calc(100% - 30px);
 }
 
@@ -166,7 +181,6 @@
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   padding-bottom: 40px;
-  box-shadow: 0px 0px 9px 3px rgba(0, 0, 0, 0.0392156863);
 }
 
 .selected {
@@ -314,4 +328,127 @@ footer {
 }
 .delete:hover img {
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(339deg) brightness(105%) contrast(101%);
+}
+
+.dropdown_with_color {
+  display: flex;
+  gap: 10px;
+}
+
+.subtask_main {
+  max-height: 100px;
+}
+
+.subtask_scroll {
+  height: 100%;
+  overflow: auto;
+}
+
+.subtask {
+  border-radius: 10px;
+  padding: 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F6F7F8;
+  transition: 150ms;
+}
+.subtask:hover {
+  background-color: #EEEEEE;
+}
+
+.subtask_img {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.subtask_img img {
+  cursor: pointer;
+}
+
+.input {
+  position: relative;
+}
+.input input {
+  height: 32px;
+  padding: 4px, 16px, 4px, 16px;
+  border-radius: 0px;
+  width: 100%;
+  border-bottom: 1px solid #29ABE2;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  justify: space-between;
+}
+
+.subtask_img_input {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.subtask_img_input img {
+  cursor: pointer;
+}
+
+.show_element {
+  animation: slide-up 0.2s ease-in-out;
+}
+
+.hide_element {
+  display: none;
+}
+
+.d_none {
+  display: none;
+}
+
+.show_required {
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  top: 5px;
+  left: 120px;
+  display: flex;
+}
+
+.invalid {
+  background-color: #686868;
+}
+.invalid:hover {
+  background-color: #686868;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.deleted {
+  animation: slide-right 200ms ease-in-out;
+  transform: translateX(100%);
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+@keyframes slide-down {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }/*# sourceMappingURL=add-task.component.css.map */
