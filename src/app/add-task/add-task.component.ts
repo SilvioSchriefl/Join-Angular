@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
 import { TaskService } from '../task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-task',
@@ -10,10 +11,9 @@ import { TaskService } from '../task.service';
 })
 export class AddTaskComponent implements OnInit {
 
- 
+
 
   description: string = '';
-  title: string = ''
   date: string = ''
   min_date: string = ''
   prio: string = ''
@@ -33,6 +33,8 @@ export class AddTaskComponent implements OnInit {
   edit_subtask: boolean = false
   edited_subtask_title: string = ''
   task_title: string = ''
+  title_error: boolean = false
+  category_error: boolean = false
 
 
 
@@ -40,9 +42,9 @@ export class AddTaskComponent implements OnInit {
     public userService: UserService,
     public gblFunctions: GlobalFunctionsService,
     public taskService: TaskService,
-    private elRef: ElementRef
-   
-  ) {}
+    public router: Router,
+
+  ) { }
 
   async ngOnInit() {
     await this.taskService.getCategorys()
@@ -54,8 +56,16 @@ export class AddTaskComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
-    if (this.open_dropdown) this.open_dropdown = false;
-    if (this.open_category) this.open_category = false;
+    if (this.open_dropdown) {
+      if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
+      else this.rotationValue = 'rotate(0deg)'
+      this.open_dropdown = false;
+    }
+    if (this.open_category) {
+      if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
+      else this.rotationValueC = 'rotate(0deg)'
+      this.open_category = false
+    }
   }
 
 
@@ -196,6 +206,9 @@ export class AddTaskComponent implements OnInit {
 
 
   createTask() {
+    if (this.task_title.length === 0 ) this.title_error = true 
+    if (this.selected_category.length === 0 ) this.category_error = true 
+    if (this.selected_category.length === 0 || this.task_title.length == 0 ) return
     let body = {
       title: this.task_title,
       description: this.description,
@@ -209,5 +222,13 @@ export class AddTaskComponent implements OnInit {
     }
     this.taskService.addTask(body)
     this.clearAll()
+    setTimeout(() => this.router.navigateByUrl('/main/board') , 2000)
+    
+  }
+
+
+  removeError(error:string) {
+     if(error == 'title') this.title_error = false
+    if (error == 'category') this.category_error = false
   }
 }

@@ -49,10 +49,16 @@
 
 .name
     display: flex
-    flex-direction: column
+    align-items: center
     font-size: 20px
-    span:nth-child(2)
-        font-size: 12px
+
+.user_type
+    display: flex
+    font-size: 20px
+    margin-left: 5px
+    div
+        color: #29ABE2
+        
 
 .contact_div
     transition: 150ms
@@ -200,6 +206,13 @@
 .show_contact_details
     display: flex
     animation: slide_in 0.4s ease-in-out
+
+.creator
+    color: #29ABE2
+    display: flex
+    align-items: center
+    gap: 5px
+    cursor: pointer
 
 @keyframes slide_in
     0%

@@ -30,8 +30,9 @@ export class ContactsComponent implements OnInit {
       initials: '',
       color: '',
       id: '',
-      contact: false,
-      index: 0
+      user_contact: false,
+      index: 0,
+      created_by: ''
     }
   }
 
@@ -60,9 +61,9 @@ export class ContactsComponent implements OnInit {
     this.userService.user_details.color = this.userService.all_users[i].color
     this.userService.user_details.phone = this.userService.all_users[i].phone
     this.userService.user_details.id = this.userService.all_users[i].id
-    this.userService.user_details.contact = this.userService.all_users[i].contact
+    this.userService.user_details.user_contact = this.userService.all_users[i].user_contact
+    this.userService.user_details.created_by = this.userService.all_users[i].created_by
     this.userService.user_details.index = i
-    console.log(this.userService.user_details)
   }
 
 
@@ -79,4 +80,9 @@ export class ContactsComponent implements OnInit {
       if (popup == 'delete') this.userService.open_delete_user = true
     }
   }  
+
+
+  showCreator() {
+    this.showContact(this.userService.creator_index)
+  }
 }

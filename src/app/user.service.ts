@@ -24,6 +24,8 @@ export class UserService {
   user_name_empty: boolean = false;
   all_contacts: any = [];
   category_title: string = ''
+  creator: any = []
+  creator_index: number = 0
   user_details = {
     user: '',
     email: '',
@@ -31,8 +33,9 @@ export class UserService {
     initials: '',
     color: '',
     id: '',
-    contact: false,
-    index: 0
+    user_contact: false,
+    index: 0,
+    created_by: ''
   }
 
 
@@ -42,7 +45,7 @@ export class UserService {
 
 
   setUsercolor() {
-    let colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B']
+    let colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FF0000', '#00FF00', '#A52A2A', '#808080', '#FFC0CB', '#800080', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B']
     let random_index = Math.floor(Math.random() * colors.length);
     return colors[random_index]
   }
@@ -115,6 +118,14 @@ export class UserService {
   }
 
 
+  
+  async loadContacts() {
+    const url = environment.baseUrl + 'contacts/'
+    await lastValueFrom(this.http.get(url));
+  }
+
+
+
   async saveContact(url: string, body: { email: string; phone: string; user_name: string; color: string; initials: string; }) {
     let response = await lastValueFrom(this.http.post(url, body));
     this.request_successful = true;
@@ -138,12 +149,6 @@ export class UserService {
     }
     this.request_error = true;
     setTimeout(() => this.request_error = false, 2000);
-  }
-
-
-  async loadContacts() {
-    const url = environment.baseUrl + 'contacts/'
-    await lastValueFrom(this.http.get(url));
   }
 
 
@@ -175,15 +180,19 @@ export class UserService {
 
   async deleteContact() {
     let i = this.user_details.index
-    const url = environment.baseUrl + 'contact/' + this.user_details.id + '/'
+    
+    const url = environment.baseUrl + 'delete_contact/' + this.user_details.id + '/'
     try {
       await lastValueFrom(this.http.delete(url));
+      
       this.request_successful = true;
       setTimeout(() => {
         this.request_successful = false
         this.open_delete_user = false
+        console.log(this.user_details, this.all_users)
         this.all_users.splice(i, 1)
         this.sortUserByLetter()
+        
       }, 2000);
     }
     catch (error: any) {
@@ -196,6 +205,20 @@ export class UserService {
     this.user_details.user = response.user_name
     this.user_details.email = response.email
     this.user_details.phone = response.phone
+  }
+
+
+  getUserName() {
+    if (this.user_details.user !== '') {
+      let users = this.all_users.filter((user: { user_contact: boolean; }) => user.user_contact === false);
+      let creator_id = this.user_details.created_by;
+      let user_index = users.findIndex((user:any) => user.id === creator_id);
+      this.creator = users[user_index];
+      console.log(this.creator)
+      this.creator_index = this.all_users.findIndex((user:any) => user.email === this.creator.email)
+      if (user_index !== -1) return users[user_index].user_name;
+      else  return 'Benutzer nicht gefunden'; // Oder einen anderen Standardwert 
+    }
   }
 }
 

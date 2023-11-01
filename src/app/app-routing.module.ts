@@ -8,6 +8,7 @@ import { RouteGuardService } from './route-guard.service';
 import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { BoardComponent } from './board/board.component';
 
 const routes: Routes = [
   {path: '', component:StartScreenComponent, children :[
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path:'main', component:MainComponent,  canActivate: [RouteGuardService], children : [
     {path:'summary', component:SummaryComponent},
     {path:'contacts', component:ContactsComponent},
-    {path:'add_task', component:AddTaskComponent}
+    {path:'add_task', component:AddTaskComponent},
+    {path:'board', component:BoardComponent}
   ]}
 ];
 

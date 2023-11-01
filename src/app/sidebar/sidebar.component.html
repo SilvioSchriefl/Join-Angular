@@ -17,7 +17,7 @@
             <span>Add Task</span>
         </div>
     </div>
-    <div class="link" [class.link_active]="route.url === '/main/board'">
+    <div class="link" [class.link_active]="route.url === '/main/board'" (click)="navigateTo('board')">
         <div class="link_child">
             <img src="/assets/img/board.png" alt="">
             <span>Board</span>

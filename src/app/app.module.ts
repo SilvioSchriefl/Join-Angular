@@ -19,6 +19,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PopupsComponent } from './popups/popups.component';
 import { AddTaskComponent } from './add-task/add-task.component';
+import { BoardComponent } from './board/board.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { AddTaskComponent } from './add-task/add-task.component';
     ContactsComponent,
     PopupsComponent,
     AddTaskComponent,
+    BoardComponent,
 
   ],
   imports: [

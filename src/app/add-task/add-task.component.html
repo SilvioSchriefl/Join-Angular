@@ -5,8 +5,10 @@
         <!---------------------------------------------------------------------TITLE---------------------------------------------------------->
 
         <div class="input_title">
+            <span class="d_none" [class.show_required]="title_error" >This field is required</span>
             <div class="title"><span>Title</span><span style="color: red">*</span></div>
-            <input type="text" placeholder="Enter a title" [(ngModel)]="task_title">
+            <input type="text" placeholder="Enter a title" [(ngModel)]="task_title" (focus)="removeError('title')">
+        
         </div>
 
         <!---------------------------------------------------------------DESCRIPTION---------------------------------------------------------->
@@ -34,8 +36,8 @@
                 <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
-                <div class="contact_main" *ngIf="open_dropdown" (click)="gblFunctions.stopPropagation($event)"
-                    [class.show_element]="open_dropdown" [class.hide_element]="!open_dropdown">
+                <div class="contact_main" (click)="gblFunctions.stopPropagation($event)"
+                    [class.show_element]="open_dropdown">
                     <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
                     <div class="contacts_scroll_div">
                         <div class="contact_div" [class.selected]="contact.selected"
@@ -80,7 +82,7 @@
 
     <div class="task_side">
         <div class="input_title">
-            <div class="title"><span>Due Date</span><span style="color: red">*</span></div>
+            <div class="title"><span>Due Date</span></div>
             <input type="date" [(ngModel)]="date" [min]="min_date">
         </div>
 
@@ -106,9 +108,14 @@
 
         <!--------------------------------------------------------------CATEGORY------------------------------------------------------------------------->
 
-        <div class="input_title">
-            <div class="title"><span>Category</span><span style="color: red">*</span></div>
-            <div class="dropdown_menu" (click)="toggleDropDownMenu('category')"
+
+        <div class="title">
+            <span>Category</span><span style="color: red">*</span>
+            <span class="d_none" [class.show_required]="category_error">This field is required</span>
+        </div>
+        <div class="input_title_hide">
+
+            <div class="dropdown_menu" (click)="toggleDropDownMenu('category')" (click)="removeError('category')"
                 (click)="gblFunctions.stopPropagation($event)">
                 <span *ngIf="selected_category.length == 0">Select task category</span>
                 <span>{{selected_category.title}}</span>
@@ -120,13 +127,11 @@
                         <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValueC">
                     </div>
                 </div>
-
             </div>
-
-            <div *ngIf="open_category" class="contact_main">
+            <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main">
                 <span class="no_contact" *ngIf="taskService.all_categorys.length == 0">No categorys</span>
                 <div class="contacts_scroll_div">
-                    <div (click)="setCategory(i)" class="category_div"
+                    <div (click)="setCategory(i)" class="category_div" (click)="gblFunctions.stopPropagation($event)"
                         *ngFor="let category of taskService.all_categorys; let i = index">
                         {{ category.title }}
                         <div class="delete_category_main">
@@ -145,11 +150,12 @@
                 </footer>
             </div>
 
+
         </div>
 
         <!-----------------------------------------------------------------SUBTASK------------------------------------------------------------------------>
-
-        <div class="input_title">
+        
+        <div class="input_title" [class.d_none]="open_category">
             <span>Subtasks</span>
             <input type="text" placeholder="Add subtask" [(ngModel)]="subtask_title">
             <div class="add" (click)="addSubtask()">
@@ -184,21 +190,19 @@
                                 </div>
                             </div>
                         </div>
-
                     </li>
-
                 </ul>
             </div>
 
 
             <!-------------------------------------------------------------------CREATE BUTTON--------------------------------------------------------------->
 
-            <div class="send_buttons">
-                <div (click)="clearAll()" class="white_button">Clear</div>
-                <div class="blue_button" (click)="createTask()">
-                    Create Task
-                    <img src="/assets/img/check.png" alt="">
-                </div>
+        </div>
+        <div class="send_buttons">
+            <div (click)="clearAll()" class="white_button">Clear</div>
+            <div class="blue_button" (click)="createTask()" [class.invalid]="task_title.length == 0 || selected_category.length == 0">
+                Create Task
+                <img src="/assets/img/check.png" alt="">
             </div>
         </div>
     </div>
@@ -207,3 +211,4 @@
         style="background-color: red;">{{taskService.error_type}}</div>
     <div [class.show_request_status]="taskService.request_successful" class="request_successful">Task created
         successfully</div>
+</div>

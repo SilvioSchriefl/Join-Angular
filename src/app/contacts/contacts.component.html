@@ -21,7 +21,8 @@
                     <div class="user_email_name">
                         <div class="name">
                             <span>{{user.user_name}}</span>
-                            <span *ngIf="!user.contact">(Registered user)</span>
+                            <span class="user_type" *ngIf="!user.user_contact">(<div>R</div>)</span> 
+                            <span class="user_type" *ngIf="user.user_contact">(<div>C</div>)</span>
                         </div>
                         <div class="email">{{user.email}}</div>
                     </div>
@@ -46,15 +47,16 @@
                 
 
                     <div class="edit_delete">
-                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.contact">
+                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
                             <img src="/assets/img/edit.png" alt="">
                             <span>Edit</span>
                         </div>
-                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.contact">
+                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
                             <img src="/assets/img/delete.png" alt="">
                             <span>Delete</span>
                         </div>
-                        <span *ngIf="!userService.user_details.contact">Registered user</span>
+                        <span *ngIf="!userService.user_details.user_contact">Registered user</span>
+                        <span *ngIf="userService.user_details.user_contact">Contact</span>
                     </div>
                 </div>
             </div>
@@ -69,6 +71,14 @@
                     <span>Phone</span>
                    <a href="tel:{{userService.user_details.phone}}" style="text-decoration: none;">{{userService.user_details.phone}}</a>
                     <span style="font-size: 16px" *ngIf="!userService.user_details.phone">No number assigned</span>
+                </div>
+                <div *ngIf="userService.user_details.user_contact" class="email_phone">
+                    <span>Contact created by :</span>
+                    <span class="creator" (click)="showCreator()">
+                        {{userService.getUserName()}}
+                        <div *ngIf="userService.user.email == userService.creator.email" >(you)</div>
+                    </span> 
+                   
                 </div>
             </div>
         </div>
