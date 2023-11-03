@@ -20,6 +20,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { PopupsComponent } from './popups/popups.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { BoardComponent } from './board/board.component';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule
 
   ],
   providers: [

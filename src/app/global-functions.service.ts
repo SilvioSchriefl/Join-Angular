@@ -7,7 +7,7 @@ import { UserService } from './user.service';
 export class GlobalFunctionsService  {
 
   menu_open: boolean = false;
- 
+  open_task_details: boolean = false
   
   
 

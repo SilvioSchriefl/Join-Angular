@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { GlobalFunctionsService } from '../global-functions.service';
+
 
 @Component({
   selector: 'app-board',
@@ -15,10 +18,16 @@ export class BoardComponent implements OnInit {
   task_status_done: any = []
   task_status_await: any = []
   subtask_progress: string = ''
+  all_board_tasks = []
+  drag_start: boolean = false
+  detail_index: number = 0
+  detail_array: any[] = []
+ 
 
   constructor(
     public taskService: TaskService,
-    public userService: UserService
+    public userService: UserService,
+    public globalService: GlobalFunctionsService
   ) {
 
   }
@@ -29,7 +38,6 @@ export class BoardComponent implements OnInit {
     await this.userService.getUsersAndContacts()
     this.filterTaskbyStatus()
     console.log(this.taskService.all_tasks);
-
   }
 
 
@@ -41,44 +49,100 @@ export class BoardComponent implements OnInit {
     console.log(this.task_status_todo);
   }
 
-  getSubtaskProgress(i: number) {
+
+  getSubtaskProgress(i: number, status: string) {
+    let array = this.getArray(status)
     let dones: any[] = []
     let dones_true = []
-    this.task_status_todo[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
+    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
     dones_true = dones.filter((done: any) => done === true)
     return dones_true.length
   }
 
 
-  getSubtaskProgressPercent(i: number) {
+  getSubtaskProgressPercent(i: number, status:string) {
+    let array = this.getArray(status)
     let progress_in_percent
     let dones: any[] = []
     let dones_true = []
-    this.task_status_todo[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
+    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
     dones_true = dones.filter((done: any) => done === true)
-    progress_in_percent = dones_true.length * 100 / this.task_status_todo[i].subtasks.length + '%';
+    progress_in_percent = dones_true.length * 100 / array[i].subtasks.length + '%';
     return progress_in_percent
   }
 
 
-  getAssignendContacts(i: number) {
+  getAssignendContacts(i: number, status:string) {
+    let array = this.getArray(status)
     let registerd_users = this.userService.all_users.filter((user: any) => user.user_contact  === false);
     let assignend_contacts: any[] = [];
-    let contact_ids = this.taskService.all_tasks[i].contacts;
-    let user_ids = this.taskService.all_tasks[i].custom_users;
+    let contact_ids = array[i].contacts;
+    let user_ids = array[i].custom_users;
 
     contact_ids.forEach((id: any) => {
         let contact = this.userService.all_contacts.find((contact: any) => +contact.id === id);
         assignend_contacts.push(contact);
     });
-
     user_ids.forEach((id: any) => {
         let contact = registerd_users.find((contact: any) => +contact.id === id);
         assignend_contacts.push(contact);
     });
-
-    console.log(assignend_contacts);
     return assignend_contacts;
   }
+
+
+  getNumberOfContacts(i:number, status:string){
+    let array = this.getArray(status)
+    let a = array[i].custom_users.length
+    let b = array[i].contacts.length
+    return a + b - 2
+  }
+
+
+  onDrop(event:any) {
+    console.log('abgelegt');
+    
+  }
+
+  onItemDrop(event: CdkDragDrop<any>, status:string) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+      event.container.data[event.currentIndex].status = status;
+      this.taskService.updateTask(event.container.data[event.currentIndex].id, status)
+    }
+  }
+
+
+  getArray(status:string) {
+    if (status == 'todo')  return this.task_status_todo
+    if (status == 'progress')  return this.task_status_in_progress
+    if (status == 'await') return this.task_status_await
+    if (status == 'done')  return this.task_status_done
+  }
+
+
+  onDragEnded(event: CdkDragEnd) {
+    this.drag_start = false;
+  }
+
+
+  onDragStarted(event: CdkDragStart) {
+  this.drag_start = true
+  }
+
+
+  openTaskDetail(i:number, status:string){
+    this.detail_index = i
+    this.detail_array = this.getArray(status)
+    this.globalService.open_task_details = true
+  }
 }
+
 

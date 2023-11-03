@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
 import { TaskService } from '../task.service';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 @Component({
   selector: 'app-popups',
@@ -15,7 +16,8 @@ export class PopupsComponent {
   constructor(
     private auth: AuthService,
     public userService: UserService,
-    public taskService: TaskService
+    public taskService: TaskService,
+    public globalService: GlobalFunctionsService
   ) { }
 
  

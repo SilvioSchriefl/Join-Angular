@@ -29,15 +29,15 @@ export class TaskService {
       let response = await lastValueFrom(this.http.post(url, body));
       this.all_categorys.push(response)
       this.userService.request_successful = true;
-      setTimeout(() =>{
+      setTimeout(() => {
         this.userService.request_successful = false
         this.userService.open_add_category = false
-      } , 2000); 
+      }, 2000);
     }
     catch (error: any) {
       this.userService.request_error = true;
       setTimeout(() => this.userService.request_error = false, 2000);
-      if(error.error.detail) this.userService.error_type = error.error.detail
+      if (error.error.detail) this.userService.error_type = error.error.detail
       else this.userService.error_type = 'Error creating category'
     }
   }
@@ -72,15 +72,15 @@ export class TaskService {
       let response = await lastValueFrom(this.http.post(url, body));
       this.all_tasks.push(response)
       this.userService.request_successful = true;
-      setTimeout(() => this.userService.request_successful = false, 3000); 
+      setTimeout(() => this.userService.request_successful = false, 3000);
     }
-    catch (error){
+    catch (error) {
       console.log(error);
       this.userService.request_error = true;
       setTimeout(() => this.userService.request_error = false, 3000);
     }
     console.log(this.all_tasks);
-    
+
   }
 
 
@@ -91,7 +91,21 @@ export class TaskService {
     }
     catch (error) {
       console.log(error);
-      
     }
-}
+  }
+
+
+  async updateTask(id: string, status: string) {
+    let url = environment.baseUrl + 'task/'
+    let body = {
+      id: id,
+      status: status,
+    }
+    try {
+      await lastValueFrom(this.http.patch(url, body))
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
 }
