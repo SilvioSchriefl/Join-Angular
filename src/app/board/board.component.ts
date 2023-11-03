@@ -20,8 +20,7 @@ export class BoardComponent implements OnInit {
   subtask_progress: string = ''
   all_board_tasks = []
   drag_start: boolean = false
-  detail_index: number = 0
-  detail_array: any[] = []
+  detail_array: any = []
  
 
   constructor(
@@ -37,7 +36,6 @@ export class BoardComponent implements OnInit {
     await this.taskService.getAllTasks()
     await this.userService.getUsersAndContacts()
     this.filterTaskbyStatus()
-    console.log(this.taskService.all_tasks);
   }
 
 
@@ -46,7 +44,6 @@ export class BoardComponent implements OnInit {
     this.task_status_in_progress = this.taskService.all_tasks.filter((task: any) => task.status === 'progress')
     this.task_status_await = this.taskService.all_tasks.filter((task: any) => task.status === 'await')
     this.task_status_done = this.taskService.all_tasks.filter((task: any) => task.status === 'done')
-    console.log(this.task_status_todo);
   }
 
 
@@ -139,9 +136,11 @@ export class BoardComponent implements OnInit {
 
 
   openTaskDetail(i:number, status:string){
-    this.detail_index = i
-    this.detail_array = this.getArray(status)
+    let array = this.getArray(status)
+    this.detail_array = array[i]
     this.globalService.open_task_details = true
+    console.log(this.detail_array);
+    
   }
 }
 
