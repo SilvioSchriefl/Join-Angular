@@ -11,6 +11,7 @@ export class TaskService {
 
   all_categorys: any = [];
   all_tasks: any = [];
+  
 
   constructor(
     public userService: UserService,
@@ -95,14 +96,10 @@ export class TaskService {
   }
 
 
-  async updateTask(id: string, status: string) {
+  async updateTask(body: any) {
     let url = environment.baseUrl + 'task/'
-    let body = {
-      id: id,
-      status: status,
-    }
     try {
-      await lastValueFrom(this.http.patch(url, body))
+       await lastValueFrom(this.http.patch(url, body))
     }
     catch (error) {
       console.log(error);

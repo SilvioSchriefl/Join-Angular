@@ -44,8 +44,7 @@
                             *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
                             <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
                             {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
-                            <input type="checkbox" class="checkbox" [checked]="contact.selected"
-                                (change)="handleValueChange($event)">
+                            <input type="checkbox" class="checkbox" [checked]="contact.selected">     
                         </div>
                     </div>
                     <footer>

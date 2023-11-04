@@ -82,20 +82,14 @@ export class AddTaskComponent implements OnInit {
 
   selectContact(i: number) {
     this.handleTaskView(i)
-    let array = []
     let contact = this.userService.all_users[i];
-    
-    
-    if (contact.user_contact) array = this.selected_contacts
-    else array = this.selected_users
-    if (array.includes(contact)) {
-      const index = array.indexOf(contact);
-      array.splice(index, 1);
+    if (this.selected_users.includes(contact)) {
+      let index = this.selected_users.indexOf(contact);
+      this.selected_users.splice(index, 1);
     } else {
-      array.push(contact.id);
+      this.selected_users.push(contact.email);
     }
-    console.log(this.selected_contacts);
-    
+    console.log(this.selected_users);
   }
 
 
@@ -183,8 +177,6 @@ export class AddTaskComponent implements OnInit {
       }
       this.subtasks.push(subtask)
       this.subtask_title = ''
-      console.log(this.subtasks);
-
     }
   }
 
@@ -228,8 +220,7 @@ export class AddTaskComponent implements OnInit {
       description: this.description,
       due_date: this.date,
       status: 'todo',
-      custom_users: this.selected_users,
-      contacts: this.selected_contacts,
+      assigned_emails: this.selected_users,
       category_title: this.selected_category.title,
       category_color: this.selected_category.color,
       subtasks: this.subtasks,

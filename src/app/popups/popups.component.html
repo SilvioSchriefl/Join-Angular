@@ -1,4 +1,4 @@
-<div class="shadow" [class.show_shadow]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category || globalService.open_task_details ">
+<div class="shadow" [class.show_shadow]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
     <div class="popup_main" (click)="stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
         <div class="blue_side">
             <img src="/assets/img/Capa 2.png">
