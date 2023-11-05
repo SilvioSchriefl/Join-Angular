@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class BoardComponent implements OnInit {
 
-  search_text: string = ''
+  task_search_value: string = ''
   task_status_in_progress: any = []
   task_status_todo: any = []
   task_status_done: any = []
@@ -23,7 +23,6 @@ export class BoardComponent implements OnInit {
   drag_start: boolean = false
   detail_task: any = []
   checkBox_value: boolean = false
-  open_edit_task: boolean = false
   open_dropdown: boolean = false
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
@@ -31,6 +30,8 @@ export class BoardComponent implements OnInit {
   selected_users_list: any = []
   subtask_title: string = ''
   edited_subtask_title: string = ''
+  deleted: boolean = false
+  delete_index!: number
 
 
 
@@ -46,6 +47,9 @@ export class BoardComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.taskService.getTasks().subscribe((tasks) => {
+      this.filterTaskbyStatus()
+    });
     await this.taskService.getAllTasks()
     await this.userService.getUsersAndContacts()
     this.filterTaskbyStatus()
@@ -72,13 +76,12 @@ export class BoardComponent implements OnInit {
 
   getSubtaskProgressPercent(i: number, status: string) {
     let array = this.getArray(status)
-    let progress_in_percent
     let dones: any[] = []
     let dones_true = []
     array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
     dones_true = dones.filter((done: any) => done === true)
-    progress_in_percent = dones_true.length * 100 / array[i].subtasks.length + '%';
-    return progress_in_percent
+    if (dones.length > 0) return dones_true.length * 100 / array[i].subtasks.length + '%';
+    else return 0
   }
 
 
@@ -104,7 +107,6 @@ export class BoardComponent implements OnInit {
 
 
   selectContact(email: string, i: number) {
-
     let contact_selected = this.selected_users_list[i].selected
     if (contact_selected) {
       this.selected_users_list[i].selected = false
@@ -116,9 +118,6 @@ export class BoardComponent implements OnInit {
       this.selected_user_emails.push(email);
     }
   }
-
-
-
 
 
   getNumberOfContacts(i: number, status: string) {
@@ -170,6 +169,7 @@ export class BoardComponent implements OnInit {
   openTaskDetail(i: number, status: string) {
     let array = this.getArray(status)
     this.detail_task[0] = array[i]
+    this.detail_task[0].array_index = i
     this.globalService.open_task_details = true
     console.log(this.detail_task);
   }
@@ -189,30 +189,25 @@ export class BoardComponent implements OnInit {
     let value = this.detail_task[0].subtasks[i].done
     if (value) this.detail_task[0].subtasks[i].done = false
     else this.detail_task[0].subtasks[i].done = true
-    let body = {
-      id: this.detail_task[0].id,
-      subtasks: this.detail_task[0].subtasks
-    }
-    this.taskService.updateTask(body)
   }
 
 
   openEditTask() {
-    this.globalService.open_task_details = false
-    this.open_edit_task = true
+
+    this.globalService.open_edit_task = true
     this.selected_user_emails = this.detail_task[0].assigned_emails
     this.getContactsForEditView()
   }
 
 
   backToTaskDetails() {
-    this.globalService.open_task_details = true
-    this.open_edit_task = false
+
+    this.globalService.open_edit_task = false
   }
 
 
   setPrio(prio: string) {
-
+    this.detail_task[0].prio = prio
   }
 
 
@@ -225,10 +220,20 @@ export class BoardComponent implements OnInit {
   }
 
 
-  handleValueChangeOnSearch(value: any) {
-    this.selected_users_list = this.userService.all_users.filter((user: { user_name: string }) =>
-      user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
-    );
+  async handleValueChangeOnSearch(value: any, object: string) {
+    if (object == 'contact') {
+      this.selected_users_list = this.userService.all_users.filter((user: { user_name: string }) =>
+        user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
+      );
+    }
+    if (object == 'task') {
+      this.taskService.all_tasks = this.taskService.all_tasks.filter((task: any) =>
+        task.title.toLowerCase().includes(this.task_search_value.toLowerCase())
+      );
+      if (this.task_search_value.length == 0) await this.taskService.getAllTasks()
+      this.filterTaskbyStatus()
+    }
+
   }
 
 
@@ -238,14 +243,20 @@ export class BoardComponent implements OnInit {
         title: this.subtask_title,
         done: false
       }
-      //this.subtasks.push(subtask)
+      this.detail_task[0].subtasks.push(subtask)
       this.subtask_title = ''
     }
   }
 
 
   deleteSubtask(i: number) {
-    //this.subtasks.splice(i, 1)
+    this.delete_index = i
+    this.deleted = true
+    setTimeout(() => {
+      this.detail_task[0].subtasks.splice(i, 1)
+      this.deleted = false
+    }, 200)
+
   }
 
 
@@ -254,17 +265,76 @@ export class BoardComponent implements OnInit {
   }
 
 
+  closeEditSubtask(i: number) {
+    this.detail_task[0].subtasks[i].selected = false
+  }
+
+
   openEditSubtask(i: number) {
-    //this.subtasks[i].selected = true
-    //this.edited_subtask_title = this.subtasks[i].title
+    this.detail_task[0].subtasks[i].selected = true
+    this.edited_subtask_title = this.detail_task[0].subtasks[i].title
   }
 
 
   saveEditSubtask(i: number) {
-    //this.subtasks[i].title = this.edited_subtask_title
-    //this.subtasks[i].selected = false
+    this.detail_task[0].subtasks[i].title = this.edited_subtask_title
+    this.detail_task[0].subtasks[i].selected = false
   }
 
+
+  async updateEditTask() {
+    let body = {
+      assigned_emails: this.selected_user_emails,
+      title: this.detail_task[0].title,
+      description: this.detail_task[0].description,
+      due_date: this.detail_task[0].due_date,
+      prio: this.detail_task[0].prio,
+      subtasks: this.detail_task[0].subtasks,
+      id: this.detail_task[0].id
+    }
+    await this.taskService.updateTask(body)
+    if (this.taskService.request_successful) {
+      setTimeout(() => {
+        this.globalService.open_edit_task = false
+        this.globalService.open_task_details = false
+      }, 2000)
+    }
+  }
+
+
+  openAddContact() {
+    this.userService.user_name = ''
+    this.userService.user_email = ''
+    this.userService.user_phone = ''
+    this.userService.open_add_user = true
+  }
+
+
+  async deleteTask(id: string, status: string) {
+    let array = this.getArray(status)
+    let index = this.detail_task[0].array_index
+    array.splice(index, 1)
+    await this.taskService.deleteTask(id)
+    if (this.taskService.request_successful) {
+      this.deleted = true
+      setTimeout(() => {
+        this.globalService.open_task_details = false
+        this.deleted = false
+      }, 2000)
+    }
+  }
+
+
+  async clearSearchInputField() {
+    this.task_search_value = ''
+    await this.taskService.getAllTasks()
+    this.filterTaskbyStatus()
+  }
+
+  toggleAddTaskPopUp(status: string) {
+    setTimeout(() => this.taskService.task_status = status, 200)
+    this.globalService.open_add_task = !this.globalService.open_add_task
+  }
 }
 
 

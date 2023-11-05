@@ -7,6 +7,7 @@
 }
 
 .task_main {
+  margin-top: 50px;
   position: absolute;
   left: calc(50% - 490px);
   top: 10%;
@@ -168,6 +169,8 @@
   flex-direction: column;
   overflow-y: auto;
   height: calc(100% - 30px);
+  padding-left: 17px;
+  padding-right: 17px;
 }
 
 .contact_main {
@@ -176,7 +179,7 @@
   box-sizing: border-box;
   z-index: 1;
   margin-top: -16px;
-  max-height: 300px;
+  max-height: 265px;
   background-color: #fff;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -237,6 +240,7 @@
 }
 
 .selected_contacts {
+  flex-wrap: wrap;
   position: absolute;
   top: 90px;
   left: 15px;
@@ -322,6 +326,9 @@ footer {
   border-radius: 100%;
   transition: 150ms;
   padding: 3px;
+}
+.delete img {
+  width: 14px;
 }
 .delete:hover {
   background: #29ABE2;

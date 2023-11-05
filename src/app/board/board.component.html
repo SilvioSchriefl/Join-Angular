@@ -3,13 +3,16 @@
         <div class="headline">Board</div>
         <div class="search">
             <div class="input">
-                <input type="text" placeholder="Find task" [(ngModel)]="search_text">
+                <input type="text" placeholder="Find task" [(ngModel)]="task_search_value" (ngModelChange)="handleValueChangeOnSearch($event, 'task')">
                 <div class="input_img">
                     <img src="/assets/img/Vector 3.png" alt="">
-                    <img src="/assets/img/search.png" alt="">
+                    <img *ngIf="task_search_value.length == 0" src="/assets/img/search.png" alt="">
+                    <div  *ngIf="task_search_value.length > 0"  class="close close_search" (click)="clearSearchInputField()">
+                        <img src="/assets/img/close.png">
+                    </div>
                 </div>
             </div>
-            <div class="blue_button">
+            <div class="blue_button" (click)="toggleAddTaskPopUp('todo')" (click)="globalService.stopPropagation($event)">
                 Add task
                 <img src="/assets/img/add (1).png">
             </div>
@@ -22,18 +25,16 @@
         <div class="task_status">
             <div class="status_text">
                 To do
-                <img src="/assets/img/plus-button-darkblue.png">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('todo')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="task_status_todo.length == 0 && !drag_start" class="empty_status">No tasks to do</div>
-
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="task_status_todo"
                 (cdkDropListDropped)="onItemDrop($event, 'todo' )" id="todo"
                 [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
-
-                <div class="task_main" *ngFor="let task of task_status_todo; let i = index" cdkDrag
-                    (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
+                <div (click)="openTaskDetail(i, 'todo')" class="task_main"
+                    (click)="globalService.stopPropagation($event)" *ngFor="let task of task_status_todo; let i = index"
+                    cdkDrag (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                     <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>
-
                     <span>{{task.title}}</span>
                     <span>{{task.description}}</span>
                     <div class="subtask">
@@ -67,14 +68,16 @@
         <div class="task_status">
             <div class="status_text">
                 In progress
-                <img src="/assets/img/plus-button-darkblue.png">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('progress')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="task_status_in_progress.length == 0 && !drag_start" class="empty_status">No tasks in progress
             </div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="task_status_in_progress"
                 (cdkDropListDropped)="onItemDrop($event, 'progress')" id="progress"
                 [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
-                <div class="task_main" *ngFor="let task of task_status_in_progress; let i = index" cdkDrag
+                <div (click)="openTaskDetail(i, 'progress')" class="task_main"
+                    (click)="globalService.stopPropagation($event)"
+                    *ngFor="let task of task_status_in_progress; let i = index" cdkDrag
                     (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                     <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>
                     <span>{{task.title}}</span>
@@ -111,13 +114,15 @@
         <div class="task_status">
             <div class="status_text">
                 Await feedback
-                <img src="/assets/img/plus-button-darkblue.png">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('await')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="task_status_await.length == 0 && !drag_start" class="empty_status">No tasks await feedback</div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="task_status_await"
                 (cdkDropListDropped)="onItemDrop($event, 'await')" id="await"
                 [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
-                <div class="task_main" *ngFor="let task of task_status_await; let i = index" cdkDrag
+                <div (click)="openTaskDetail(i, 'await')" class="task_main"
+                    (click)="globalService.stopPropagation($event)"
+                    *ngFor="let task of task_status_await; let i = index" cdkDrag
                     (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                     <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>
                     <span>{{task.title}}</span>
@@ -153,15 +158,15 @@
         <div class="task_status">
             <div class="status_text">
                 Done
-                <img src="/assets/img/plus-button-darkblue.png">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('done')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="task_status_done.length == 0 && !drag_start" class="empty_status">No tasks done</div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="task_status_done"
                 (cdkDropListDropped)="onItemDrop($event, 'done')" id="done"
                 [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
                 <div (click)="openTaskDetail(i, 'done')" class="task_main"
-                    *ngFor="let task of task_status_done; let i = index" cdkDrag
-                    (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
+                    (click)="globalService.stopPropagation($event)" *ngFor="let task of task_status_done; let i = index"
+                    cdkDrag (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                     <div class="category" [style.background-color]="task.category_color">{{task.category_title}}</div>
                     <span>{{task.title}}</span>
                     <span>{{task.description}}</span>
@@ -194,84 +199,134 @@
 </div>
 
 
-<div class="task_detail_main" *ngIf="globalService.open_task_details">
-    <div class="close" (click)="closeTaskDetails()">
-        <img src="/assets/img/close.png">
-    </div>
-    <div class="category" [style.background-color]="detail_task[0].category_color">{{detail_task[0].category_title}}
-    </div>
-    <span class="title">{{detail_task[0].title}}</span>
-    <span>{{detail_task[0].description}}</span>
-    <div class="task_detail">
-        Due date :
-        <span>{{detail_task[0].due_date}}</span>
-    </div>
-    <div class="task_detail">
-        Priority:
-        <div *ngIf="detail_task[0].prio =='medium'">
-            <span>Medium</span>
-            <img src="/assets/img/prioMedium.png">
+<!---------------------------------------------------------------DETAIL-TASK----------------------------------------------------------------->
+
+
+<div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event)"
+    [class.show_popup]="globalService.open_task_details">
+    <div class="task_detail_scroll">
+        <div class="close" (click)="closeTaskDetails()">
+            <img src="/assets/img/close.png">
         </div>
-        <div *ngIf="detail_task[0].prio =='urgent'">
-            <span>Urgent</span>
-            <img src="/assets/img/prioUrgent.png">
+        <div class="category" [style.background-color]="detail_task[0].category_color">{{detail_task[0].category_title}}
         </div>
-        <div *ngIf="detail_task[0].prio =='low'">
-            <span>Low</span>
-            <img src="/assets/img/prioLow.png">
+        <span class="title">{{detail_task[0].title}}</span>
+        <span>{{detail_task[0].description}}</span>
+
+        <!---------------------------------------------------------------DETAIL-DATE----------------------------------------------------------------->
+
+        <div class="details_input">
+            Due date :
+            <span class="background">{{detail_task[0].due_date}}</span>
         </div>
-    </div>
-    Assigned to:
-    <div class="detail_contacts_main">
-        <div class="detail_contacts_scroll">
-            <div class="contacts_list" *ngFor="let contact of getAssignendContacts(0, 'detail')"
-                (click)="openContact()">
-                <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                <span>{{contact.user_name}}</span>
+
+        <!---------------------------------------------------------------DETAIL-PRIO----------------------------------------------------------------->
+
+        <div class="details_input">
+            Priority:
+            <span class="background">
+                <span class="no_subtask" *ngIf="!detail_task[0].prio ">No priority assigned</span>
+                <div class="prio_detail" *ngIf="detail_task[0].prio =='medium'">
+                    <span>Medium</span>
+                    <img src="/assets/img/prioMedium.png">
+                </div>
+                <div class="prio_detail" *ngIf="detail_task[0].prio =='urgent'">
+                    <span>Urgent</span>
+                    <img src="/assets/img/prioUrgent.png">
+                </div>
+                <div class="prio_detail" *ngIf="detail_task[0].prio =='low'">
+                    <span>Low</span>
+                    <img src="/assets/img/prioLow.png">
+                </div>
+            </span>
+        </div>
+
+        <!---------------------------------------------------------------DETAIL-CONTACTS----------------------------------------------------------------->
+
+        <div class="details_input">
+            Assigned to:
+            <div class="detail_contacts_main">
+                <div class="detail_contacts_scroll">
+                    <span class="no_subtask" *ngIf="detail_task[0].assigned_emails.length == 0">No contacts
+                        assigned</span>
+                    <div class="contacts_list" *ngFor="let contact of getAssignendContacts(0, 'detail')"
+                        (click)="openContact()">
+                        <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
+                        <span>{{contact.user_name}}</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    Subtasks
-    <div class="subtasks_main">
-        <div class="subtasks_scroll">
-            <div class="subtask_list" *ngFor="let subtask of detail_task[0].subtasks; let i = index">
-                <input type="checkbox" [checked]="subtask.done" (change)="updateSubtaskStatus($event, i)">
-                <span>{{subtask.title}}</span>
+
+        <!---------------------------------------------------------------DETAIL-SUBTASKS----------------------------------------------------------------->
+
+        <div class="details_input">
+            Subtasks
+            <div class="subtasks_main">
+                <div class="subtasks_scroll">
+                    <span class="no_subtask" *ngIf="detail_task[0].subtasks.length == 0">No subtasks assigned</span>
+                    <div class="subtask_list" *ngFor="let subtask of detail_task[0].subtasks; let i = index">
+                        <label class="checkbox">
+                            <input class="checkbox__input" type="checkbox" [checked]="subtask.done"
+                                (change)="updateSubtaskStatus($event, i)" disabled>
+                            <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
+                                <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round" stroke-width="4"
+                                    d="M4 10l5 5 9-9" />
+                            </svg>
+                        </label>
+                        <span>{{subtask.title}}</span>
+                        <span *ngIf="subtask.done"> is done</span>
+                        <span *ngIf="!subtask.done"> is not done</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="edit_buttons_main">
-        <div class="edit_buttons">
-            <img src="/assets/img/delete.png" alt="">
-            Delete
-        </div>
-        <img src="/assets/img/Vector 3.png" alt="">
-        <div class="edit_buttons" (click)="openEditTask()">
-            <img src="/assets/img/edit.png" alt="">
-            Edit
+        <div class="edit_buttons_main">
+            <div class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)" [class.no_pointer_events]="taskService.request_successful || taskService.request_error">
+                <img src="/assets/img/delete.png" alt="">
+                Delete
+            </div>
+            <img src="/assets/img/Vector 3.png" alt="">
+            <div class="edit_buttons" (click)="openEditTask()">
+                <img src="/assets/img/edit.png" alt="">
+                Edit
+            </div>
         </div>
     </div>
 </div>
 
 <!---------------------------------------------------------------EDIT TASK------------------------------------------------------------------->
 
-<div *ngIf="open_edit_task" class="task_edit_main">
+<div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)">
     <div class="task_detail_scroll">
-        <div class="close" (click)="backToTaskDetails()">
+        <div class="close" (click)="backToTaskDetails()" style="top: 19px">
             <img src="/assets/img/arrow-black.png">
         </div>
+
+        <!---------------------------------------------------------------EDIT-TITLE----------------------------------------------------------------->
+
         <div class="details_input">
             Title :
             <input type="text" [(ngModel)]="detail_task[0].title">
         </div>
+
+        <!---------------------------------------------------------------EDIT DESCRIPTION----------------------------------------------------------------->
+
         <div class="details_input">
             Description :
             <textarea [(ngModel)]="detail_task[0].description"></textarea>
         </div>
+
+        <!---------------------------------------------------------------EDIT-DATE----------------------------------------------------------------->
+
         <div class="details_input">
             Due Date
             <input type="date" [(ngModel)]="detail_task[0].due_date">
         </div>
+
+        <!---------------------------------------------------------------EDIT-PRIO----------------------------------------------------------------->
+
         <div class="details_input">
             Priority :
             <div class="prio_main">
@@ -290,7 +345,7 @@
             </div>
         </div>
 
-        <!------------------------------------------------------------------CONTACTS---------------------------------------------------------------->
+        <!---------------------------------------------------------------EDIT CONTACTS---------------------------------------------------------------->
         <div class="details_input">
             <span>Assigned to</span>
             <div *ngIf="!open_dropdown" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
@@ -300,29 +355,38 @@
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
             </div>
-
             <div *ngIf="open_dropdown" class="input_title_hide" (click)="globalService.stopPropagation($event)"
                 [class.add_shadow]="open_dropdown">
                 <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
-                    (ngModelChange)="handleValueChangeOnSearch($event)">
+                    (ngModelChange)="handleValueChangeOnSearch($event, 'contact')">
                 <div class="dropdown_search" (click)="toggleDropDownMenu()">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
                 <div class="contact_main" (click)="globalService.stopPropagation($event)"
                     [class.show_element]="open_dropdown">
-
                     <div class="contacts_scroll_div">
                         <span class="no_contact" *ngIf="selected_users_list.length == 0">No contact found</span>
                         <div class="contact_div" [class.selected]="contact.selected"
                             *ngFor="let contact of selected_users_list; let i = index"
                             (click)="selectContact(contact.email, i)">
-                            <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                            {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
-                            <input type="checkbox" class="checkbox" [checked]="contact.selected">
+                            <div class="circle_name">
+                                <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
+                                {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
+                            </div>
+                            <label class="checkbox">
+                                <input class="checkbox__input" type="checkbox" [checked]="contact.selected"
+                                    (change)="updateSubtaskStatus($event, i)" disabled>
+                                <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                    <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
+                                    <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round"
+                                        stroke-width="4" d="M4 10l5 5 9-9" />
+                                </svg>
+                            </label>
                         </div>
                     </div>
                     <footer>
-                        <div class="blue_button" (click)="globalService.stopPropagation($event)">
+                        <div class="blue_button" (click)="globalService.stopPropagation($event)"
+                            (click)="openAddContact()">
                             <span>Add new contact</span>
                             <img src="/assets/img/person_add.png">
                         </div>
@@ -337,20 +401,31 @@
             </div>
         </div>
 
-<!-------------------------------------------------------EDIT SUBTASKS----------------------------------------------------------------------->
+        <!-------------------------------------------------------EDIT SUBTASKS----------------------------------------------------------------------->
 
         <div class="details_input">
             <span>Subtasks</span>
-            <input type="text" placeholder="Add subtask" [(ngModel)]="subtask_title">
+            <input type="text" placeholder="Add subtask" [(ngModel)]="subtask_title" maxlength="30">
             <div class="add" (click)="addSubtask()">
                 <img src="/assets/img/add.png">
             </div>
-
-            <div class="subtask_main">
+            <div class="subtasks_main">
                 <div class="subtask_scroll">
-                    <div *ngFor="let subtask of detail_task[0].subtasks; let i = index">
+                    <div *ngFor="let subtask of detail_task[0].subtasks; let i = index"
+                        [class.slide_out]="deleted && delete_index == i ">
                         <div class="subtask_edit" *ngIf="!subtask.selected">
-                            {{subtask.title}}
+                            <div>
+                                <label class="checkbox">
+                                    <input class="checkbox__input" type="checkbox" [checked]="subtask.done"
+                                        (change)="updateSubtaskStatus($event, i)">
+                                    <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                        <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
+                                        <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round"
+                                            stroke-width="4" d="M4 10l5 5 9-9" />
+                                    </svg>
+                                </label>
+                                {{subtask.title}}
+                            </div>
                             <div class="subtask_img">
                                 <div class="delete" (click)="deleteSubtask(i)">
                                     <img src="/assets/img/delete.png">
@@ -362,10 +437,10 @@
                             </div>
                         </div>
                         <div *ngIf="subtask.selected" class="input_edit">
-                            <input type="text" [(ngModel)]="edited_subtask_title">
+                            <input type="text" [(ngModel)]="edited_subtask_title" maxlength="30">
                             <div class="subtask_img_input">
-                                <div class="delete" (click)="deleteSubtask(i)">
-                                    <img src="/assets/img/delete.png">
+                                <div class="delete" (click)="closeEditSubtask(i)">
+                                    <img src="/assets/img/close.png">
                                 </div>
                                 <img src="/assets/img/Vector 19.png">
                                 <div class="delete" (click)="saveEditSubtask(i)">
@@ -375,11 +450,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="blue_button">Save</div>
+                <div class="blue_button save_button" (click)="updateEditTask()" [class.no_pointer_events]="taskService.request_successful || taskService.request_error">
+                    Save
+                    <img src="/assets/img/check.png" alt="">
+                </div>
             </div>
-            
         </div>
-        
     </div>
-    
+</div>
+<div [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component"*ngIf="globalService.open_add_task"  [class.show_popup]="globalService.open_add_task" (click)="globalService.stopPropagation($event)">
+    <div   class="close " (click)="toggleAddTaskPopUp('todo')">
+        <img src="/assets/img/close.png">
+    </div>
+    <app-add-task></app-add-task>
+</div>
+
+<div *ngIf="this.globalService.open_task_details" [class.show_request_status]="taskService.request_error" [class.hide_request_status]="!taskService.request_error"
+    class="request_successful" style="background-color: red;">{{taskService.error_type}}</div>
+<div *ngIf="this.globalService.open_task_details" [class.show_request_status]="taskService.request_successful" class="request_successful">
+    <span *ngIf="!deleted">Task updated successfully</span>
+    <span *ngIf="deleted">Task deleted successfully</span>
 </div>

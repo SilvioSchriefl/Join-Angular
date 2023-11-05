@@ -31,9 +31,6 @@
 .link:hover img {
   filter: brightness(0) invert(1);
 }
-.link:hover span {
-  color: white;
-}
 
 .link_main {
   gap: 15px;

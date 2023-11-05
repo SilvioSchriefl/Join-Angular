@@ -1,10 +1,28 @@
-#myCheckbox {
-  border: 2px solid #2A3647;
-  border-radius: 3px !important;
-  width: 16px;
+.checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
-#myCheckbox:checked + label {
-  background: #fff;
+.checkbox__input {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkbox__input:checked + .checkbox__icon .tick {
+  stroke-dashoffset: 0;
+}
+.checkbox__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.checkbox__icon .tick {
+  stroke-dasharray: 20px;
+  stroke-dashoffset: 20px;
+  transition: stroke-dashoffset 0.2s ease-out;
 }
 
 textarea {
@@ -57,6 +75,7 @@ a.tel-link {
 }
 
 input {
+  padding-top: 6px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -75,10 +94,6 @@ input::-webkit-input-placeholder {
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 0s 600000s, color 0s 600000s;
-}
-
-input:-webkit-checkbox {
-  width: 16px;
 }
 
 input:focus {
@@ -148,11 +163,6 @@ input[type=date]::-webkit-calendar-picker-indicator {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2509803922);
 }
 
-.mdc-checkbox {
-  border: 2px solid #2A3647;
-  border-radius: 3px;
-}
-
 .input_field {
   position: relative;
 }
@@ -168,7 +178,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: #d4d4d4 #ffffff;
+  scrollbar-color: #29ABE2 #ffffff;
 }
 
 *::-webkit-scrollbar {
@@ -180,7 +190,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #d4d4d4;
+  background-color: #29ABE2;
   border-radius: 10px;
   border: 0px solid #ffffff;
 }
@@ -197,13 +207,14 @@ input[type=number] {
 }
 
 .close {
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: 150ms;
   border-radius: 100%;
-  height: 32px;
-  width: 32px;
+  height: 25px;
+  width: 25px;
   background-color: #fff;
   cursor: pointer;
   position: absolute;
@@ -211,7 +222,8 @@ input[type=number] {
   right: 30px;
 }
 .close img {
-  width: 24px;
+  width: 17px;
+  height: 17px;
 }
 .close:hover {
   background-color: #29ABE2;
@@ -245,6 +257,35 @@ input[type=number] {
   animation: slight_out_bottom 0.5s ease-in-out;
 }
 
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+}
+
+.show_shadow {
+  z-index: 4;
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.show_popup {
+  animation: slide_in 300ms ease-in-out;
+  display: flex !important;
+  transition: 300ms;
+}
+
+.no_pointer_events {
+  pointer-events: none;
+}
+
+.z_index {
+  z-index: 3 !important;
+}
+
 @keyframes slight_in_bottom {
   0% {
     opacity: 0;
@@ -265,4 +306,17 @@ input[type=number] {
     opacity: 0;
     bottom: 0;
   }
+}
+@keyframes slide_in {
+  0% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+.d_none {
+  display: none;
 }/*# sourceMappingURL=styles.css.map */

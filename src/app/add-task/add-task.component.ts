@@ -41,7 +41,7 @@ export class AddTaskComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public gblFunctions: GlobalFunctionsService,
+    public globalService: GlobalFunctionsService,
     public taskService: TaskService,
     public router: Router,
 
@@ -52,6 +52,7 @@ export class AddTaskComponent implements OnInit {
     this.getCurrentDate()
     await this.userService.getUsersAndContacts()
     this.all_contacts = this.userService.all_users
+    this.taskService.task_status = 'todo'
   }
 
 
@@ -219,7 +220,7 @@ export class AddTaskComponent implements OnInit {
       title: this.task_title,
       description: this.description,
       due_date: this.date,
-      status: 'todo',
+      status: this.taskService.task_status,
       assigned_emails: this.selected_users,
       category_title: this.selected_category.title,
       category_color: this.selected_category.color,
@@ -228,7 +229,10 @@ export class AddTaskComponent implements OnInit {
     }
     this.taskService.addTask(body)
     this.clearAll()
-    setTimeout(() => this.router.navigateByUrl('/main/board') , 2000)
+    setTimeout(() => {
+      this.router.navigateByUrl('/main/board')
+      this.globalService.open_add_task = false
+    } , 2000)
     
   }
 

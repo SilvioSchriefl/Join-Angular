@@ -1,5 +1,5 @@
-<div class="shadow" [class.show_shadow]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
-    <div class="popup_main" (click)="stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+<div class="shadow" [class.show_shadow]="userService.open_add_user || globalService.open_add_task || globalService.open_edit_task || this.globalService.open_task_details || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+    <div class="popup_main" (click)="globalService.stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
         <div class="blue_side">
             <img src="/assets/img/Capa 2.png">
             <span *ngIf="userService.open_add_category">Add Category</span>

@@ -65,9 +65,7 @@ export class UserService {
   async getUsersAndContacts() {
     const usersUrl = environment.baseUrl + 'users/';
     const contactsUrl = environment.baseUrl + 'contacts/';
-
     try {
-
       const usersResponse = await lastValueFrom(this.http.get(usersUrl));
       const contactsResponse = await lastValueFrom(this.http.get(contactsUrl));
       this.all_users = usersResponse;
@@ -109,7 +107,6 @@ export class UserService {
       }
     }
   }
-
 
 
   async saveContact(url: string, body: { email: string; phone: string; user_name: string; color: string; initials: string; }) {
@@ -168,8 +165,6 @@ export class UserService {
 
 
   async deleteContact() {
-    console.log('test');
-    
     let i = this.user_details.index;
     let url = environment.baseUrl + 'delete_contact/' + this.user_details.id + '/';
     try {

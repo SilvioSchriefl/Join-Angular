@@ -192,11 +192,17 @@
 }
 
 .edit_delete_child {
+  height: 35px;
   gap: 8px;
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: 150ms;
+  background: linear-gradient(to right, #F6F7F8, #F6F7F8), linear-gradient(to right, #29ABE2, #29ABE2);
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 29px, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 300ms;
 }
 .edit_delete_child img {
   width: 18px;
@@ -206,6 +212,7 @@
   font-weight: 400;
 }
 .edit_delete_child:hover {
+  background-size: 0 3px, 100% 3px;
   color: #29ABE2;
 }
 .edit_delete_child:hover img {

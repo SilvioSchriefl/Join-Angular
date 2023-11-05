@@ -29,7 +29,7 @@
     right: 12px
     display: flex
     align-items: center
-    gap: 10px
+    gap: 9px
 
 .input
     position: relative
@@ -48,6 +48,11 @@
     align-items: center
     font-weight: 700
     font-size: 20px
+    img
+        cursor: pointer
+        transition: 150ms
+        &:hover
+            filter: invert(56%) sepia(95%) saturate(1065%) hue-rotate(165deg) brightness(92%) contrast(92%)
 
 .task_status
     width: 250px
@@ -56,6 +61,9 @@
     gap: 20px
     & .task_main
         transition: transform 0.2s ease-in-out
+        &:hover
+            transition: transform 0.2s ease-in-out
+            box-shadow: 0px 0px 10px 3px #00000024
 
 .task_main
     position: relative
@@ -167,16 +175,18 @@
     ity: 0.6
 
 .task_detail_main
-    width: 380px
+    overflow: hidden
+    z-index: 98
+    width: 420px
     display: flex
     flex-direction: column
     font-size: 20px
     font-weight: 400
     position: absolute
-    left: 50%
-    top: 10%
+    left: calc(50% - 325px)
+    top: calc(50% - 459px)
     background-color: #fff
-    padding: 28px 20px
+    padding: 20px 0
     border-radius: 20px
     gap: 24px
     box-shadow: 0px 0px 4px 0px #00000029
@@ -190,13 +200,11 @@
 
 .subtask_img_input
     position: absolute
-    right: 0
+    right: 9px
     top: 0
     display: flex
     align-items: center
     gap: 5px
-    img
-        cursor: pointer
 
 
 
@@ -204,49 +212,58 @@
     z-index: 1
     @include flex
     cursor: pointer
-    width: 24px
-    height: 24px
+    width: 22px
+    height: 22px
     border-radius: 100%
     transition: 150ms
     padding: 3px
+    img
+         width: 14px
     &:hover
         background: #29ABE2
         img
+           
             filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(339deg) brightness(105%) contrast(101%)
 
 .subtask_edit
-    margin-bottom: 5px
     border-radius: 10px
-    padding: 5px 20px
+    padding: 5px 10px
     display: flex
     align-items: center
     justify-content: space-between
     background-color: #F6F7F8
     transition: 150ms
+    :nth-child(1)
+        display: flex
+        gap: 5px
     &:hover
         background-color: #EEEEEE
 
 .task_edit_main
+    z-index: 99
     overflow: hidden
     position: absolute
-    left: 50%
+    left: calc(50% - 325px)
     top: 10%
     background-color: #fff
     textarea
         height: 100px
     border-radius: 20px
     box-shadow: 0px 0px 4px 0px #00000029
-    width: 380px
+    width: 420px
+    padding-bottom: 10px
+
+.no_subtask
+    font-size: 16px
+    margin-left: 10px
 
 .subtask_scroll
-    height: 100%
-    overflow: auto
-
-.subtask_main
-    max-height: 100px
+    overflow-x: hidden
+    max-height: 150px
+    overflow-y: auto
 
 .add
-    top: 48px
+    top: 42px
     position: absolute
     right: 10px
     @include flex
@@ -264,15 +281,22 @@
     gap: 24px
     display: flex
     flex-direction: column
-    font-size: 20px
+    font-size: 16px
     font-weight: 400
-    overflow: scroll
-    max-height: 700px
-    padding: 28px 20px
+    overflow-y: scroll
+    max-height: 800px
+    padding: 0px 28px
+    padding-top: 28px
 
 .title
     font-size: 61px
     font-weight: 700
+
+.background
+    box-shadow: 0px 0px 4px 0px #00000029
+    background-color: #F6F7F8
+    border-radius: 10px
+    padding: 8px 10px
 
 .task_detail
     width: 100%
@@ -286,13 +310,13 @@
 .detail_contacts_main
     box-shadow: 0px 0px 4px 0px #00000029
     background-color: #F6F7F8
-    padding-right: 5px
     overflow: hidden
     border-radius: 10px
 
 .detail_contacts_scroll
-    max-height: 200px
-    overflow-y: scroll
+    padding: 10px 0
+    max-height: 150px
+    overflow-y: auto
 
 .contacts_list
     display: flex
@@ -309,19 +333,27 @@
 
 .subtasks_main
     overflow: hidden
+    box-shadow: 0px 0px 4px 0px #00000029
+    background-color: #F6F7F8
+    overflow: hidden
+    border-radius: 10px
+   
 
 .subtasks_scroll
     max-height: 100px
-    overflow-y: scroll
+    overflow-y: auto
     gap: 5px
+    padding: 10px 10px
 
 .subtask_list
+    pointer-events: none
     display: flex
     align-items: center
-    :nth-child(2)
-        margin-left: 10px
+    span
+        margin-left:5px
         font-size: 16px
         font-weight: 400
+ 
     input
         height: unset
 
@@ -361,6 +393,11 @@
     display: flex
     justify-content: space-between
     gap: 3px
+
+.prio_detail
+    display: flex
+    align-items: center
+    gap: 6px
 
 .prio
     transition: 150ms
@@ -447,9 +484,15 @@
     top: 20px
 
 .selected_contacts
+    flex-wrap: wrap
     display: flex
     .circle
         font-size: 12px
+
+.circle_name
+    display: flex
+    align-items: center
+    gap: 20px
 
 .selected
     color: #fff
@@ -459,6 +502,7 @@
         background: #2A3647 !important
 
 .contact_div
+    justify-content: space-between
     box-sizing: border-box
     margin-bottom: 2px
     position: relative
@@ -521,7 +565,7 @@ footer
     position: relative
     input
         height: 32px 
-        padding: 4px 16px 4px 16px
+        padding: 4px 16px 4px 11px
         border-radius: 0px
         width: 100%
         border-bottom: 1px solid #29ABE2
@@ -531,6 +575,33 @@ footer
 
 .show_element
     animation: slide-up 0.2s ease-in-out
+    
+
+.save_button 
+    width: max-content
+    margin: 10px 0
+    position: absolute
+
+.close_search
+    position: unset
+    img
+        width: 15px
+        height: 15px
+
+.add_task_component
+    padding: 50px 0 0 0
+    width: 1116px
+    height: 710px
+    position: absolute
+    border-radius: 30px
+    top: 10%
+    z-index: 4
+    background-color: #fff
+    box-shadow: 0px 0px 4px 0px #0000001A
+
+
+.slide_out
+    animation: slide-right 0.2s ease-in-out
 
 @keyframes slide-up 
     0%
@@ -538,3 +609,10 @@ footer
 
     100%
         transform: translateY(0%)
+
+@keyframes slide-right 
+    0%
+        transform:  translateX(0)
+        
+    100%
+        transform:  translateX(100%)

@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class SummaryComponent {
 
+  test: boolean = false;
   title = 'angular-drag-drop-tutorial';
   todo = ['Get to work', 'Pick up groceries', 'Go home', 'Fall asleep'];
   done = ['Get up', 'Brush teeth', 'Take a shower', 'Check e-mail', 'Walk dog'];
@@ -26,5 +27,9 @@ export class SummaryComponent {
       );
     }
     console.log(this.todo, this.done)
+  }
+
+  test1() {
+    console.log(this.test)
   }
 }

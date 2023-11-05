@@ -31,11 +31,7 @@ export class PopupsComponent {
     this.userService.user_name_empty = false
     this.userService.email_valid = true
   }
-
-  stopPropagation(event: Event) {
-    event.stopPropagation();
-  };
-
+  
 
   dataChanged(value: string) {
     this.userService.email_valid = this.regexEmail.test(this.userService.user_email)

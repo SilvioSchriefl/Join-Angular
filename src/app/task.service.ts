@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from './enviroments/enviroments';
 import { UserService } from './user.service';
-import { lastValueFrom } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -11,35 +11,43 @@ export class TaskService {
 
   all_categorys: any = [];
   all_tasks: any = [];
-  
+  request_successful: boolean = false;
+  request_error: boolean = false;
+  error_type: string = ''
+  task_status: string = ''
+  private taskSubject = new BehaviorSubject<string[]>(this.all_tasks);
+
 
   constructor(
     public userService: UserService,
     private http: HttpClient
   ) { }
 
-
+  getTasks() {
+    return this.taskSubject.asObservable();
+  }
 
   async addCategory() {
     let url = environment.baseUrl + 'category/';
     let body = {
       'title': this.userService.category_title,
-      'color': this.userService.setUsercolor()
+      'color': this.userService.setUsercolor(),
+      'creator_email': this.userService.user.email
     }
     try {
       let response = await lastValueFrom(this.http.post(url, body));
       this.all_categorys.push(response)
       this.userService.request_successful = true;
       setTimeout(() => {
-        this.userService.request_successful = false
+        this.request_successful = false
         this.userService.open_add_category = false
       }, 2000);
     }
     catch (error: any) {
       this.userService.request_error = true;
-      setTimeout(() => this.userService.request_error = false, 2000);
-      if (error.error.detail) this.userService.error_type = error.error.detail
-      else this.userService.error_type = 'Error creating category'
+      setTimeout(() => this.request_error = false, 2000);
+      if (error.error.detail) this.error_type = error.error.detail
+      else this.error_type = 'Error creating category'
     }
   }
 
@@ -72,13 +80,14 @@ export class TaskService {
     try {
       let response = await lastValueFrom(this.http.post(url, body));
       this.all_tasks.push(response)
-      this.userService.request_successful = true;
-      setTimeout(() => this.userService.request_successful = false, 3000);
+      this.taskSubject.next(this.all_tasks);
+      this.request_successful = true;
+      setTimeout(() => this.request_successful = false, 2000);
     }
     catch (error) {
       console.log(error);
-      this.userService.request_error = true;
-      setTimeout(() => this.userService.request_error = false, 3000);
+      this.request_error = true;
+      setTimeout(() => this.request_error = false, 2000);
     }
     console.log(this.all_tasks);
 
@@ -99,10 +108,31 @@ export class TaskService {
   async updateTask(body: any) {
     let url = environment.baseUrl + 'task/'
     try {
-       await lastValueFrom(this.http.patch(url, body))
+      await lastValueFrom(this.http.patch(url, body))
+      this.request_successful = true;
+      setTimeout(() => this.request_successful = false , 2000);
     }
     catch (error) {
-      console.log(error);
+      this.request_error = true;
+      setTimeout(() => this.request_error = false, 2000);
+      this.error_type = 'Error saving task'
+    }
+  }
+
+
+  async deleteTask(id: string) {
+    {
+      let url = environment.baseUrl + 'task/' + id + '/'
+      try {
+        await lastValueFrom(this.http.delete(url))
+        this.request_successful = true;
+        setTimeout(() => this.request_successful = false , 2000);
+      }
+      catch (error) {
+        this.request_error = true;
+        setTimeout(() => this.request_error = false, 2000);
+        this.error_type = 'Error delete task'
+      }
     }
   }
 }

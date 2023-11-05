@@ -5,10 +5,10 @@
         <!---------------------------------------------------------------------TITLE---------------------------------------------------------->
 
         <div class="input_title">
-            <span class="d_none" [class.show_required]="title_error" >This field is required</span>
+            <span class="d_none" [class.show_required]="title_error">This field is required</span>
             <div class="title"><span>Title</span><span style="color: red">*</span></div>
             <input type="text" placeholder="Enter a title" [(ngModel)]="task_title" (focus)="removeError('title')">
-        
+
         </div>
 
         <!---------------------------------------------------------------DESCRIPTION---------------------------------------------------------->
@@ -22,7 +22,7 @@
 
         <div class="input_title">
             <span>Assigned to</span>
-            <div *ngIf="!open_dropdown" (click)="gblFunctions.stopPropagation($event)" class="dropdown_menu"
+            <div *ngIf="!open_dropdown" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
                 (click)="toggleDropDownMenu('contact')">
                 <span>Select contacts to assign</span>
                 <div class="dropdown">
@@ -30,13 +30,14 @@
                 </div>
             </div>
 
-            <div *ngIf="open_dropdown" class="input_title_hide" (click)="gblFunctions.stopPropagation($event)" [class.add_shadow]="open_dropdown">
+            <div *ngIf="open_dropdown" class="input_title_hide" (click)="globalService.stopPropagation($event)"
+                [class.add_shadow]="open_dropdown">
                 <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
                     (ngModelChange)="handleValueChange($event)">
                 <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
-                <div class="contact_main" (click)="gblFunctions.stopPropagation($event)"
+                <div class="contact_main" (click)="globalService.stopPropagation($event)"
                     [class.show_element]="open_dropdown">
                     <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
                     <div class="contacts_scroll_div">
@@ -44,12 +45,12 @@
                             *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
                             <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
                             {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
-                            <input type="checkbox" class="checkbox" [checked]="contact.selected">     
+                            <input type="checkbox" class="checkbox" [checked]="contact.selected">
                         </div>
                     </div>
                     <footer>
                         <div class="blue_button" (click)="openAddContact()"
-                            (click)="gblFunctions.stopPropagation($event)">
+                            (click)="globalService.stopPropagation($event)">
                             <span>Add new contact</span>
                             <img src="/assets/img/person_add.png">
                         </div>
@@ -115,26 +116,30 @@
         <div class="input_title_hide" [class.add_shadow]="open_category">
 
             <div class="dropdown_menu" (click)="toggleDropDownMenu('category')" (click)="removeError('category')"
-                (click)="gblFunctions.stopPropagation($event)">
+                (click)="globalService.stopPropagation($event)">
                 <span *ngIf="selected_category.length == 0">Select task category</span>
                 <span>{{selected_category.title}}</span>
                 <div class="dropdown_with_color">
                     <div *ngIf="selected_category.color" class="category_color"
                         [style.background]="selected_category.color"></div>
                     <div class="dropdown" (click)="toggleDropDownMenu('category')"
-                        (click)="gblFunctions.stopPropagation($event)">
+                        (click)="globalService.stopPropagation($event)">
                         <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValueC">
                     </div>
                 </div>
             </div>
-            <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main" >
+            <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main">
                 <span class="no_contact" *ngIf="taskService.all_categorys.length == 0">No categorys</span>
                 <div class="contacts_scroll_div">
-                    <div (click)="setCategory(i)" class="category_div" [class.deleted]="deleted && delete_index == i"  (click)="gblFunctions.stopPropagation($event)" *ngFor="let category of taskService.all_categorys; let i = index">
+                    <div (click)="setCategory(i)" class="category_div" [class.deleted]="deleted && delete_index == i"
+                        (click)="globalService.stopPropagation($event)"
+                        *ngFor="let category of taskService.all_categorys; let i = index">
                         {{ category.title }}
                         <div class="delete_category_main">
-                           
-                            <div class="delete" (click)="deleteCategory(i)" *ngIf="userService.user.user_id == category.created_by" (click)="gblFunctions.stopPropagation($event)">
+
+                            <div class="delete" (click)="deleteCategory(i)"
+                                *ngIf="userService.user.email == category.creator_email"
+                                (click)="globalService.stopPropagation($event)">
                                 <img src="/assets/img/delete.png">
                             </div>
                             <div class="category_color" [style.background]="category.color"></div>
@@ -142,7 +147,7 @@
                     </div>
                 </div>
                 <footer>
-                    <div class="blue_button" (click)="openAddCategory()" (click)="gblFunctions.stopPropagation($event)">
+                    <div class="blue_button" (click)="openAddCategory()" (click)="globalService.stopPropagation($event)">
                         <span>Add new category</span>
                         <img src="/assets/img/person_add.png">
                     </div>
@@ -153,7 +158,7 @@
         </div>
 
         <!-----------------------------------------------------------------SUBTASK------------------------------------------------------------------------>
-        
+
         <div class="input_title" [class.d_none]="open_category">
             <span>Subtasks</span>
             <input type="text" placeholder="Add subtask" [(ngModel)]="subtask_title">
@@ -199,15 +204,18 @@
         </div>
         <div class="send_buttons">
             <div (click)="clearAll()" class="white_button">Clear</div>
-            <div class="blue_button" (click)="createTask()" [class.invalid]="task_title.length == 0 || selected_category.length == 0">
+            <div class="blue_button" (click)="createTask()"
+                [class.invalid]="task_title.length == 0 || selected_category.length == 0">
                 Create Task
                 <img src="/assets/img/check.png" alt="">
             </div>
         </div>
     </div>
-    <div [class.show_request_status]="userService.request_error && !userService.open_add_category && !userService.open_add_user"
-        [class.hide_request_status]="!userService.request_error" class="request_successful"
-        style="background-color: red;">{{taskService.userService.error_type}}</div>
-    <div [class.show_request_status]="userService.request_successful && !userService.open_add_category && !userService.open_add_user" class="request_successful">Task created
-        successfully</div>
 </div>
+<div [class.show_request_status]="taskService.request_error && !userService.open_add_category && !userService.open_add_user"
+[class.hide_request_status]="!taskService.request_error" class="request_successful"
+style="background-color: red;">
+{{taskService.error_type}}
+</div>
+<div [class.show_request_status]="taskService.request_successful && !userService.open_add_category && !userService.open_add_user"
+class="request_successful">Task created successfully</div>
