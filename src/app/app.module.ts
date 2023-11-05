@@ -21,6 +21,7 @@ import { PopupsComponent } from './popups/popups.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { HelpViewComponent } from './help-view/help-view.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     PopupsComponent,
     AddTaskComponent,
     BoardComponent,
+    HelpViewComponent,
 
   ],
   imports: [

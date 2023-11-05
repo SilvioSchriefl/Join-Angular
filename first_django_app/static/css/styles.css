@@ -222,8 +222,8 @@ input[type=number] {
   right: 30px;
 }
 .close img {
-  width: 17px;
-  height: 17px;
+  width: 15px;
+  height: 15px;
 }
 .close:hover {
   background-color: #29ABE2;
@@ -318,5 +318,5 @@ input[type=number] {
   }
 }
 .d_none {
-  display: none;
+  display: none !important;
 }/*# sourceMappingURL=styles.css.map */

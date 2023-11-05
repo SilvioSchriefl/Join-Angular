@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     let token = localStorage.getItem('token');
     if (token) {
       this.guard.authenticated = true;
-      this.route.navigate(['/main/board']);
+      this.route.navigate(['/main/summary']);
     }
   }
 

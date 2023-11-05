@@ -4,7 +4,6 @@
     flex-direction: column
     align-items: center
     padding-top: 50px
-    
 
 .logo
     width: 100px
@@ -27,11 +26,9 @@
         background-color: #091931
         img
             filter: brightness(0) invert(1)
-        
-       
 
-.link_main 
-  
+.link_main
+
     gap: 15px
     padding-top: 150px
     display: flex
@@ -39,22 +36,23 @@
     align-items: flex-start
 
 .note
+    width: 100%
     gap: 8px
-    transission : 150ms
+    transition: 150ms
     cursor: pointer
     position: absolute
     bottom: 50px
-    left: 50px
-    color: #A8A8A8
+    left: 0
     font-size: 16px
     display: flex
     flex-direction: column
     span
-        transission: 150ms
+        color: #A8A8A8
+        text-align: center
+        transission: 250ms 
         &:hover
             color: #29ABE2
-            font-weight: 500
-   
+    
 
 .link_child
     padding-left: 50px
@@ -65,10 +63,7 @@
     img
         height: 25px
 
-   
-        
-
-.link_active 
+.link_active
     background-color: #091931
     img
         filter: brightness(0) invert(1)

@@ -9,6 +9,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TaskService {
 
+  task_status_in_progress: any = []
+  task_status_todo: any = []
+  task_status_done: any = []
+  task_status_await: any = []
   all_categorys: any = [];
   all_tasks: any = [];
   request_successful: boolean = false;
@@ -23,8 +27,17 @@ export class TaskService {
     private http: HttpClient
   ) { }
 
+
   getTasks() {
     return this.taskSubject.asObservable();
+  }
+
+
+  filterTaskbyStatus() {
+    this.task_status_todo = this.all_tasks.filter((task: any) => task.status === 'todo')
+    this.task_status_in_progress = this.all_tasks.filter((task: any) => task.status === 'progress')
+    this.task_status_await = this.all_tasks.filter((task: any) => task.status === 'await')
+    this.task_status_done = this.all_tasks.filter((task: any) => task.status === 'done')
   }
 
   async addCategory() {
@@ -109,6 +122,7 @@ export class TaskService {
     let url = environment.baseUrl + 'task/'
     try {
       await lastValueFrom(this.http.patch(url, body))
+      this.taskSubject.next(this.all_tasks);
       this.request_successful = true;
       setTimeout(() => this.request_successful = false , 2000);
     }
@@ -116,6 +130,7 @@ export class TaskService {
       this.request_error = true;
       setTimeout(() => this.request_error = false, 2000);
       this.error_type = 'Error saving task'
+      console.log(error);
     }
   }
 

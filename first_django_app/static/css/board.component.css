@@ -199,6 +199,7 @@
 }
 
 .task_detail_main {
+  box-sizing: border-box;
   overflow: hidden;
   z-index: 98;
   width: 420px;
@@ -318,6 +319,8 @@
 }
 
 .task_detail_scroll {
+  min-height: 743px;
+  box-sizing: border-box;
   position: relative;
   gap: 24px;
   display: flex;

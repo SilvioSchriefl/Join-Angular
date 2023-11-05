@@ -14,10 +14,6 @@ import { Router } from '@angular/router';
 export class BoardComponent implements OnInit {
 
   task_search_value: string = ''
-  task_status_in_progress: any = []
-  task_status_todo: any = []
-  task_status_done: any = []
-  task_status_await: any = []
   subtask_progress: string = ''
   filtered_users: any = []
   drag_start: boolean = false
@@ -32,6 +28,12 @@ export class BoardComponent implements OnInit {
   edited_subtask_title: string = ''
   deleted: boolean = false
   delete_index!: number
+  edit_task_title: string = ''
+  edit_task_description: string = ''
+  edit_task_due_date: string = ''
+  edit_task_prio: string = ''
+  edit_subtasks:any = []
+  task_status_changed: boolean = false
 
 
 
@@ -47,23 +49,16 @@ export class BoardComponent implements OnInit {
 
 
   async ngOnInit() {
-    this.taskService.getTasks().subscribe((tasks) => {
-      this.filterTaskbyStatus()
+    this.taskService.getTasks().subscribe(async (tasks) => {
+      await this.taskService.getAllTasks()
+      this.taskService.filterTaskbyStatus()
     });
     await this.taskService.getAllTasks()
-    await this.userService.getUsersAndContacts()
-    this.filterTaskbyStatus()
+    this.taskService.filterTaskbyStatus()
   }
 
 
-  filterTaskbyStatus() {
-    this.task_status_todo = this.taskService.all_tasks.filter((task: any) => task.status === 'todo')
-    this.task_status_in_progress = this.taskService.all_tasks.filter((task: any) => task.status === 'progress')
-    this.task_status_await = this.taskService.all_tasks.filter((task: any) => task.status === 'await')
-    this.task_status_done = this.taskService.all_tasks.filter((task: any) => task.status === 'done')
-  }
-
-
+  
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
     let dones: any[] = []
@@ -86,9 +81,9 @@ export class BoardComponent implements OnInit {
 
 
   getAssignendContacts(i: number, status: string) {
-    let array = this.getArray(status)
+    let array = this.getArray(status);
     let assignend_contacts: any = [];
-    let contact_emails = array[i].assigned_emails;
+    let contact_emails = array[i].assigned_emails
     contact_emails.forEach((email: any) => {
       let contact = this.userService.all_users.find((contact: any) => contact.email === email);
       if (contact) assignend_contacts.push(contact);
@@ -97,8 +92,17 @@ export class BoardComponent implements OnInit {
   }
 
 
+  getArray(status: string) {
+    if (status == 'detail') return this.detail_task
+    if (status == 'todo') return this.taskService.task_status_todo
+    if (status == 'progress') return this.taskService.task_status_in_progress
+    if (status == 'await') return this.taskService.task_status_await
+    if (status == 'done') return [...this.taskService.task_status_done]
+  }
+
+
   getContactsForEditView() {
-    let edit_contacts = this.userService.all_users
+    let edit_contacts = [...this.userService.all_users]
     edit_contacts.forEach((user: { [x: string]: any; email: any; }) => {
       user['selected'] = this.detail_task[0].assigned_emails.includes(user.email);
     });
@@ -128,9 +132,8 @@ export class BoardComponent implements OnInit {
 
 
   onItemDrop(event: CdkDragDrop<any>, status: string) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+    if (event.previousContainer === event.container)  moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+     else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -143,16 +146,9 @@ export class BoardComponent implements OnInit {
         status: status,
       }
       this.taskService.updateTask(body)
+      this.task_status_changed = true
+      setTimeout(() => this.task_status_changed = false, 2000)
     }
-  }
-
-
-  getArray(status: string) {
-    if (status == 'detail') return this.detail_task
-    if (status == 'todo') return this.task_status_todo
-    if (status == 'progress') return this.task_status_in_progress
-    if (status == 'await') return this.task_status_await
-    if (status == 'done') return this.task_status_done
   }
 
 
@@ -167,11 +163,23 @@ export class BoardComponent implements OnInit {
 
 
   openTaskDetail(i: number, status: string) {
-    let array = this.getArray(status)
+    this.detail_task[0] = []
+    let array = [...this.getArray(status)]
     this.detail_task[0] = array[i]
     this.detail_task[0].array_index = i
     this.globalService.open_task_details = true
-    console.log(this.detail_task);
+    this.edit_task_title = this.detail_task[0].title;
+    this.edit_task_description = this.detail_task[0].description;
+    this.edit_task_due_date = this.detail_task[0].due_date
+  }
+
+
+  openEditTask() {
+    this.edit_subtasks = []
+    this.globalService.open_edit_task = true
+    this.selected_user_emails = [...this.detail_task[0].assigned_emails]
+    this.edit_subtasks =  structuredClone(this.detail_task[0].subtasks)
+    this.getContactsForEditView()
   }
 
 
@@ -185,29 +193,13 @@ export class BoardComponent implements OnInit {
   }
 
 
-  updateSubtaskStatus(event: any, i: number) {
-    let value = this.detail_task[0].subtasks[i].done
-    if (value) this.detail_task[0].subtasks[i].done = false
-    else this.detail_task[0].subtasks[i].done = true
-  }
-
-
-  openEditTask() {
-
-    this.globalService.open_edit_task = true
-    this.selected_user_emails = this.detail_task[0].assigned_emails
-    this.getContactsForEditView()
-  }
-
-
   backToTaskDetails() {
-
     this.globalService.open_edit_task = false
   }
 
 
   setPrio(prio: string) {
-    this.detail_task[0].prio = prio
+    this.edit_task_prio = prio
   }
 
 
@@ -231,9 +223,16 @@ export class BoardComponent implements OnInit {
         task.title.toLowerCase().includes(this.task_search_value.toLowerCase())
       );
       if (this.task_search_value.length == 0) await this.taskService.getAllTasks()
-      this.filterTaskbyStatus()
+      this.taskService.filterTaskbyStatus()
     }
+  }
 
+
+  updateSubtaskStatus(event: any, i: number) {
+    let value = this.edit_subtasks[i].done
+    if (value) this.edit_subtasks[i].done = false
+    else this.edit_subtasks[i].done = true
+    console.log(this.taskService.task_status_done)
   }
 
 
@@ -243,7 +242,7 @@ export class BoardComponent implements OnInit {
         title: this.subtask_title,
         done: false
       }
-      this.detail_task[0].subtasks.push(subtask)
+      this.edit_subtasks.push(subtask)
       this.subtask_title = ''
     }
   }
@@ -253,10 +252,9 @@ export class BoardComponent implements OnInit {
     this.delete_index = i
     this.deleted = true
     setTimeout(() => {
-      this.detail_task[0].subtasks.splice(i, 1)
+      this.edit_subtasks.splice(i, 1)
       this.deleted = false
     }, 200)
-
   }
 
 
@@ -266,30 +264,32 @@ export class BoardComponent implements OnInit {
 
 
   closeEditSubtask(i: number) {
-    this.detail_task[0].subtasks[i].selected = false
+    this.edit_subtasks[i].selected = false
   }
 
 
   openEditSubtask(i: number) {
-    this.detail_task[0].subtasks[i].selected = true
-    this.edited_subtask_title = this.detail_task[0].subtasks[i].title
+    this.edit_subtasks.forEach((subtask:any) => subtask.selected = false) 
+    this.edit_subtasks[i].selected = true
+    this.edited_subtask_title = this.edit_subtasks[i].title
   }
 
 
   saveEditSubtask(i: number) {
-    this.detail_task[0].subtasks[i].title = this.edited_subtask_title
-    this.detail_task[0].subtasks[i].selected = false
+    this.edit_subtasks[i].title = this.edited_subtask_title
+    this.edit_subtasks[i].selected = false
   }
 
 
   async updateEditTask() {
+    this.edit_subtasks.forEach((subtask:any) => subtask.selected = false) 
     let body = {
       assigned_emails: this.selected_user_emails,
-      title: this.detail_task[0].title,
-      description: this.detail_task[0].description,
-      due_date: this.detail_task[0].due_date,
-      prio: this.detail_task[0].prio,
-      subtasks: this.detail_task[0].subtasks,
+      title: this.edit_task_title,
+      description: this.edit_task_description,
+      due_date: this.edit_task_due_date,
+      prio: this.edit_task_prio,
+      subtasks: this.edit_subtasks,
       id: this.detail_task[0].id
     }
     await this.taskService.updateTask(body)
@@ -328,7 +328,7 @@ export class BoardComponent implements OnInit {
   async clearSearchInputField() {
     this.task_search_value = ''
     await this.taskService.getAllTasks()
-    this.filterTaskbyStatus()
+    this.taskService.filterTaskbyStatus()
   }
 
   toggleAddTaskPopUp(status: string) {

@@ -42,6 +42,7 @@ export class AuthService {
     } catch (error) {
       this.request_error = true;
       setTimeout(() => this.request_error = false, 3000);
+      console.log(error);
     }
   }
 

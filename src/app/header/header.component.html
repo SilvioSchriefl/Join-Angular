@@ -1,7 +1,7 @@
 <div class="content">
     <span class="headline">Kanban Project Management Tool</span>
     <div class="circle_main">
-        <img src="/assets/img/help.png" alt="">
+        <img src="/assets/img/help.png" (click)="openHelpView()" >
         <div [style.background-color]="userService.user.color" class="circle" (click)="toggleLogoutMenu()" (click)="stopPropagation($event)">
            {{userService.user.initials}}
         </div>

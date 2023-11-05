@@ -9,6 +9,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board.component';
+import { HelpViewComponent } from './help-view/help-view.component';
 
 const routes: Routes = [
   {path: '', component:StartScreenComponent, children :[
@@ -19,7 +20,8 @@ const routes: Routes = [
     {path:'summary', component:SummaryComponent},
     {path:'contacts', component:ContactsComponent},
     {path:'add_task', component:AddTaskComponent},
-    {path:'board', component:BoardComponent}
+    {path:'board', component:BoardComponent},
+    {path:'help', component:HelpViewComponent}
   ]}
 ];
 

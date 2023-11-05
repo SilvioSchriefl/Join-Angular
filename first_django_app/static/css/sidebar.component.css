@@ -41,23 +41,24 @@
 }
 
 .note {
+  width: 100%;
   gap: 8px;
-  transission: 150ms;
+  transition: 150ms;
   cursor: pointer;
   position: absolute;
   bottom: 50px;
-  left: 50px;
-  color: #A8A8A8;
+  left: 0;
   font-size: 16px;
   display: flex;
   flex-direction: column;
 }
 .note span {
-  transission: 150ms;
+  color: #A8A8A8;
+  text-align: center;
+  transission: 250ms;
 }
 .note span:hover {
   color: #29ABE2;
-  font-weight: 500;
 }
 
 .link_child {

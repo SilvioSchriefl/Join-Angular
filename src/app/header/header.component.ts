@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public userService: UserService,
-    public gblFunctions: GlobalFunctionsService
+    public gblFunctions: GlobalFunctionsService,
+    private router: Router
   ) { }
 
 
@@ -44,4 +46,8 @@ export class HeaderComponent implements OnInit {
     event.stopPropagation();
   };
 
+
+  openHelpView() {
+    this.router.navigateByUrl('/main/help')
+  }
 }

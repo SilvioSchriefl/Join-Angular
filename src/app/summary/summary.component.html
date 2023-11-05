@@ -1,18 +1,65 @@
-<h2>To do</h2>
-<div class="container" cdkDropList id="todo" [cdkDropListConnectedTo]="['done']" [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)">
-  <div class="item" cdkDrag *ngFor="let item of todo">{{item}}</div>
-</div>
+<div class="summery_main">
+  <div class="header">
+    <span>Join 360</span>
+    <img src="/assets/img/blue_line.png">
+    <span>Key Metrics at a Glance</span>
+  </div>
 
-<h2>Done</h2>
-<div class="container" cdkDropList id="done" [cdkDropListConnectedTo]="['todo']" [cdkDropListData]="done" (cdkDropListDropped)="drop($event)">
-  <div class="item" cdkDrag *ngFor="let item of done">{{item}}</div>
-</div>
-<div class="test">
-  <label  class="checkbox">
-    <input class="checkbox__input" type="checkbox"  >
-    <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
-      <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
-      <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round" stroke-width="4" d="M4 10l5 5 9-9" />
-    </svg>>
-  </label>
+  <div class="detail_greet">
+    <div class="details_main">
+      <div class="todo_done">
+        <div class="todo_done_child" (click)="openBoard()">
+          <div class="image">
+            <img src="/assets/img/edit_sammery.png">
+          </div>
+          <div class="status_count">
+            <span>{{taskService.task_status_todo.length}}</span>
+            <span>To-do</span>
+          </div>
+        </div>
+        <div class="todo_done_child" (click)="openBoard()">
+          <div class="image">
+            <img src="/assets/img/summary_done.png">
+          </div>
+          
+          <div class="status_count">
+            <span>{{taskService.task_status_done.length}}</span>
+            <span>Done</span>
+          </div>
+        </div>
+      </div>
+      <div class="prio_date" (click)="openBoard()">
+        <div>
+          <img src="/assets/img/Frame 59.png">
+          <div class="status_count">
+            <span>{{urgent_count}}</span>
+            <span>Urgent</span>
+          </div>
+        </div>
+        <img src="/assets/img/summaryline.png">
+        <div class="deadline">
+          <span>{{dead_line}}</span>
+          <span>Upcoming Deadline</span>
+        </div>
+      </div>
+      <div class="task_progress">
+        <div class="status_task" (click)="openBoard()">
+          <span>{{taskService.all_tasks.length}}</span>
+          <span>Tasks in Board</span>
+        </div>
+        <div class="status_task" (click)="openBoard()">
+          <span>{{taskService.task_status_in_progress.length}}</span>
+          <span>Tasks in Progress</span>
+        </div>
+        <div class="status_task" (click)="openBoard()">
+          <span>{{taskService.task_status_await.length}}</span>
+          <span>Awaiting Feedback</span>
+        </div>
+      </div>
+    </div>
+    <div class="greet_main">
+      <span>{{greeting}}</span>
+      <span>{{userService.user.user_name}}</span>
+    </div>
+  </div>
 </div>
