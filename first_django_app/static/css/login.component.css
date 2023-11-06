@@ -30,9 +30,13 @@
 }
 
 .remember_me {
+  gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.remember_me input {
+  width: unset;
 }
 
 .request_successful {

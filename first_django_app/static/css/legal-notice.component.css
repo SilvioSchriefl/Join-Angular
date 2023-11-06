@@ -1,4 +1,6 @@
-.help_main {
+.legal_main {
+  font-size: 16px;
+  font-weight: 400;
   width: 1014px;
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@
   height: 100vh;
 }
 
-.help_scroll {
+.legal_scroll {
   height: 76%;
   overflow: auto;
   padding-right: 15px;
@@ -21,31 +23,23 @@
   font-weight: 700;
 }
 
-.description {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  font-size: 16px;
-  font-weight: 400;
+.imprint {
+  margin-top: 30px;
 }
-
-.sub_headline {
+.imprint span {
   font-size: 27px;
   font-weight: 700;
 }
 
-.list {
+.sub_headline {
   font-size: 20px;
   font-weight: 700;
-  padding-bottom: 20px;
 }
 
-.list_main {
-  margin-top: 20px;
+.sections {
   display: flex;
-  gap: 20px;
-}
-
-.text {
-  margin-left: 45px;
-}/*# sourceMappingURL=help-view.component.css.map */
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+  margin-top: 15px;
+}/*# sourceMappingURL=legal-notice.component.css.map */

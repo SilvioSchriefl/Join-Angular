@@ -30,10 +30,10 @@ export class SummaryComponent implements OnInit {
   async ngOnInit() {
     this.setGreeting();
     await this.taskService.getAllTasks()
-    this.taskService.filterTaskbyStatus()
+     this.taskService.filterTaskbyStatus()
     await this.getTasksUrgent()
     await this.userService.getUsersAndContacts()
-    this.getDeadline()
+    await this.getDeadline()
   }
 
   setGreeting() {
@@ -43,7 +43,7 @@ export class SummaryComponent implements OnInit {
     } else if (currentTime < 18) {
       this.greeting = 'Good afternoon';
     } else {
-      this.greeting = 'Guten Abend';
+      this.greeting = 'Good Evening';
     }
   }
 
@@ -56,15 +56,15 @@ export class SummaryComponent implements OnInit {
   }
 
 
-  getDeadline() {
+  async getDeadline() {
     let dates: any = []
     this.taskService.all_tasks.forEach((task: any) => dates.push(task.due_date))
     const currentDate: any = new Date(); 
     let nearestFutureDate = null;
     let minTimeDifference = Infinity;
     for (const dateStr of dates) {
-      const date: any = new Date(dateStr);
-      const timeDifference = date - currentDate;
+      const date: any = new Date(dateStr);   
+      const timeDifference = date - currentDate
       if (timeDifference > 0 && timeDifference < minTimeDifference) {
         nearestFutureDate = date;
         minTimeDifference = timeDifference;

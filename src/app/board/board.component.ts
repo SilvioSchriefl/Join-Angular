@@ -34,6 +34,7 @@ export class BoardComponent implements OnInit {
   edit_task_prio: string = ''
   edit_subtasks:any = []
   task_status_changed: boolean = false
+  animation: boolean = false
 
 
 
@@ -317,9 +318,11 @@ export class BoardComponent implements OnInit {
     await this.taskService.deleteTask(id)
     if (this.taskService.request_successful) {
       this.deleted = true
+      this.animation = true
       setTimeout(() => {
         this.globalService.open_task_details = false
         this.deleted = false
+        this.animation = false
       }, 2000)
     }
   }

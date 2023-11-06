@@ -140,6 +140,7 @@ export class TaskService {
       let url = environment.baseUrl + 'task/' + id + '/'
       try {
         await lastValueFrom(this.http.delete(url))
+        this.taskSubject.next(this.all_tasks);
         this.request_successful = true;
         setTimeout(() => this.request_successful = false , 2000);
       }

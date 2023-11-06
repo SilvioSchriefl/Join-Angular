@@ -15,4 +15,12 @@ export class SidebarComponent {
     this.route.navigateByUrl(`/main/${link}`);
   }
 
+  openLegalNotice() {
+    this.route.navigateByUrl('/main/legal_notice');
+  }
+
+  openPrivatePolicy() {
+    this.route.navigateByUrl('/main/private_policy');
+  }
+
 }

@@ -10,6 +10,8 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board.component';
 import { HelpViewComponent } from './help-view/help-view.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { PolicyComponent } from './policy/policy.component';
 
 const routes: Routes = [
   {path: '', component:StartScreenComponent, children :[
@@ -21,7 +23,9 @@ const routes: Routes = [
     {path:'contacts', component:ContactsComponent},
     {path:'add_task', component:AddTaskComponent},
     {path:'board', component:BoardComponent},
-    {path:'help', component:HelpViewComponent}
+    {path:'help', component:HelpViewComponent},
+    {path:'legal_notice', component:LegalNoticeComponent},
+    {path:'private_policy', component:PolicyComponent},
   ]}
 ];
 

@@ -1,33 +1,29 @@
 
-.checkbox 
-  cursor: pointer
-  display: flex
-  align-items: center
-
-  &__input 
-    position: absolute
-    width: 10px
-    height: 10px
-    opacity: 0
+.checkbox
     cursor: pointer
+    display: flex
+    align-items: center
 
-    &:checked + .checkbox__icon .tick 
-      stroke-dashoffset: 0
-    
-  
+    &__input
+        position: absolute
+        width: 10px
+        height: 10px
+        opacity: 0
+        cursor: pointer
 
-  &__icon 
-    width: 18px
-    height: 18px
-    flex-shrink: 0
-    overflow: visible
+        &:checked + .checkbox__icon .tick
+            stroke-dashoffset: 0
 
-    .tick 
-      stroke-dasharray: 20px
-      stroke-dashoffset: 20px
-      transition: stroke-dashoffset 0.2s ease-out
+    &__icon
+        width: 18px
+        height: 18px
+        flex-shrink: 0
+        overflow: visible
 
-
+        .tick
+            stroke-dasharray: 20px
+            stroke-dashoffset: 20px
+            transition: stroke-dashoffset 0.2s ease-out
 
 textarea
     border: 1px solid #D1D1D1
@@ -224,7 +220,6 @@ input[type=number]
 .hide_request_status
     animation: slight_out_bottom 0.5s ease-in-out
 
-
 .shadow
     position: absolute
     top: 0
@@ -243,9 +238,14 @@ input[type=number]
     display: flex !important
     transition: 300ms
 
+.remove_popup
+    animation: slide_out 300ms ease-in-out
+    visibility: hidden
+
 .no_pointer_events
     pointer-events: none
-
+    transition: 300ms
+    display: none
 .z_index
     z-index: 3 !important
 
@@ -277,6 +277,19 @@ input[type=number]
         transform: translateX(0%)
         opacity: 1
 
+@keyframes slide_out
+    0%
+        transform: translateX(0%)
+        opacity: 1
+        visibility: visible
+
+    100%
+        transform: translateX(200%)
+        opacity: 0
+        
 
 .d_none
     display: none !important
+
+.join
+    color: #29ABE2

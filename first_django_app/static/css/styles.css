@@ -278,8 +278,15 @@ input[type=number] {
   transition: 300ms;
 }
 
+.remove_popup {
+  animation: slide_out 300ms ease-in-out;
+  visibility: hidden;
+}
+
 .no_pointer_events {
   pointer-events: none;
+  transition: 300ms;
+  display: none;
 }
 
 .z_index {
@@ -317,6 +324,21 @@ input[type=number] {
     opacity: 1;
   }
 }
+@keyframes slide_out {
+  0% {
+    transform: translateX(0%);
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+}
 .d_none {
   display: none !important;
+}
+
+.join {
+  color: #29ABE2;
 }/*# sourceMappingURL=styles.css.map */

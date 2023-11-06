@@ -22,6 +22,8 @@ import { AddTaskComponent } from './add-task/add-task.component';
 import { BoardComponent } from './board/board.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HelpViewComponent } from './help-view/help-view.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { PolicyComponent } from './policy/policy.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { HelpViewComponent } from './help-view/help-view.component';
     AddTaskComponent,
     BoardComponent,
     HelpViewComponent,
+    LegalNoticeComponent,
+    PolicyComponent,
 
   ],
   imports: [

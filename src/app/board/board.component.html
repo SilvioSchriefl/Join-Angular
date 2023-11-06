@@ -203,7 +203,7 @@
 
 
 <div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) " [class.z_index]="userService.open_add_user"
-    [class.show_popup]="globalService.open_task_details">
+    [class.show_popup]="globalService.open_task_details" [class.remove_popup]="animation">
     <div class="task_detail_scroll">
         <div class="close" (click)="closeTaskDetails()">
             <img src="/assets/img/close.png">

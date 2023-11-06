@@ -13,7 +13,14 @@
             </div>
             
             <div class="remember_me" >
-                <input type="checkbox" id="myCheckbox" [(ngModel)]="checkBox_value" (change)="handleValueChange($event)" [ngModelOptions]="{standalone: true}" > 
+                <label class="checkbox">
+                    <input class="checkbox__input" type="checkbox" [(ngModel)]="checkBox_value" [ngModelOptions]="{standalone: true}" (change)="handleValueChange($event)">
+                    <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                        <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
+                        <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round"
+                            stroke-width="4" d="M4 10l5 5 9-9" />
+                    </svg>
+                </label>
                 <label for="myCheckbox">Remember me</label>
             </div>
 

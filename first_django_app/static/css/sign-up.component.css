@@ -24,6 +24,9 @@
   width: 100%;
   align-items: center;
 }
+.buttons input {
+  width: unset;
+}
 
 .checkbox {
   display: flex;
