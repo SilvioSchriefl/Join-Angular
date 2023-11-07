@@ -12,7 +12,7 @@
                     </div>
                 </div>
             </div>
-            <div class="blue_button" (click)="toggleAddTaskPopUp('todo')" (click)="globalService.stopPropagation($event)">
+            <div class="blue_button" (click)="openAddTask('todo')" (click)="globalService.stopPropagation($event)">
                 Add task
                 <img src="/assets/img/add (1).png">
             </div>
@@ -25,7 +25,7 @@
         <div class="task_status">
             <div class="status_text">
                 To do
-                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('todo')" (click)="globalService.stopPropagation($event)">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="openAddTask('todo')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="taskService.task_status_todo.length == 0 && !drag_start" class="empty_status">No tasks to do</div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="taskService.task_status_todo"
@@ -68,7 +68,7 @@
         <div class="task_status">
             <div class="status_text">
                 In progress
-                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('progress')" (click)="globalService.stopPropagation($event)">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="openAddTask('progress')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="taskService.task_status_in_progress.length == 0 && !drag_start" class="empty_status">No tasks in progress
             </div>
@@ -114,7 +114,7 @@
         <div class="task_status">
             <div class="status_text">
                 Await feedback
-                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('await')" (click)="globalService.stopPropagation($event)">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="openAddTask('await')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="taskService.task_status_await.length == 0 && !drag_start" class="empty_status">No tasks await feedback</div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="taskService.task_status_await"
@@ -158,7 +158,7 @@
         <div class="task_status">
             <div class="status_text">
                 Done
-                <img src="/assets/img/plus-button-darkblue.png" (click)="toggleAddTaskPopUp('done')" (click)="globalService.stopPropagation($event)">
+                <img src="/assets/img/plus-button-darkblue.png" (click)="openAddTask('done')" (click)="globalService.stopPropagation($event)">
             </div>
             <div *ngIf="taskService.task_status_done.length == 0 && !drag_start" class="empty_status">No tasks done</div>
             <div [ngClass]="{ 'droplist_border': drag_start }" cdkDropList [cdkDropListData]="taskService.task_status_done"
@@ -202,8 +202,8 @@
 <!---------------------------------------------------------------DETAIL-TASK----------------------------------------------------------------->
 
 
-<div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) " [class.z_index]="userService.open_add_user"
-    [class.show_popup]="globalService.open_task_details" [class.remove_popup]="animation">
+<div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) " [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation"
+    [class.show_popup]="globalService.open_task_details">
     <div class="task_detail_scroll">
         <div class="close" (click)="closeTaskDetails()">
             <img src="/assets/img/close.png">
@@ -298,7 +298,7 @@
 
 <!---------------------------------------------------------------EDIT TASK------------------------------------------------------------------->
 
-<div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)" [class.z_index]="userService.open_add_user">
+<div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)" [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation"> 
     <div class="task_detail_scroll" >
         <div class="close" (click)="backToTaskDetails()"  style="top: 19px" (click)="globalService.stopPropagation($event)">
             <img src="/assets/img/close.png">
@@ -459,7 +459,7 @@
         </div>
     </div>
 </div>
-<div [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component"*ngIf="globalService.open_add_task"  [class.show_popup]="globalService.open_add_task" (click)="globalService.stopPropagation($event)">
+<div [class.remove_popup]="globalService.animation" [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component" *ngIf="globalService.open_add_task"  [class.show_popup]="globalService.open_add_task" (click)="globalService.stopPropagation($event)">
     <div   class="close " (click)="toggleAddTaskPopUp('todo')">
         <img src="/assets/img/close.png">
     </div>

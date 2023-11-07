@@ -34,6 +34,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
+
+  goToRestorePassword() {
+    this.route.navigateByUrl('restore_pw');
+  }
+
   async logIn() {
     await this.auth.loginWithEmailAndPassword(this.email, this.password)
     if (this.auth.request_successful) {

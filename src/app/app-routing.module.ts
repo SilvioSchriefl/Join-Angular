@@ -12,11 +12,15 @@ import { BoardComponent } from './board/board.component';
 import { HelpViewComponent } from './help-view/help-view.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PolicyComponent } from './policy/policy.component';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 
 const routes: Routes = [
+  
   {path: '', component:StartScreenComponent, children :[
+    {path: 'restore_pw', component:RestorePasswordComponent},
     {path: 'login', component:LoginComponent},
-    {path:'sign_up', component:SignUpComponent}
+    {path:'sign_up', component:SignUpComponent},
+    {path:'private_policy', component:PolicyComponent},
   ]},
   {path:'main', component:MainComponent,  canActivate: [RouteGuardService], children : [
     {path:'summary', component:SummaryComponent},
@@ -25,8 +29,9 @@ const routes: Routes = [
     {path:'board', component:BoardComponent},
     {path:'help', component:HelpViewComponent},
     {path:'legal_notice', component:LegalNoticeComponent},
-    {path:'private_policy', component:PolicyComponent},
-  ]}
+   
+  ]},
+ 
 ];
 
 @NgModule({

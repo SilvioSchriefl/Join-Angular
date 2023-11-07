@@ -19,6 +19,9 @@
 }
 
 .buttons {
+  font-size: 16px;
+  font-weight: 400;
+  gap: 32px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -101,6 +104,19 @@
 
 .hide_request_status {
   animation: slight_out_bottom 0.5s ease-in-out;
+}
+
+.policy {
+  color: #29ABE2;
+  background: linear-gradient(to right, #F6F7F8, #F6F7F8), linear-gradient(to right, #29ABE2, #29ABE2);
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 29px, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 300ms;
+}
+.policy:hover {
+  background-size: 0 3px, 100% 3px;
+  color: #29ABE2;
 }
 
 input {

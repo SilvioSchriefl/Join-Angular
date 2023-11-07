@@ -32,9 +32,8 @@ export class BoardComponent implements OnInit {
   edit_task_description: string = ''
   edit_task_due_date: string = ''
   edit_task_prio: string = ''
-  edit_subtasks:any = []
+  edit_subtasks: any = []
   task_status_changed: boolean = false
-  animation: boolean = false
 
 
 
@@ -59,7 +58,7 @@ export class BoardComponent implements OnInit {
   }
 
 
-  
+
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
     let dones: any[] = []
@@ -133,8 +132,8 @@ export class BoardComponent implements OnInit {
 
 
   onItemDrop(event: CdkDragDrop<any>, status: string) {
-    if (event.previousContainer === event.container)  moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-     else {
+    if (event.previousContainer === event.container) moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -179,13 +178,15 @@ export class BoardComponent implements OnInit {
     this.edit_subtasks = []
     this.globalService.open_edit_task = true
     this.selected_user_emails = [...this.detail_task[0].assigned_emails]
-    this.edit_subtasks =  structuredClone(this.detail_task[0].subtasks)
+    this.edit_subtasks = structuredClone(this.detail_task[0].subtasks)
     this.getContactsForEditView()
   }
 
 
   closeTaskDetails() {
-    this.globalService.open_task_details = false
+    this.globalService.animation = true
+    setTimeout(() => this.globalService.open_task_details = false, 500);
+    setTimeout(() => this.globalService.animation = false, 600);
   }
 
 
@@ -270,7 +271,7 @@ export class BoardComponent implements OnInit {
 
 
   openEditSubtask(i: number) {
-    this.edit_subtasks.forEach((subtask:any) => subtask.selected = false) 
+    this.edit_subtasks.forEach((subtask: any) => subtask.selected = false)
     this.edit_subtasks[i].selected = true
     this.edited_subtask_title = this.edit_subtasks[i].title
   }
@@ -283,7 +284,7 @@ export class BoardComponent implements OnInit {
 
 
   async updateEditTask() {
-    this.edit_subtasks.forEach((subtask:any) => subtask.selected = false) 
+    this.edit_subtasks.forEach((subtask: any) => subtask.selected = false)
     let body = {
       assigned_emails: this.selected_user_emails,
       title: this.edit_task_title,
@@ -318,11 +319,9 @@ export class BoardComponent implements OnInit {
     await this.taskService.deleteTask(id)
     if (this.taskService.request_successful) {
       this.deleted = true
-      this.animation = true
       setTimeout(() => {
         this.globalService.open_task_details = false
         this.deleted = false
-        this.animation = false
       }, 2000)
     }
   }
@@ -335,9 +334,17 @@ export class BoardComponent implements OnInit {
   }
 
   toggleAddTaskPopUp(status: string) {
+      this.globalService.animation = true
+      setTimeout(() => this.globalService.open_add_task  = false, 500);
+      setTimeout(() => this.globalService.animation = false, 600);
+  }
+
+
+  openAddTask(status: string) {
     setTimeout(() => this.taskService.task_status = status, 200)
-    this.globalService.open_add_task = !this.globalService.open_add_task
+    this.globalService.open_add_task = true
   }
 }
+
 
 

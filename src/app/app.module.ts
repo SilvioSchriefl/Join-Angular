@@ -24,6 +24,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { HelpViewComponent } from './help-view/help-view.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PolicyComponent } from './policy/policy.component';
+import { RestorePasswordComponent } from './restore-password/restore-password.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { PolicyComponent } from './policy/policy.component';
     HelpViewComponent,
     LegalNoticeComponent,
     PolicyComponent,
+    RestorePasswordComponent,
 
   ],
   imports: [

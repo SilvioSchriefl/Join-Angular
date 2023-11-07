@@ -11,25 +11,30 @@
                 <input type="password" name="password" placeholder="Password" [(ngModel)]="password">
                 <img src="/assets/img/lock-icon.png" alt="">
             </div>
-            
-            <div class="remember_me" >
-                <label class="checkbox">
-                    <input class="checkbox__input" type="checkbox" [(ngModel)]="checkBox_value" [ngModelOptions]="{standalone: true}" (change)="handleValueChange($event)">
-                    <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
-                        <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
-                        <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round"
-                            stroke-width="4" d="M4 10l5 5 9-9" />
-                    </svg>
-                </label>
-                <label for="myCheckbox">Remember me</label>
-            </div>
 
+            <div class="remember_me">
+                <div>
+                    <label class="checkbox">
+                        <input class="checkbox__input" type="checkbox" [(ngModel)]="checkBox_value"
+                            [ngModelOptions]="{standalone: true}" (change)="handleValueChange($event)">
+                        <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                            <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
+                            <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round" stroke-width="4"
+                                d="M4 10l5 5 9-9" />
+                        </svg>
+                    </label>
+                    <label for="myCheckbox">Remember me</label>
+                </div>
+                <span (click)="goToRestorePassword()" class="password">Forgott may password</span>
+            </div>
             <div class="button_div">
                 <button class="blue_button" type="submit">Log in</button>
                 <button class="white_button">Guest Log in</button>
             </div>
         </form>
     </div>
-    <div  [class.show_request_status]="auth.request_successful" class="request_successful">Hello {{userService.user?.user_name}}</div>
-    <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error" class="request_successful" style="background-color: red;">Email or password incorrect</div>
+    <div [class.show_request_status]="auth.request_successful" class="request_successful">Hello
+        {{userService.user?.user_name}}</div>
+    <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error"
+        class="request_successful" style="background-color: red;">Email or password incorrect</div>
 </div>

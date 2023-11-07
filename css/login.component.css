@@ -30,10 +30,16 @@
 }
 
 .remember_me {
+  font-size: 16px;
+  font-weight: 400;
   gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.remember_me :nth-child(1) {
+  display: flex;
+  gap: 10px;
 }
 .remember_me input {
   width: unset;
@@ -64,6 +70,20 @@
 
 .hide_request_status {
   animation: slight_out_bottom 0.3s ease-in-out;
+}
+
+.password {
+  cursor: pointer;
+  color: #29ABE2;
+  background: linear-gradient(to right, #F6F7F8, #F6F7F8), linear-gradient(to right, #29ABE2, #29ABE2);
+  background-size: 100% 3px, 0 3px;
+  background-position: 100% 29px, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 300ms;
+}
+.password:hover {
+  background-size: 0 3px, 100% 3px;
+  color: #29ABE2;
 }
 
 input[type=checkbox] {

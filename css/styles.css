@@ -206,6 +206,14 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.d_none {
+  display: none !important;
+}
+
+.join {
+  color: #29ABE2;
+}
+
 .close {
   z-index: 1;
   display: flex;
@@ -270,6 +278,7 @@ input[type=number] {
   z-index: 4;
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.3);
+  animation: opacity_1 500ms ease-in-out;
 }
 
 .show_popup {
@@ -280,7 +289,12 @@ input[type=number] {
 
 .remove_popup {
   animation: slide_out 300ms ease-in-out;
-  visibility: hidden;
+  opacity: 0;
+}
+
+.remove_shadow {
+  animation: opacity_0 500ms ease-in-out;
+  opacity: 0;
 }
 
 .no_pointer_events {
@@ -293,6 +307,22 @@ input[type=number] {
   z-index: 3 !important;
 }
 
+@keyframes opacity_0 {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes opacity_1 {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 @keyframes slight_in_bottom {
   0% {
     opacity: 0;
@@ -328,17 +358,9 @@ input[type=number] {
   0% {
     transform: translateX(0%);
     opacity: 1;
-    visibility: visible;
   }
   100% {
     transform: translateX(200%);
     opacity: 0;
   }
-}
-.d_none {
-  display: none !important;
-}
-
-.join {
-  color: #29ABE2;
 }/*# sourceMappingURL=styles.css.map */

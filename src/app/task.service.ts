@@ -3,6 +3,7 @@ import { environment } from './enviroments/enviroments';
 import { UserService } from './user.service';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { GlobalFunctionsService } from './global-functions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class TaskService {
 
   constructor(
     public userService: UserService,
-    private http: HttpClient
+    private http: HttpClient,
+    private  globalService: GlobalFunctionsService
   ) { }
 
 
@@ -95,7 +97,10 @@ export class TaskService {
       this.all_tasks.push(response)
       this.taskSubject.next(this.all_tasks);
       this.request_successful = true;
+      this.globalService.animation = true
       setTimeout(() => this.request_successful = false, 2000);
+      setTimeout(() =>  this.globalService.animation = false , 2100);
+  
     }
     catch (error) {
       console.log(error);
@@ -124,7 +129,9 @@ export class TaskService {
       await lastValueFrom(this.http.patch(url, body))
       this.taskSubject.next(this.all_tasks);
       this.request_successful = true;
-      setTimeout(() => this.request_successful = false , 2000);
+      this.globalService.animation = true
+      setTimeout(() =>  this.request_successful = false , 2000);
+      setTimeout(() =>  this.globalService.animation = false , 2100);
     }
     catch (error) {
       this.request_error = true;
@@ -142,7 +149,9 @@ export class TaskService {
         await lastValueFrom(this.http.delete(url))
         this.taskSubject.next(this.all_tasks);
         this.request_successful = true;
-        setTimeout(() => this.request_successful = false , 2000);
+        this.globalService.animation = true
+        setTimeout(() =>  this.request_successful = false , 2000);
+        setTimeout(() =>  this.globalService.animation = false , 2100);
       }
       catch (error) {
         this.request_error = true;

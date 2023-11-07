@@ -58,6 +58,11 @@ export class SignUpComponent {
     this.router.navigateByUrl('/login');
   }
 
+
+  goToPolicy() {
+    this.router.navigateByUrl('/private_policy');
+  }
+
   dataChanged(value: string, inputfield: string) {
     this.email_valid = this.regexEmail.test(this.user_email)
    
