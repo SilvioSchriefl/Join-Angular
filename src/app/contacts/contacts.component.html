@@ -1,7 +1,7 @@
 <div class="content">
     <div class="sidebar">
         <div class="header">
-            <div class="blue_button " (click)="openPopup('add')" (click)="gblFunctions.stopPropagation($event)">
+            <div class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
                 <div class="add_button">
                     <span>Add new contact</span>
                     <img src="/assets/img/person_add.png" alt="">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="contact_detail_main" [class.show_contact_details]="userService.show_contact">
+    <div class="contact_detail_main" [class.show_contact_details]="userService.show_contact" [class.remove_popup]="globalService.animation && userService.open_delete_user && userService.request_successful">
         <div class="headline">
             <span>Contacts</span>
             <img src="/assets/img/blue_line.png" alt="">
@@ -47,11 +47,11 @@
                 
 
                     <div class="edit_delete">
-                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
                             <img src="/assets/img/edit.png" alt="">
                             <span>Edit</span>
                         </div>
-                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="gblFunctions.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
                             <img src="/assets/img/delete.png" alt="">
                             <span>Delete</span>
                         </div>

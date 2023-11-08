@@ -17,7 +17,7 @@ export class ContactsComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public gblFunctions: GlobalFunctionsService
+    public globalService: GlobalFunctionsService
     ) { }
 
 

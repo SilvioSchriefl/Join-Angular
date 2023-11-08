@@ -212,10 +212,9 @@
         </div>
     </div>
 </div>
-<div [class.show_request_status]="taskService.request_error && !userService.open_add_category && !userService.open_add_user"
-[class.hide_request_status]="!taskService.request_error" class="request_successful"
-style="background-color: red;">
-{{taskService.error_type}}
+<div [class.show_request_status]="taskService.request_error && !userService.open_add_category && !userService.open_add_user" [class.hide_request_status]="!taskService.request_error" class="request_successful" style="background-color: red;">
+    {{taskService.error_type}}
 </div>
-<div [class.show_request_status]="taskService.request_successful && !userService.open_add_category && !userService.open_add_user"
-class="request_successful">Task created successfully</div>
+<div [class.show_request_status_success]="taskService.request_successful && !userService.open_add_category && !userService.open_add_user"class="request_successful">
+    Task created successfully
+</div>  

@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { environment } from './enviroments/enviroments';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { GlobalFunctionsService } from './global-functions.service';
 
 @Injectable({
   providedIn: 'root'

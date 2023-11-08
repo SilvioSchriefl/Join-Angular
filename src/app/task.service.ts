@@ -42,6 +42,7 @@ export class TaskService {
     this.task_status_done = this.all_tasks.filter((task: any) => task.status === 'done')
   }
 
+
   async addCategory() {
     let url = environment.baseUrl + 'category/';
     let body = {
@@ -54,15 +55,17 @@ export class TaskService {
       this.all_categorys.push(response)
       this.userService.request_successful = true;
       setTimeout(() => {
-        this.request_successful = false
+        this.userService.request_successful = false
         this.userService.open_add_category = false
       }, 2000);
     }
     catch (error: any) {
       this.userService.request_error = true;
-      setTimeout(() => this.request_error = false, 2000);
-      if (error.error.detail) this.error_type = error.error.detail
-      else this.error_type = 'Error creating category'
+      setTimeout(() => this.userService.request_error = false, 2000);
+      if (error.error.detail) this.userService.error_type = error.error.detail
+      else this.userService.error_type = 'Error creating category'
+      console.log(error);
+      
     }
   }
 
@@ -96,19 +99,14 @@ export class TaskService {
       let response = await lastValueFrom(this.http.post(url, body));
       this.all_tasks.push(response)
       this.taskSubject.next(this.all_tasks);
-      this.request_successful = true;
-      this.globalService.animation = true
-      setTimeout(() => this.request_successful = false, 2000);
-      setTimeout(() =>  this.globalService.animation = false , 2100);
-  
+      this.setBoolians()
     }
-    catch (error) {
-      console.log(error);
+    catch (error: any) {
       this.request_error = true;
       setTimeout(() => this.request_error = false, 2000);
+      if (error.error.detail) this.error_type = error.error.detail
+      else this.error_type = 'Error creating Task'
     }
-    console.log(this.all_tasks);
-
   }
 
 
@@ -128,10 +126,7 @@ export class TaskService {
     try {
       await lastValueFrom(this.http.patch(url, body))
       this.taskSubject.next(this.all_tasks);
-      this.request_successful = true;
-      this.globalService.animation = true
-      setTimeout(() =>  this.request_successful = false , 2000);
-      setTimeout(() =>  this.globalService.animation = false , 2100);
+      this.setBoolians()
     }
     catch (error) {
       this.request_error = true;
@@ -148,10 +143,7 @@ export class TaskService {
       try {
         await lastValueFrom(this.http.delete(url))
         this.taskSubject.next(this.all_tasks);
-        this.request_successful = true;
-        this.globalService.animation = true
-        setTimeout(() =>  this.request_successful = false , 2000);
-        setTimeout(() =>  this.globalService.animation = false , 2100);
+        this.setBoolians()
       }
       catch (error) {
         this.request_error = true;
@@ -159,5 +151,13 @@ export class TaskService {
         this.error_type = 'Error delete task'
       }
     }
+  }
+
+
+  setBoolians() {
+    this.request_successful = true;
+    this.globalService.animation = true
+    setTimeout(() =>  this.request_successful = false , 2000);
+    setTimeout(() =>  this.globalService.animation = false , 2100);
   }
 }

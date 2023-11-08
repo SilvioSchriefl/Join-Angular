@@ -12,25 +12,36 @@ export class GlobalFunctionsService {
   open_add_task: boolean = false
   animation: boolean = false
 
-
-
   constructor(
     public userService: UserService,
   ) {
     window.addEventListener('click', (event) => {
-      if (this.menu_open) this.menu_open = false;
-      if (this.userService.open_add_user) this.userService.open_add_user = false;
-      if (this.userService.open_edit_user) this.userService.open_edit_user = false;
-      if (this.userService.open_delete_user) this.userService.open_delete_user = false;
-      if (this.userService.open_add_category) this.userService.open_add_category = false
-      if (this.open_edit_task) this.open_edit_task = false
-      if (this.open_task_details) this.open_task_details = false
-      if (this.open_add_task) {
-        this.animation = true
-        setTimeout(() => this.open_add_task = false, 500);
-        setTimeout(() => this.animation = false, 600);
+      const conditions = [
+        this.userService.open_add_user,
+        this.userService.open_edit_user,
+        this.userService.open_delete_user,
+        this.userService.open_add_category,
+        this.open_edit_task,
+        this.open_task_details,
+        this.open_add_task,
+      ];
+
+      for (const condition of conditions) {
+        if (condition) {
+          this.animation = true;
+          setTimeout(() => {
+            if (condition === this.userService.open_add_user) this.userService.open_add_user = false;
+            else if (condition === this.userService.open_edit_user) this.userService.open_edit_user = false;
+            else if (condition === this.userService.open_delete_user) this.userService.open_delete_user = false;
+            else if (condition === this.userService.open_add_category) this.userService.open_add_category = false;
+            else if (condition === this.open_edit_task) this.open_edit_task = false;
+            else if (condition === this.open_task_details) this.open_task_details = false;
+            else if (condition === this.open_add_task) this.open_add_task = false;
+            this.animation = false;
+          }, 600);
+        }
       }
-    })
+    });
   }
 
 

@@ -29,6 +29,7 @@ const routes: Routes = [
     {path:'board', component:BoardComponent},
     {path:'help', component:HelpViewComponent},
     {path:'legal_notice', component:LegalNoticeComponent},
+    {path:'private_policy', component:PolicyComponent},
    
   ]},
  

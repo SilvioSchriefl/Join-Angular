@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     public auth: AuthService,
     public userService: UserService,
-    public gblFunctions: GlobalFunctionsService,
+    public globalService: GlobalFunctionsService,
     private router: Router
   ) { }
 
@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleLogoutMenu() {
-    this.gblFunctions.menu_open = !this.gblFunctions.menu_open;
+    this.globalService.menu_open = !this.globalService.menu_open;
   }
 
 
@@ -49,5 +49,11 @@ export class HeaderComponent implements OnInit {
 
   openHelpView() {
     this.router.navigateByUrl('/main/help')
+  }
+
+
+  navigateTo(link: string) {
+    this.globalService.menu_open = false
+    this.router.navigateByUrl(`/main/${link}`)
   }
 }

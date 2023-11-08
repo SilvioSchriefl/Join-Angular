@@ -202,7 +202,7 @@
 <!---------------------------------------------------------------DETAIL-TASK----------------------------------------------------------------->
 
 
-<div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) " [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation"
+<div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) " [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !open_dropdown"
     [class.show_popup]="globalService.open_task_details">
     <div class="task_detail_scroll">
         <div class="close" (click)="closeTaskDetails()">
@@ -298,7 +298,7 @@
 
 <!---------------------------------------------------------------EDIT TASK------------------------------------------------------------------->
 
-<div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)" [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation"> 
+<div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)" [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !open_dropdown"> 
     <div class="task_detail_scroll" >
         <div class="close" (click)="backToTaskDetails()"  style="top: 19px" (click)="globalService.stopPropagation($event)">
             <img src="/assets/img/close.png">
@@ -468,7 +468,8 @@
 
 <div *ngIf="this.globalService.open_task_details" [class.show_request_status]="taskService.request_error" [class.hide_request_status]="!taskService.request_error"
     class="request_successful" style="background-color: red;">{{taskService.error_type}}</div>
-<div *ngIf="this.globalService.open_task_details && !task_status_changed" [class.show_request_status]="taskService.request_successful" class="request_successful">
-    <span *ngIf="!deleted">Task updated successfully</span>
-    <span *ngIf="deleted">Task deleted successfully</span>
+<div *ngIf="this.globalService.open_task_details || taskService.request_successful && !task_status_changed" [class.show_request_status_success]="taskService.request_successful" class="request_successful">
+    <span *ngIf="!deleted && !globalService.open_add_task">Task updated successfully</span>
+    <span *ngIf="deleted && !globalService.open_add_task">Task deleted successfully</span>
+    <span *ngIf="globalService.open_add_task">Task created successfully</span>
 </div>

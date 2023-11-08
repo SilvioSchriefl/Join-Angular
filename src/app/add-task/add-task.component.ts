@@ -158,7 +158,7 @@ export class AddTaskComponent implements OnInit {
       this.taskService.deleteCategory(i)
       this.deleted = false
     }, 190);
-    
+
   }
 
 
@@ -212,10 +212,10 @@ export class AddTaskComponent implements OnInit {
   }
 
 
-  createTask() {
-    if (this.task_title.length === 0 ) this.title_error = true 
-    if (this.selected_category.length === 0 ) this.category_error = true 
-    if (this.selected_category.length === 0 || this.task_title.length == 0 ) return
+  async createTask() {
+    if (this.task_title.length === 0) this.title_error = true
+    if (this.selected_category.length === 0) this.category_error = true
+    if (this.selected_category.length === 0 || this.task_title.length == 0) return
     let body = {
       title: this.task_title,
       description: this.description,
@@ -227,18 +227,20 @@ export class AddTaskComponent implements OnInit {
       subtasks: this.subtasks,
       prio: this.prio,
     }
-    this.taskService.addTask(body)
-    this.clearAll()
-    setTimeout(() => {
-      this.router.navigateByUrl('/main/board')
-      this.globalService.open_add_task = false
-    } , 2000)
-    
+    await this.taskService.addTask(body)
+
+    if (this.taskService.request_successful) {
+      this.clearAll()
+      setTimeout(() => {
+        this.router.navigateByUrl('/main/board')
+        this.globalService.open_add_task = false
+      }, 2000)
+    }
   }
 
 
-  removeError(error:string) {
-     if(error == 'title') this.title_error = false
+  removeError(error: string) {
+    if (error == 'title') this.title_error = false
     if (error == 'category') this.category_error = false
   }
 }
