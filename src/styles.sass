@@ -66,7 +66,6 @@ a.tel-link
     text-decoration: none
 
 input
-    padding-top: 6px
     font-family: inherit
     font-size: inherit
     line-height: inherit
@@ -264,8 +263,19 @@ input[type=number]
     transition: 300ms
     display: none
 
+.invalid
+    background-color: #686868
+    &:hover
+        background-color: #686868
+        cursor: not-allowed
+        box-shadow: none
+
 .z_index
     z-index: 3 !important
+
+.slide_out
+    animation: slide_out 0.4s ease-in-out
+    opacity: 0
 
 @keyframes opacity_0
     0%
@@ -285,11 +295,10 @@ input[type=number]
     0%
         opacity: 0
         bottom: 0
-        
+
     100%
         opacity: 1
         bottom: 10%
-        
 
 @keyframes slight_in_out_bottom
     0%
@@ -335,3 +344,23 @@ input[type=number]
     100%
         transform: translateX(200%)
         opacity: 0
+
+@media (max-width: 510px)
+
+    input
+        height: 40px
+        &::-webkit-input-placeholder
+            font-size: 16px
+
+    textarea
+        height: 60px
+        &::-webkit-input-placeholder
+            font-size: 16px
+
+@media (max-height: 800px)
+
+    .blue_button
+        height: 40px
+
+    .white_button
+        height: 40px

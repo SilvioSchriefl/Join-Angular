@@ -24,6 +24,7 @@ export class GlobalFunctionsService {
         this.open_edit_task,
         this.open_task_details,
         this.open_add_task,
+        this.menu_open,
       ];
 
       for (const condition of conditions) {
@@ -37,6 +38,7 @@ export class GlobalFunctionsService {
             else if (condition === this.open_edit_task) this.open_edit_task = false;
             else if (condition === this.open_task_details) this.open_task_details = false;
             else if (condition === this.open_add_task) this.open_add_task = false;
+            else if (condition === this.menu_open) this.menu_open = false;
             this.animation = false;
           }, 600);
         }

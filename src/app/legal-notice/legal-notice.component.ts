@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-legal-notice',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class LegalNoticeComponent {
 
+  constructor(public router: Router,) {
+    
+  }
 }

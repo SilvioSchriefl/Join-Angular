@@ -1,19 +1,37 @@
 .headline {
   font-weight: 700;
   font-size: 61px;
-  position: absolute;
+  position: sticky;
+  top: 0px;
   left: 0;
-  top: -100px;
+  z-index: 3;
+  background-color: #F6F7F8;
+  width: 992px;
+  padding: 50px 0;
 }
 
 .task_main {
-  margin-top: 50px;
-  position: absolute;
-  left: calc(50% - 490px);
-  top: 10%;
+  padding-top: 100px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-weight: 400;
   font-size: 20px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.task_main_scroll {
+  font-weight: 400;
+  font-size: 20px;
+  box-sizing: border-box;
+  padding: 5px;
   display: flex;
+  justify-content: center;
+  position: relative;
 }
 
 .task_side {
@@ -32,6 +50,7 @@
 }
 
 .input_title_hide {
+  z-index: 1;
   border-radius: 10px;
   gap: 8px;
   position: relative;
@@ -142,11 +161,11 @@
 }
 
 .send_buttons {
-  top: 530px;
-  position: absolute;
-  right: 0;
   display: flex;
   gap: 16px;
+  position: absolute;
+  top: 525px;
+  right: 0;
 }
 
 .required {
@@ -158,6 +177,8 @@
 
 .parting {
   margin: 0 50px;
+  width: 2px;
+  height: 450px;
 }
 
 .contacts_scroll_div {
@@ -168,7 +189,8 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: calc(100% - 30px);
+  max-height: 150px;
+  min-height: 55px;
   padding-left: 17px;
   padding-right: 17px;
 }
@@ -183,7 +205,7 @@
   background-color: #fff;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-  padding-bottom: 40px;
+  padding-bottom: 10px;
 }
 
 .selected {
@@ -204,8 +226,6 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-weight: 400;
-  font-size: 20px;
   border-radius: 10px;
   height: 56px;
   padding: 7px 16px;
@@ -240,11 +260,27 @@
 }
 
 .selected_contacts {
-  flex-wrap: wrap;
+  box-sizing: border-box;
+  width: 440px;
   position: absolute;
   top: 90px;
-  left: 15px;
+  left: 0px;
   display: flex;
+  padding: 6px;
+  overflow: hidden;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1607843137);
+  background-color: #F6F7F8;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.scroll_div_contacts {
+  padding-left: 13px;
+  flex-wrap: wrap;
+  display: flex;
+  max-height: 45px;
+  overflow: auto;
+  gap: 5px;
 }
 
 .urgent {
@@ -296,8 +332,6 @@ footer {
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-weight: 400;
-  font-size: 20px;
   border-radius: 10px;
   height: 56px;
   padding: 7px 16px;
@@ -321,8 +355,8 @@ footer {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 100%;
   transition: 150ms;
   padding: 3px;
@@ -342,13 +376,23 @@ footer {
   gap: 10px;
 }
 
-.subtask_main {
-  max-height: 100px;
+.subtasks_main {
+  padding: 6px;
+  overflow: hidden;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1607843137);
+  background-color: #F6F7F8;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.subtasks_main span {
+  padding-left: 13px;
 }
 
-.subtask_scroll {
-  height: 100%;
-  overflow: auto;
+.scroll_div {
+  max-height: 100px;
+  overflow-y: auto;
+  gap: 5px;
+  overflow-x: hidden;
 }
 
 .subtask {
@@ -378,26 +422,22 @@ footer {
 }
 .input input {
   height: 32px;
-  padding: 4px, 16px, 4px, 16px;
+  padding: 4px 16px 4px 19px;
   border-radius: 0px;
   width: 100%;
   border-bottom: 1px solid #29ABE2;
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  justify: space-between;
 }
 
 .subtask_img_input {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 20px;
+  top: 3px;
   display: flex;
   align-items: center;
   gap: 5px;
-}
-.subtask_img_input img {
-  cursor: pointer;
 }
 
 .show_element {
@@ -421,20 +461,6 @@ footer {
   display: flex;
 }
 
-.invalid {
-  background-color: #686868;
-}
-.invalid:hover {
-  background-color: #686868;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.deleted {
-  animation: slide-right 200ms ease-in-out;
-  transform: translateX(100%);
-}
-
 @keyframes slide-up {
   0% {
     transform: translateY(-100%);
@@ -451,11 +477,70 @@ footer {
     transform: translateY(-100%);
   }
 }
-@keyframes slide-right {
-  0% {
-    transform: translateX(0);
+@media (max-width: 1350px) {
+  .required {
+    top: 694px;
+    right: 0;
   }
-  100% {
-    transform: translateX(100%);
+  .task_main {
+    flex-direction: column;
+    left: calc(50% - 220px);
+  }
+  .parting {
+    display: none;
+  }
+  .task_side_mobile {
+    position: absolute;
+    top: 452px;
+    padding-bottom: 50px;
+  }
+  .send_buttons {
+    position: unset;
+    margin-top: 50px;
+    justify-content: flex-end;
+  }
+  .headline {
+    width: 440px;
+  }
+}
+@media (max-width: 510px) {
+  .dropdown_search {
+    top: 8px;
+  }
+  .headline {
+    font-size: 47px;
+    width: 90%;
+    padding: 40px 0;
+  }
+  .task_main_scroll {
+    width: 90%;
+    font-size: 16px !important;
+  }
+  .selected_contacts {
+    width: 100%;
+    top: 76px;
+  }
+  .circle {
+    width: 36px;
+    height: 36px;
+  }
+  .task_side_mobile {
+    width: 100%;
+    top: 355px;
+  }
+  .prio {
+    width: 120px;
+    height: 41px;
+  }
+  .dropdown_menu {
+    height: 40px;
+  }
+  .add {
+    top: 35px;
+  }
+  .required {
+    top: 619px;
+    right: 0;
+    font-size: 14px;
   }
 }/*# sourceMappingURL=add-task.component.css.map */

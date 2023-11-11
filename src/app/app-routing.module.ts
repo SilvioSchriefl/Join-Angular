@@ -21,6 +21,7 @@ const routes: Routes = [
     {path: 'login', component:LoginComponent},
     {path:'sign_up', component:SignUpComponent},
     {path:'private_policy', component:PolicyComponent},
+    {path:'legal_notice', component:LegalNoticeComponent},
   ]},
   {path:'main', component:MainComponent,  canActivate: [RouteGuardService], children : [
     {path:'summary', component:SummaryComponent},

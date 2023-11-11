@@ -11,8 +11,4 @@ export class PolicyComponent {
   constructor(public router: Router,) {
     
   }
-
-  goTosignUp() {
-    this.router.navigateByUrl('sign_up');
-  }
 }

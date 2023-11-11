@@ -1,17 +1,24 @@
-<div class="shadow" [class.remove_shadow]="globalService.animation" [class.show_shadow]="userService.open_add_user || globalService.open_add_task || globalService.open_edit_task || this.globalService.open_task_details || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
-    <div [class.remove_popup]="globalService.animation" class="popup_main" (click)="globalService.stopPropagation($event)" [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+<div class="shadow" [class.remove_shadow]="globalService.animation"
+    [class.show_shadow]="userService.open_add_user || globalService.open_add_task || globalService.open_edit_task || this.globalService.open_task_details || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+    <div [class.remove_popup]="globalService.animation" class="popup_main"
+        (click)="globalService.stopPropagation($event)"
+        [class.show_popup]="userService.open_add_user || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
+        <div class="close_mobile" (click)="closePopup()">
+            <img src="/assets/img/close.png">
+        </div>
         <div class="blue_side">
+
             <img src="/assets/img/Capa 2.png">
             <span *ngIf="userService.open_add_category">Add Category</span>
             <span *ngIf="userService.open_delete_user">Delete Contact</span>
             <span *ngIf="userService.open_edit_user">Edit Contact</span>
             <span *ngIf="userService.open_add_user">Add Contact</span>
-            <span *ngIf="userService.open_add_user" >Tasks are better with a team!</span>
-            <span *ngIf="userService.open_add_category" >Tasks are better with a category!</span>
+            <span *ngIf="userService.open_add_user">Tasks are better with a team!</span>
+            <span *ngIf="userService.open_add_category">Tasks are better with a category!</span>
             <img src="/assets/img/Vector 5.png">
         </div>
         <div class="white_side">
-            <div class="close" (click)="closePopup()">
+            <div class="close mobile" (click)="closePopup()">
                 <img src="/assets/img/close.png">
             </div>
             <div class="circle_input">
@@ -22,63 +29,73 @@
                 <div *ngIf="userService.open_add_category" class="circle_detail">
                     <img src="/assets/img/category.png" alt="">
                 </div>
-                <div *ngIf="userService.open_edit_user || userService.open_delete_user" class="circle_detail_edit" [style.background-color]="userService.user_details.color">
+                <div *ngIf="userService.open_edit_user || userService.open_delete_user" class="circle_detail_edit"
+                    [style.background-color]="userService.user_details.color">
                     <span>{{userService.user_details.initials}}</span>
                 </div>
 
 
-                <div class="input_div" *ngIf="userService.open_add_user || userService.open_edit_user || userService.open_delete_user; else elseBlock">
+                <div class="input_div"
+                    *ngIf="userService.open_add_user || userService.open_edit_user || userService.open_delete_user; else elseBlock">
                     <div class="input_field">
-                        <input type="text" placeholder="Name" [(ngModel)]="userService.user_name" (focus)="inputFocus('name')" [disabled]="userService.open_delete_user">
+                        <input type="text" placeholder="Name" [(ngModel)]="userService.user_name"
+                            (focus)="inputFocus('name')" [disabled]="userService.open_delete_user">
                         <img src="/assets/img/person-icon.png" alt="">
-                        <span class="error" *ngIf="userService.user_name_empty" >This field is required</span>
+                        <span class="error" *ngIf="userService.user_name_empty">This field is required</span>
                     </div>
                     <div class="input_field">
-                        <input type="text" placeholder="Email" [(ngModel)]="userService.user_email" (ngModelChange)="dataChanged($event)" maxlength="40" (focus)="inputFocus('email')" [disabled]="userService.open_delete_user">
+                        <input type="text" placeholder="Email" [(ngModel)]="userService.user_email"
+                            (ngModelChange)="dataChanged($event)" maxlength="40" (focus)="inputFocus('email')"
+                            [disabled]="userService.open_delete_user">
                         <img src="/assets/img/letter-icon.png" alt="">
-                        <span class="error" *ngIf="!userService.email_valid" >Please enter a valid email address</span>
+                        <span class="error" *ngIf="!userService.email_valid">Please enter a valid email address</span>
                     </div>
                     <div class="input_field">
-                        <input type="number" placeholder="Phone" [(ngModel)]="userService.user_phone" maxlength="30" [disabled]="userService.open_delete_user">
+                        <input type="number" placeholder="Phone" [(ngModel)]="userService.user_phone" maxlength="30"
+                            [disabled]="userService.open_delete_user">
                         <img src="/assets/img/call.png" alt="">
                     </div>
-                   
+
                     <div class="button_div">
-                        <div class="white_button" (click)="closePopup()"  >Cancel</div>
-                        <div class="blue_button" (click)="handleAction()" [class.invalid]=" !userService.email_valid || !userService.user_name">
-                          <span *ngIf="userService.open_add_user" >Create ontact</span> 
-                          <span *ngIf="userService.open_edit_user" >Save</span> 
-                          <span *ngIf="userService.open_delete_user" >Delete</span>
-                          <img src="/assets/img/check.png" alt="">
+                        <div class="white_button padding" (click)="closePopup()">Cancel</div>
+                        <div class="blue_button padding" (click)="handleAction()"
+                            [class.invalid]=" !userService.email_valid || !userService.user_name">
+                            <span *ngIf="userService.open_add_user">Create contact</span>
+                            <span *ngIf="userService.open_edit_user">Save</span>
+                            <span *ngIf="userService.open_delete_user">Delete</span>
+                            <img src="/assets/img/check.png" alt="">
                         </div>
                     </div>
                 </div>
 
 
                 <ng-template #elseBlock>
-                    <div  class="input_div">
-                    <div class="input_field">
-                        <input type="text" placeholder="Title" [(ngModel)]="userService.category_title" (focus)="inputFocus('name')" maxlength="30">
-                        <img src="/assets/img/edit_square.png" alt="">
-                        <span class="error" *ngIf="userService.user_name_empty" >This field is required</span>
-                    </div>
-                    <div class="button_div">
-                        <div class="white_button" (click)="closePopup()">Cancel</div>
-                        <div class="blue_button" (click)="handleAction()" [class.invalid]="  !userService.category_title">
-                          <span>Create category</span> 
-                          <img src="/assets/img/check.png" alt="">
+                    <div class="input_div">
+                        <div class="input_field">
+                            <input type="text" placeholder="Title" [(ngModel)]="userService.category_title"
+                                (focus)="inputFocus('name')" maxlength="30">
+                            <img src="/assets/img/edit_square.png" alt="">
+                            <span class="error" *ngIf="userService.user_name_empty">This field is required</span>
+                        </div>
+                        <div class="button_div">
+                            <div class="white_button" (click)="closePopup()">Cancel</div>
+                            <div class="blue_button" (click)="handleAction()"
+                                [class.invalid]="  !userService.category_title">
+                                <span>Create category</span>
+                                <img src="/assets/img/check.png" alt="">
+                            </div>
                         </div>
                     </div>
-                </div>
-                </ng-template>  
+                </ng-template>
             </div>
         </div>
     </div>
 </div>
-<div *ngIf="userService.request_error" [class.show_request_status_success]="userService.request_error "  class="request_successful" style="background-color: red;">{{userService.error_type}}</div>
-<div  [class.show_request_status_success]="userService.request_successful" class="request_successful">
-   <span *ngIf="userService.open_add_user">Contact created succesfully</span> 
-   <span *ngIf="userService.open_edit_user">Contact edited succesfully</span>
-   <span *ngIf="userService.open_delete_user">Contact deleted succesfully</span>
-   <span *ngIf="userService.open_add_category">Category created succesfully</span>
+<div *ngIf="userService.request_error" [class.show_request_status_success]="userService.request_error "
+    class="request_successful" style="background-color: red;">{{userService.error_type}}</div>
+<div [class.show_request_status_success]="userService.request_successful" class="request_successful">
+    <span *ngIf="userService.open_add_user">Contact created succesfully</span>
+    <span *ngIf="userService.open_edit_user">Contact edited succesfully</span>
+    <span *ngIf="userService.open_delete_user">Contact deleted succesfully</span>
+    <span *ngIf="userService.open_add_category">Category created succesfully</span>
 </div>

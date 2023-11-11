@@ -23,7 +23,7 @@ export class BoardComponent implements OnInit {
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
   selected_user_emails: any = []
-  selected_users_list: any = []
+  contact_selection_list: any = []
   subtask_title: string = ''
   edited_subtask_title: string = ''
   deleted: boolean = false
@@ -34,6 +34,7 @@ export class BoardComponent implements OnInit {
   edit_task_prio: string = ''
   edit_subtasks: any = []
   task_status_changed: boolean = false
+  selected_contacts: any = []
 
 
 
@@ -105,23 +106,35 @@ export class BoardComponent implements OnInit {
     let edit_contacts = [...this.userService.all_users]
     edit_contacts.forEach((user: { [x: string]: any; email: any; }) => {
       user['selected'] = this.detail_task[0].assigned_emails.includes(user.email);
+      if (user['selected'] === true) this.selected_contacts.push(user)
     });
-    this.selected_users_list = edit_contacts;
+    this.contact_selection_list = edit_contacts;
   }
 
 
   selectContact(email: string, i: number) {
-    let contact_selected = this.selected_users_list[i].selected
+    this.updateSelectedContacts(email)
+    let contact_selected = this.contact_selection_list[i].selected
     if (contact_selected) {
-      this.selected_users_list[i].selected = false
-      let index = this.selected_user_emails.findIndex((mail: string) => mail === email);
-      this.selected_user_emails.splice(index, 1);
+      this.contact_selection_list[i].selected = false
+      let list_index = this.selected_user_emails.findIndex((mail: string) => mail === email);
+      this.selected_user_emails.splice(list_index, 1);
     }
     else {
-      this.selected_users_list[i].selected = true
+      this.contact_selection_list[i].selected = true
       this.selected_user_emails.push(email);
     }
   }
+
+
+  updateSelectedContacts(email: string) {
+    let user_index = this.userService.all_users.findIndex((user: { email: string; }) => user.email === email);
+    let index = this.selected_contacts.findIndex((contact:any) => contact.email === email)
+    console.log(index)
+    if(index != -1) this.selected_contacts.splice(index, 1)
+    else this.selected_contacts.push(this.userService.all_users[user_index])
+  }
+
 
 
   getNumberOfContacts(i: number, status: string) {
@@ -208,7 +221,6 @@ export class BoardComponent implements OnInit {
   toggleDropDownMenu() {
     this.open_dropdown = !this.open_dropdown;
     if (this.open_dropdown) this.search_value = ''
-    else this.getContactsForEditView()
     if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
     else this.rotationValue = 'rotate(0deg)'
   }
@@ -216,7 +228,7 @@ export class BoardComponent implements OnInit {
 
   async handleValueChangeOnSearch(value: any, object: string) {
     if (object == 'contact') {
-      this.selected_users_list = this.userService.all_users.filter((user: { user_name: string }) =>
+      this.contact_selection_list = this.userService.all_users.filter((user: { user_name: string }) =>
         user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
       );
     }
@@ -256,7 +268,7 @@ export class BoardComponent implements OnInit {
     setTimeout(() => {
       this.edit_subtasks.splice(i, 1)
       this.deleted = false
-    }, 200)
+    }, 400)
   }
 
 
@@ -334,9 +346,9 @@ export class BoardComponent implements OnInit {
   }
 
   toggleAddTaskPopUp(status: string) {
-      this.globalService.animation = true
-      setTimeout(() => this.globalService.open_add_task  = false, 500);
-      setTimeout(() => this.globalService.animation = false, 600);
+    this.globalService.animation = true
+    setTimeout(() => this.globalService.open_add_task = false, 500);
+    setTimeout(() => this.globalService.animation = false, 600);
   }
 
 

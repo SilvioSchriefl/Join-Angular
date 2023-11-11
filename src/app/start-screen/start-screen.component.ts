@@ -18,4 +18,9 @@ export class StartScreenComponent implements OnInit {
     this.router.navigateByUrl('/sign_up');
   }
 
+
+  navigateTo(link: string) {
+    this.router.navigateByUrl(`/${link}`)
+  }
+
 }

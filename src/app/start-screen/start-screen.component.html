@@ -12,6 +12,11 @@
 <div class="join_user"  *ngIf="router.url === '/login'" >
     <span>Not a Join user?</span>
     <button (click)="signUp()" class="blue_button" >Sign up</button>
-    
+   
+</div>
+<div class="imprint" *ngIf="router.url === '/login' || router.url === '/sign_up'" >
+    <span (click)="navigateTo('legal_notice')">Legal Notice</span>
+    <span (click)="navigateTo('private_policy')">Privacy Policy</span>
 </div>
 <router-outlet class="content" ></router-outlet>
+

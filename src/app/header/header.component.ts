@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
+  animation: boolean= false 
 
   
 
@@ -38,13 +39,16 @@ export class HeaderComponent implements OnInit {
   }
 
   toggleLogoutMenu() {
-    this.globalService.menu_open = !this.globalService.menu_open;
+    if (this.globalService.menu_open){
+      this.animation = true
+      setTimeout(() => {
+        this.animation = false
+        this.globalService.menu_open = false
+      }  , 300)
+    } 
+    else this.globalService.menu_open = true
+    
   }
-
-
-  stopPropagation(event: Event) {
-    event.stopPropagation();
-  };
 
 
   openHelpView() {

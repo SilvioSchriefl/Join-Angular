@@ -6,7 +6,7 @@
     left: 350px
 
 .circle
-    transition: 150ms 
+    transition: 150ms
     cursor: pointer
     display: flex
     justify-content: center
@@ -63,5 +63,27 @@
             color: white
             background-color: #091931
 
-.show_menu
-    display: flex
+.logo_mobile
+    position: absolute
+    top: 28px
+    left: 38px
+    display: none
+    width: 32px
+    height: 39.02px
+
+@media (max-width: 900px)
+
+    .headline
+        display: none
+
+    .logo_mobile
+        display: flex
+
+
+@media (max-width: 510px)
+    
+    .circle_main
+        right: 20px
+
+    .logout
+        right: 20px

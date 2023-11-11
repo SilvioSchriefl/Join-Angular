@@ -29,7 +29,7 @@ textarea {
   border: 1px solid #D1D1D1;
   resize: none;
   outline: none;
-  padding: 5px 21px;
+  padding: 10px;
   height: 120px;
   border-radius: 10px;
   font-family: inherit;
@@ -75,7 +75,6 @@ a.tel-link {
 }
 
 input {
-  padding-top: 6px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -261,6 +260,13 @@ input[type=number] {
   z-index: 10;
 }
 
+.show_request_status_success {
+  display: block;
+  animation: slight_in_out_bottom 2.2s ease-in-out;
+  bottom: 10%;
+  z-index: 10;
+}
+
 .hide_request_status {
   animation: slight_out_bottom 0.5s ease-in-out;
 }
@@ -303,8 +309,22 @@ input[type=number] {
   display: none;
 }
 
+.invalid {
+  background-color: #686868;
+}
+.invalid:hover {
+  background-color: #686868;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
 .z_index {
   z-index: 3 !important;
+}
+
+.slide_out {
+  animation: slide_out 0.4s ease-in-out;
+  opacity: 0;
 }
 
 @keyframes opacity_0 {
@@ -331,6 +351,24 @@ input[type=number] {
   100% {
     opacity: 1;
     bottom: 10%;
+  }
+}
+@keyframes slight_in_out_bottom {
+  0% {
+    opacity: 0;
+    bottom: 0;
+  }
+  35% {
+    opacity: 1;
+    bottom: 10%;
+  }
+  65% {
+    opacity: 1;
+    bottom: 10%;
+  }
+  100% {
+    opacity: 0;
+    bottom: 0;
   }
 }
 @keyframes slight_out_bottom {
@@ -362,5 +400,27 @@ input[type=number] {
   100% {
     transform: translateX(200%);
     opacity: 0;
+  }
+}
+@media (max-width: 510px) {
+  input {
+    height: 40px;
+  }
+  input::-webkit-input-placeholder {
+    font-size: 16px;
+  }
+  textarea {
+    height: 60px;
+  }
+  textarea::-webkit-input-placeholder {
+    font-size: 16px;
+  }
+}
+@media (max-height: 800px) {
+  .blue_button {
+    height: 40px;
+  }
+  .white_button {
+    height: 40px;
   }
 }/*# sourceMappingURL=styles.css.map */

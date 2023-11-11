@@ -55,7 +55,7 @@ export class PopupsComponent {
     if (this.userService.open_add_user) await this.userService.addContact()
     if (this.userService.open_edit_user) await this.userService.editContact()
     if (this.userService.open_delete_user) await this.userService.deleteContact()
-    if (this.userService.open_add_category) await this.taskService.addCategory()
+    if (this.userService.open_add_category && this.userService.category_title.length > 0) await this.taskService.addCategory()
     if (this.userService.request_successful) {
       this.globalService.animation = true
       setTimeout(() => this.globalService.animation = false, 2100)

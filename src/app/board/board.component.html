@@ -366,9 +366,9 @@
                 <div class="contact_main" (click)="globalService.stopPropagation($event)"
                     [class.show_element]="open_dropdown">
                     <div class="contacts_scroll_div">
-                        <span class="no_contact" *ngIf="selected_users_list.length == 0">No contact found</span>
+                        <span class="no_contact" *ngIf="contact_selection_list.length == 0">No contact found</span>
                         <div class="contact_div" [class.selected]="contact.selected"
-                            *ngFor="let contact of selected_users_list; let i = index"
+                            *ngFor="let contact of contact_selection_list; let i = index"
                             (click)="selectContact(contact.email, i)">
                             <div class="circle_name">
                                 <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
@@ -396,9 +396,10 @@
             </div>
         </div>
         <div class="selected_contacts">
-            <div *ngFor="let contact of selected_users_list; let i = index">
-                <div class="circle" [style.background-color]="contact.color" *ngIf="contact.selected">
-                    {{contact.initials}}</div>
+            <div *ngFor="let contact of selected_contacts; let i = index">
+                <div class="circle" [style.background-color]="contact.color">
+                    {{contact.initials}}
+                </div>
             </div>
         </div>
 

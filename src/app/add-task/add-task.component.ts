@@ -183,11 +183,17 @@ export class AddTaskComponent implements OnInit {
 
 
   deleteSubtask(i: number) {
-    this.subtasks.splice(i, 1)
+    this.delete_index = i
+    this.deleted = true
+    setTimeout(() => {
+      this.subtasks.splice(i, 1)
+      this.deleted = false
+    }, 400)
   }
 
 
   openEditSubtask(i: number) {
+    this.subtasks.forEach((subtask: any) => subtask.selected = false)
     this.subtasks[i].selected = true
     this.edited_subtask_title = this.subtasks[i].title
   }
@@ -195,6 +201,11 @@ export class AddTaskComponent implements OnInit {
 
   saveEditSubtask(i: number) {
     this.subtasks[i].title = this.edited_subtask_title
+    this.subtasks[i].selected = false
+  }
+
+
+  closeEditSubtask(i: number) {
     this.subtasks[i].selected = false
   }
 
