@@ -85,6 +85,7 @@
     gap: 32px
     align-items: center
     display: flex
+    height: 100%
 
 .error
     position: absolute
@@ -159,6 +160,8 @@
 
 @media (max-width: 900px)
 
+   
+
     .popup_main
         left: calc(50% - 230px)
         top: calc(50% - 415px)
@@ -169,11 +172,10 @@
         height: 100%
         width: 100%
         position: unset
-        margin-top: 100px
         border-radius: unset
 
     .close_mobile
-        top: 130px
+        top: 30px
 
     .blue_side
         height: 55%
@@ -188,20 +190,18 @@
     .input_div
         width: 90%
 
-    .padding
-        padding: 10px
-
     .white_side
         align-items: flex-start
 
 @media (max-height: 1030px)
     .circle_detail
-        margin-top: -65px
+        margin-top: -48px
 
 @media (max-height: 900px)
 
     .input_div
-        gap: 20px
+        position: absolute
+        top: calc(50% - 120px)
 
     .circle_input
         gap: 10px
@@ -215,8 +215,3 @@
             height: 50px
             width: 40px
 
-@media (max-height: 800px)
-
-    .circle_detail
-        display: none
-    

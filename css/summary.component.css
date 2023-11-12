@@ -1,8 +1,7 @@
 .summery_main {
-  margin-top: 50px;
   position: absolute;
   left: calc(50% - 490px);
-  top: 10%;
+  top: calc(50% - 364px);
   font-weight: 400;
   font-size: 20px;
   display: flex;
@@ -22,6 +21,9 @@
 .header :nth-child(3) {
   font-size: 27px;
   font-weight: 400;
+}
+.header :nth-child(4) {
+  display: none;
 }
 
 .details_main {
@@ -84,6 +86,7 @@
 }
 
 .prio_date {
+  box-sizing: border-box;
   transition: 150ms;
   cursor: pointer;
   height: 168px;
@@ -171,4 +174,133 @@
   font-size: 64px;
   font-weight: 700;
   color: #29ABE2;
+}
+
+@media (max-width: 1350px) {
+  .greet_main {
+    display: none;
+  }
+  .summery_main {
+    left: calc(50% - 291px);
+  }
+}
+@media (max-width: 700px) {
+  .header {
+    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .header :nth-child(2) {
+    display: none;
+  }
+  .header :nth-child(3) {
+    font-size: 20px !important;
+  }
+  .header :nth-child(4) {
+    display: flex;
+  }
+  .header :nth-child(1) {
+    font-size: 40px;
+  }
+  .status_count :nth-child(1) {
+    font-size: 40px;
+  }
+  .status_count :nth-child(2) {
+    font-size: 14px;
+  }
+  .status_task {
+    width: 116px;
+    height: 116px;
+    font-size: 14px;
+  }
+  .status_task :nth-child(1) {
+    font-size: 40px;
+  }
+  .image {
+    width: 40px;
+    height: 40px;
+  }
+  .image img {
+    width: 17px;
+    height: 12px;
+  }
+  .prio_date {
+    gap: 40px;
+  }
+  .prio_date :nth-child(1) img {
+    width: 40px;
+    height: 40px;
+  }
+  .deadline :nth-child(1) {
+    font-size: 16px;
+  }
+  .deadline :nth-child(2) {
+    font-size: 14px;
+  }
+  .todo_done_child {
+    width: 186px;
+    height: 110px;
+  }
+  .todo_done {
+    gap: 30px;
+  }
+  .prio_date {
+    width: 402px;
+    height: 110px;
+  }
+  .prio_date img {
+    height: 80%;
+  }
+  .details_main {
+    gap: 30px;
+  }
+  .summery_main {
+    left: calc(50% - 200px);
+    top: calc(50% - 275px);
+  }
+  .task_progress {
+    gap: 30px;
+  }
+  .detail_greet {
+    height: unset;
+  }
+}
+@media (max-width: 450px) {
+  .todo_done_child {
+    width: 150px;
+  }
+  .prio_date {
+    width: 330px;
+  }
+  .task_progress {
+    gap: 10px;
+  }
+  .status_task {
+    width: 100px;
+  }
+  .prio_date {
+    gap: 20px;
+  }
+  .summery_main {
+    left: calc(50% - 165px);
+  }
+}
+@media (max-height: 900px) {
+  .summery_main {
+    gap: 30px;
+    top: 20%;
+    top: calc(50% - 173px);
+  }
+  .todo_done_child {
+    height: 85px;
+  }
+  .prio_date {
+    height: 85px;
+  }
+  .task_progress {
+    height: 85px;
+  }
+  .details_main {
+    gap: 15px;
+  }
 }/*# sourceMappingURL=summary.component.css.map */

@@ -5,7 +5,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 6;
   transition: 300ms;
 }
 
@@ -18,7 +18,7 @@
   height: 100px;
   background-color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1019607843);
-  z-index: 4;
+  z-index: 5;
 }
 
 .content {

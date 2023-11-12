@@ -9,7 +9,7 @@
     position: sticky
     top: 0px
     left: 0
-    z-index: 3
+    z-index: 4
     background-color: #F6F7F8
     width: 992px
     padding: 50px 0
@@ -26,6 +26,15 @@
     height: 100%
     overflow-x: hidden
     overflow-y: auto
+
+.task_main_board
+    padding: 40px
+
+  
+.headline_board
+    background-color: #fff
+    position: unset
+    padding: 0
 
 .task_main_scroll
     font-weight: 400
@@ -93,6 +102,20 @@
     &:hover
         background-color: #EEEEEE
 
+.dropdown_contact
+    position: absolute
+    right: 21px
+    top: 45px
+    z-index: 3
+    @include flex
+    cursor: pointer
+    width: 24px
+    height: 24px
+    border-radius: 100%
+    transition: 150ms
+    &:hover
+        background-color: #EEEEEE
+
 .dropdown_search
     top: 13px
     z-index: 2
@@ -144,12 +167,14 @@
     position: absolute
     top: 525px
     right: 0
+    padding-bottom: 70px
 
 .required
     position: absolute
-    top: 260px
+    top: 543px
     font-size: 16px
     z-index: 0
+    left: 15px
 
 .parting
     margin: 0 50px
@@ -410,8 +435,9 @@ footer
 @media (max-width: 1350px)
 
     .required
-        top: 694px
-        right: 0
+        top: 1013px
+        right: 5px
+        left: unset
 
     .task_main
         flex-direction: column
@@ -426,14 +452,15 @@ footer
         padding-bottom: 50px
 
     .send_buttons
-        position: unset
-        margin-top: 50px
-        justify-content: flex-end
+        top: 960px
 
     .headline
         width: 440px
 
 @media (max-width: 510px)
+
+    .dropdown_contact
+        top: 35px
 
     .dropdown_search
         top: 8px
@@ -470,11 +497,11 @@ footer
         top: 35px
 
     .required
-        top: 619px
+        top: 858px
         right: 0
         font-size: 14px
 
-    
-        
+    .send_buttons
+        top: 815px
 
 @media (max-width: 410px)

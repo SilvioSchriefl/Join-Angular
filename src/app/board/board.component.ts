@@ -353,6 +353,7 @@ export class BoardComponent implements OnInit {
 
 
   openAddTask(status: string) {
+    if(this.globalService.screen_width < 600) this.router.navigateByUrl('manin/add_task')
     setTimeout(() => this.taskService.task_status = status, 200)
     this.globalService.open_add_task = true
   }

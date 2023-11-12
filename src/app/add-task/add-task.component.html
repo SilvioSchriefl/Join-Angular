@@ -1,12 +1,11 @@
-
-<div class="task_main">
-    <div class="headline">
-       <span>Add Task</span> 
+<div class="task_main" [class.task_main_board]="globalService.open_add_task">
+    <div class="headline" [class.headline_board]="globalService.open_add_task">
+        <span>Add Task</span>
     </div>
-       
-   
-    <div  class="task_main_scroll">
-       
+
+
+    <div class="task_main_scroll">
+
         <div class="task_side">
 
             <!---------------------------------------------------------------------TITLE---------------------------------------------------------->
@@ -28,24 +27,22 @@
             <!---------------------------------------------------------------CONTACTS----------------------------------------------------------------->
 
             <div class="input_title">
+                <div class="dropdown_contact" (click)="globalService.stopPropagation($event)" (click)="toggleDropDownMenu('contact')">
+                    <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
+                </div>
                 <span>Assigned to</span>
-                <div *ngIf="!open_dropdown" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
+                <div *ngIf="!open_contacts" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
                     (click)="toggleDropDownMenu('contact')">
                     <span>Select contacts to assign</span>
-                    <div class="dropdown">
-                        <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
-                    </div>
+                   
                 </div>
-
-                <div *ngIf="open_dropdown" class="input_title_hide" (click)="globalService.stopPropagation($event)"
-                    [class.add_shadow]="open_dropdown">
-                    <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
+                <div *ngIf="open_contacts" class="input_title_hide" 
+                    [class.add_shadow]="open_contacts">
+                    <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value" (click)="globalService.stopPropagation($event)"
                         (ngModelChange)="handleValueChange($event)">
-                    <div class="dropdown_search" (click)="toggleDropDownMenu('contact')">
-                        <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
-                    </div>
+                 
                     <div class="contact_main" (click)="globalService.stopPropagation($event)"
-                        [class.show_element]="open_dropdown">
+                        [class.show_element]="open_contacts">
                         <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
                         <div class="contacts_scroll_div">
                             <div class="contact_div" [class.selected]="contact.selected"
@@ -72,9 +69,6 @@
                         </footer>
                     </div>
                 </div>
-
-
-
                 <div class="selected_contacts">
                     <div class="scroll_div_contacts">
                         <span *ngIf="selected_contacts_list.length == 0">No contacts assigned</span>
@@ -87,12 +81,7 @@
 
                 <!-----------------------------------------------------------------CONTACTS END--------------------------------------------------------->
 
-                <div class="required">
-                    <span style="color: red">*</span>
-                    <span>This field is required</span>
-                </div>
             </div>
-
         </div>
         <img class="parting line" src="/assets/img/Vector 4.png">
 
@@ -173,8 +162,6 @@
                         </div>
                     </footer>
                 </div>
-
-
             </div>
 
             <!-----------------------------------------------------------------SUBTASK------------------------------------------------------------------------>
@@ -223,16 +210,19 @@
                 <!-------------------------------------------------------------------CREATE BUTTON--------------------------------------------------------------->
 
             </div>
-            <div class="send_buttons">
-                <div (click)="clearAll()" class="white_button">Clear</div>
-                <div class="blue_button" (click)="createTask()"
-                    [class.invalid]="task_title.length == 0 || selected_category.length == 0">
-                    Create Task
-                    <img src="/assets/img/check.png" alt="">
-                </div>
+        </div>
+        <div class="send_buttons">
+            <div (click)="clearAll()" class="white_button">Clear</div>
+            <div class="blue_button" (click)="createTask()"
+                [class.invalid]="task_title.length == 0 || selected_category.length == 0">
+                Create Task
+                <img src="/assets/img/check.png" alt="">
             </div>
         </div>
-       
+        <div class="required">
+            <span style="color: red">*</span>
+            <span>This field is required</span>
+        </div>
     </div>
     <div [class.show_request_status]="taskService.request_error && !userService.open_add_category && !userService.open_add_user"
         [class.hide_request_status]="!taskService.request_error" class="request_successful"

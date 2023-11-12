@@ -25,7 +25,7 @@ export class AddTaskComponent implements OnInit {
   search_value: string = ''
   all_contacts: any = []
   open_category: boolean = false
-  open_dropdown: boolean = false
+  open_contacts: boolean = false
   rotationValueC: string = 'rotate(0deg)';
   selected_category: any = []
   subtasks: any = []
@@ -58,10 +58,11 @@ export class AddTaskComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
-    if (this.open_dropdown) {
+ 
+    if (this.open_contacts) {
       if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
       else this.rotationValue = 'rotate(0deg)'
-      this.open_dropdown = false;
+      this.open_contacts = false;
     }
     if (this.open_category) {
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
@@ -109,8 +110,8 @@ export class AddTaskComponent implements OnInit {
 
   toggleDropDownMenu(menu: string) {
     if (menu == 'contact') {
-      this.open_dropdown = !this.open_dropdown;
-      if (this.open_dropdown) {
+      this.open_contacts = !this.open_contacts;
+      if (this.open_contacts) {
         this.all_contacts = this.userService.all_users
         this.search_value = ''
       }
@@ -122,6 +123,8 @@ export class AddTaskComponent implements OnInit {
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
       else this.rotationValueC = 'rotate(0deg)'
     }
+    console.log(this.open_category);
+    
   }
 
 

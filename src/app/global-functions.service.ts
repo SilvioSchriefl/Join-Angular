@@ -1,20 +1,26 @@
-import { Injectable, OnInit } from '@angular/core';
+import { HostListener, Injectable, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalFunctionsService {
+export class GlobalFunctionsService implements OnInit {
 
   menu_open: boolean = false;
   open_task_details: boolean = false
   open_edit_task: boolean = false
   open_add_task: boolean = false
   animation: boolean = false
+  screen_width: number = 0;
+  
 
   constructor(
     public userService: UserService,
   ) {
+
+   
+  
+
     window.addEventListener('click', (event) => {
       const conditions = [
         this.userService.open_add_user,
@@ -44,6 +50,21 @@ export class GlobalFunctionsService {
         }
       }
     });
+  }
+
+  ngOnInit() {
+    this.checkScreenSize();
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.checkScreenSize();
+  }
+
+
+  checkScreenSize(): void {
+     this.screen_width = window.innerWidth;
   }
 
 

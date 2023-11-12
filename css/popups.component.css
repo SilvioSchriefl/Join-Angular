@@ -95,6 +95,7 @@
   gap: 32px;
   align-items: center;
   display: flex;
+  height: 100%;
 }
 
 .error {
@@ -184,11 +185,10 @@
     height: 100%;
     width: 100%;
     position: unset;
-    margin-top: 100px;
     border-radius: unset;
   }
   .close_mobile {
-    top: 130px;
+    top: 30px;
   }
   .blue_side {
     height: 55%;
@@ -205,21 +205,19 @@
   .input_div {
     width: 90%;
   }
-  .padding {
-    padding: 10px;
-  }
   .white_side {
     align-items: flex-start;
   }
 }
 @media (max-height: 1030px) {
   .circle_detail {
-    margin-top: -65px;
+    margin-top: -48px;
   }
 }
 @media (max-height: 900px) {
   .input_div {
-    gap: 20px;
+    position: absolute;
+    top: calc(50% - 120px);
   }
   .circle_input {
     gap: 10px;
@@ -231,10 +229,5 @@
   .blue_side img:nth-child(1) {
     height: 50px;
     width: 40px;
-  }
-}
-@media (max-height: 800px) {
-  .circle_detail {
-    display: none;
   }
 }/*# sourceMappingURL=popups.component.css.map */

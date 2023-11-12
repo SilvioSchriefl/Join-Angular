@@ -7,12 +7,12 @@
 .board_content
     overflow: hidden
     position: absolute
-    top: 10%
-    left: calc(50% - 540px)
+    top: 15%
+    left: calc(50% - 610px)
     display: flex
     flex-direction: column
     gap: 50px
-    width: 1080px
+    overflow-y: auto
 
 .header
     display: flex
@@ -41,7 +41,7 @@
 
 .status_main
     display: flex
-    gap: 26px
+    gap: 40px
 
 .status_text
     display: flex
@@ -56,15 +56,14 @@
             filter: invert(56%) sepia(95%) saturate(1065%) hue-rotate(165deg) brightness(92%) contrast(92%)
 
 .task_status
-    width: 250px
+    width: 275px
     display: flex
     flex-direction: column
     gap: 20px
     & .task_main
-        transition: transform 0.2s ease-in-out
+        transition: 200ms
         &:hover
-            transition: transform 0.2s ease-in-out
-            box-shadow: 0px 0px 10px 3px #00000024
+            box-shadow: 0px 0px 10px 3px #00000034
 
 .task_main
     position: relative
@@ -88,12 +87,12 @@
 .category
     color: #fff
     padding: 4px 16px 4px 16px
-    width: max-content
     border-radius: 8px
     font-size: 16px
     font-weight: 400
 
 .empty_status
+    margin-top: 15px
     box-sizing: border-box
     width: 100%
     border-radius: 10px
@@ -150,17 +149,28 @@
         width: 17px
         height: 12px
 
+.droplist_main
+    overflow: hidden
+    width: 265px
+    border-radius: 20px
+    padding: 1px
+
+.droplist_scroll
+    width: 275px
+    height: 500px
+    overflow: auto
+    overflow-x: hidden
+
 .cdk-drop-list
-    box-sizing: content-box
-    width: max-content
+    width: 265px
+    overflow-y: auto
+    box-sizing: border-box
     min-height: 190px
-    width: 243px
-    height: max-content
+    padding: 12px
     border-radius: 16px
     gap: 10px
     display: flex
     flex-direction: column
-    gap: 10px
     border: 1px solid #F6F7F8
 
 .droplist_border
@@ -208,8 +218,6 @@
     align-items: center
     gap: 5px
 
-
-
 .delete
     z-index: 1
     @include flex
@@ -220,11 +228,11 @@
     transition: 150ms
     padding: 3px
     img
-         width: 14px
+        width: 14px
     &:hover
         background: #29ABE2
         img
-           
+
             filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(339deg) brightness(105%) contrast(101%)
 
 .subtask_edit
@@ -250,10 +258,10 @@
     background-color: #fff
     textarea
         height: 100px
-    border-radius: 20px
-    box-shadow: 0px 0px 4px 0px #00000029
-    width: 420px
-    padding-bottom: 10px
+        border-radius: 20px
+        box-shadow: 0px 0px 4px 0px #00000029
+        width: 420px
+        padding-bottom: 10px
 
 .no_subtask
     font-size: 16px
@@ -276,7 +284,6 @@
     transition: 150ms
     &:hover
         background-color: #EEEEEE
-    
 
 .task_detail_scroll
     box-sizing: border-box
@@ -340,7 +347,6 @@
     background-color: #F6F7F8
     overflow: hidden
     border-radius: 10px
-   
 
 .subtasks_scroll
     max-height: 100px
@@ -353,10 +359,10 @@
     display: flex
     align-items: center
     span
-        margin-left:5px
+        margin-left: 5px
         font-size: 16px
         font-weight: 400
- 
+
     input
         height: unset
 
@@ -569,7 +575,7 @@ footer
 .input_edit
     position: relative
     input
-        height: 32px 
+        height: 32px
         padding: 4px 16px 4px 11px
         border-radius: 0px
         width: 100%
@@ -580,9 +586,8 @@ footer
 
 .show_element
     animation: slide-up 0.2s ease-in-out
-    
 
-.save_button 
+.save_button
     width: max-content
     margin: 10px 0
     position: absolute
@@ -594,25 +599,95 @@ footer
         height: 15px
 
 .add_task_component
-    padding: 50px 0 0 0
-    width: 1116px
-    height: 710px
+    overflow: hidden
+    height: 760px
     position: absolute
     top: calc(50% - 355px)
-    left: calc(50% - 674px)
+    left: calc(50% - 544px)
     border-radius: 30px
     top: 10%
     z-index: 4
     background-color: #fff
     box-shadow: 0px 0px 4px 0px #0000001A
 
-
-
-
-@keyframes slide-up 
+@keyframes slide-up
     0%
         transform: translateY(-100%)
 
     100%
         transform: translateY(0%)
 
+@media (max-width: 1500px)
+
+    .status_main
+        flex-direction: column
+        
+
+    .board_content
+        width: 600px
+        left: calc(50% - 300px)
+
+    .droplist_main
+        width: 605px
+
+    .task_status
+        width: 100%
+
+    .droplist_scroll
+        width: 607px
+        max-height: 500px
+        height: unset
+
+    .cdk-drop-list
+        width: 598px
+        min-height: 100px
+
+
+
+@media (max-width: 1350px)
+    
+    .add_task_component
+        left: calc(50% - 269px)
+
+
+@media (max-width: 700px)
+
+    .cdk-drop-list
+        width: calc(100% - 9px) 
+
+    .droplist_scroll
+        width: calc(100% + 9px) 
+
+    .droplist_main
+        width: calc(100% + 5px) 
+
+    .input
+        margin-left: 25px
+        margin-right: 25px
+        position: absolute
+        top: 215px
+        left: 0
+        width: calc(100% - 50px)
+        input
+            width: 100%
+
+    .headline
+        font-size: 47px
+
+    .status_main
+        margin-top: 60px
+        
+
+    .board_content
+        margin-top: 140px
+        box-sizing: border-box
+        width: 100%
+        padding: 0 25px
+        overflow: hidden
+        position: unset
+
+@media (max-width: 510px)
+
+    .input_img
+        top: 5px
+    
