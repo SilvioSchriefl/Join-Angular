@@ -27,6 +27,7 @@ const routes: Routes = [
     {path:'summary', component:SummaryComponent},
     {path:'contacts', component:ContactsComponent},
     {path:'add_task', component:AddTaskComponent},
+    {path:'add_task_board', component:AddTaskComponent},
     {path:'board', component:BoardComponent},
     {path:'help', component:HelpViewComponent},
     {path:'legal_notice', component:LegalNoticeComponent},

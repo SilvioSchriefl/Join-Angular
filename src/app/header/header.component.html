@@ -7,7 +7,7 @@
            {{userService.user.initials}}
         </div>
     </div>
-    <div class="logout" [class.show_popup]="globalService.menu_open" [class.remove_popup]="animation" >
+    <div class="logout" [class.show_popup]="globalService.menu_open" [class.remove_popup]="globalService.animation" >
        <span (click)="navigateTo('legal_notice')">Legal Notice</span>
        <span (click)="navigateTo('private_policy')">Privacy Policy</span>
         <span (click)="auth.logOut()" >Log out</span>

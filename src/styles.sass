@@ -249,6 +249,7 @@ input[type=number]
     animation: slide_in 300ms ease-in-out
     display: flex !important
     transition: 300ms
+    z-index: 7
 
 .remove_popup
     animation: slide_out 300ms ease-in-out
@@ -264,11 +265,9 @@ input[type=number]
     display: none
 
 .invalid
-    background-color: #686868
-    &:hover
-        background-color: #686868
-        cursor: not-allowed
-        box-shadow: none
+    cursor: not-allowed !important
+    box-shadow: none !important
+    background-color: #686868 !important
 
 .z_index
     z-index: 3 !important
@@ -347,6 +346,9 @@ input[type=number]
 
 @media (max-width: 510px)
 
+    .show_shadow
+        background-color: transparent
+
     .blue_button
         height: 40px
         font-size: 18px
@@ -366,7 +368,3 @@ input[type=number]
         height: 60px
         &::-webkit-input-placeholder
             font-size: 16px
-
-
-
-    

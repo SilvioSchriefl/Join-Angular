@@ -1,10 +1,10 @@
-import { HostListener, Injectable, OnInit } from '@angular/core';
+import { HostListener, Injectable  } from '@angular/core';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalFunctionsService implements OnInit {
+export class GlobalFunctionsService  {
 
   menu_open: boolean = false;
   open_task_details: boolean = false
@@ -12,6 +12,8 @@ export class GlobalFunctionsService implements OnInit {
   open_add_task: boolean = false
   animation: boolean = false
   screen_width: number = 0;
+  open_contact_menu: boolean = false;
+
   
 
   constructor(
@@ -31,6 +33,7 @@ export class GlobalFunctionsService implements OnInit {
         this.open_task_details,
         this.open_add_task,
         this.menu_open,
+        this.open_contact_menu,
       ];
 
       for (const condition of conditions) {
@@ -45,6 +48,7 @@ export class GlobalFunctionsService implements OnInit {
             else if (condition === this.open_task_details) this.open_task_details = false;
             else if (condition === this.open_add_task) this.open_add_task = false;
             else if (condition === this.menu_open) this.menu_open = false;
+            else if (condition === this.open_contact_menu) this.open_contact_menu = false;
             this.animation = false;
           }, 600);
         }
@@ -52,21 +56,11 @@ export class GlobalFunctionsService implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.checkScreenSize();
-  }
-
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
-    this.checkScreenSize();
+    this.screen_width = window.innerWidth;
   }
-
-
-  checkScreenSize(): void {
-     this.screen_width = window.innerWidth;
-  }
-
 
   stopPropagation(event: Event) {
     event.stopPropagation();

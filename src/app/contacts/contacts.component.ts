@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
 
@@ -13,17 +13,20 @@ export class ContactsComponent implements OnInit {
 
   letter: string = '';
   sort_letter: string = '';
+  screen_width: number = 0;
+  animation:boolean = false;
 
 
   constructor(
     public userService: UserService,
     public globalService: GlobalFunctionsService
-    ) { }
+  ) { }
 
 
   async ngOnInit() {
+    this.screen_width = window.innerWidth
     await this.userService.getUsersAndContacts()
-    this.userService.user_details  = {
+    this.userService.user_details = {
       user: '',
       email: '',
       phone: '',
@@ -34,6 +37,12 @@ export class ContactsComponent implements OnInit {
       index: 0,
       created_by: ''
     }
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.screen_width = window.innerWidth;
   }
 
 
@@ -65,11 +74,23 @@ export class ContactsComponent implements OnInit {
     this.userService.user_details.created_by = this.userService.all_users[i].created_by
     this.userService.user_details.index = i
     console.log(i);
-    
+
+  }
+
+
+  closeContactViewMobile() {
+    this.animation = true
+    setTimeout(() => {
+      this.userService.show_contact = false
+      this.animation = false
+    }, 300)
+
+
   }
 
 
   openPopup(popup: string) {
+    this.globalService.open_contact_menu = false
     this.userService.user_name = ''
     this.userService.user_email = ''
     this.userService.user_phone = ''
@@ -81,7 +102,13 @@ export class ContactsComponent implements OnInit {
       if (popup == 'edit') this.userService.open_edit_user = true
       if (popup == 'delete') this.userService.open_delete_user = true
     }
-  }  
+  }
+
+
+  openContactMenu() {
+    if(!this.userService.user_details.user_contact || this.userService.user.user_id != this.userService.user_details.created_by) return
+    else this.globalService.open_contact_menu = true
+  }
 
 
   showCreator() {

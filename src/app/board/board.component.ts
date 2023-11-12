@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
@@ -35,6 +35,7 @@ export class BoardComponent implements OnInit {
   edit_subtasks: any = []
   task_status_changed: boolean = false
   selected_contacts: any = []
+  screen_width: number = 0
 
 
 
@@ -50,6 +51,7 @@ export class BoardComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.screen_width = window.innerWidth
     this.taskService.getTasks().subscribe(async (tasks) => {
       await this.taskService.getAllTasks()
       this.taskService.filterTaskbyStatus()
@@ -57,6 +59,9 @@ export class BoardComponent implements OnInit {
     await this.taskService.getAllTasks()
     this.taskService.filterTaskbyStatus()
   }
+
+
+
 
 
 
@@ -129,9 +134,9 @@ export class BoardComponent implements OnInit {
 
   updateSelectedContacts(email: string) {
     let user_index = this.userService.all_users.findIndex((user: { email: string; }) => user.email === email);
-    let index = this.selected_contacts.findIndex((contact:any) => contact.email === email)
+    let index = this.selected_contacts.findIndex((contact: any) => contact.email === email)
     console.log(index)
-    if(index != -1) this.selected_contacts.splice(index, 1)
+    if (index != -1) this.selected_contacts.splice(index, 1)
     else this.selected_contacts.push(this.userService.all_users[user_index])
   }
 
@@ -353,9 +358,20 @@ export class BoardComponent implements OnInit {
 
 
   openAddTask(status: string) {
-    if(this.globalService.screen_width < 600) this.router.navigateByUrl('manin/add_task')
-    setTimeout(() => this.taskService.task_status = status, 200)
-    this.globalService.open_add_task = true
+    if (this.screen_width < 600) {
+      this.router.navigateByUrl('main/add_task_board')
+      setTimeout(() => this.taskService.task_status = status, 200)
+    }
+    else {
+      setTimeout(() => this.taskService.task_status = status, 200)
+      this.globalService.open_add_task = true
+    }
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.screen_width = window.innerWidth;
   }
 }
 

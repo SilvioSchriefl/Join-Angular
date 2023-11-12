@@ -1,4 +1,8 @@
 <div class="content">
+    <div class="add_contact_mobile" (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
+        <img src="/assets/img/person_add.png">
+    </div>
+    
     <div class="sidebar">
         <div class="header">
             <div class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
@@ -21,7 +25,7 @@
                     <div class="user_email_name">
                         <div class="name">
                             <span>{{user.user_name}}</span>
-                            <span class="user_type" *ngIf="!user.user_contact">(<div>R</div>)</span> 
+                            <span class="user_type" *ngIf="!user.user_contact">(<div>R</div>)</span>
                             <span class="user_type" *ngIf="user.user_contact">(<div>C</div>)</span>
                         </div>
                         <div class="email">{{user.email}}</div>
@@ -30,55 +34,86 @@
             </div>
         </div>
     </div>
-    <div class="contact_detail_main" [class.show_contact_details]="userService.show_contact" [class.remove_popup]="globalService.animation && userService.open_delete_user && userService.request_successful">
+    <div class="contact_detail_main"
+        [class.hide_contact_mobile]="animation && userService.show_contact && screen_width <= 1200"
+        [class.show_contact_mobile]="userService.show_contact && screen_width <= 1200">
+        <div  class="add_contact_mobile" (click)="openContactMenu()" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+            <img src="/assets/img/more_vert.png">
+        </div>
+        
+<!-------------------------------------------------------Mobile Menu--------------------------------------------------------------------------->
+        
+        <div class="edit_contact_menu" [class.show_popup]="globalService.open_contact_menu" (click)="globalService.stopPropagation($event)"
+            [class.remove_popup]="globalService.animation">
+            <div class="menu_point" (click)="openPopup('edit')">
+                <img src="/assets/img/edit.png" alt="">
+                <span>Edit</span>
+            </div>
+            <div class="menu_point" (click)="openPopup('delete')">
+                <img src="/assets/img/delete.png" alt="">
+                <span>Delete</span>
+            </div>
+        </div>
+
+<!--------------------------------------------------------------------------------------------------------------------------------------->
+
+        <div *ngIf="screen_width <= 1200" class="close close_contact" (click)="closeContactViewMobile()">
+            <img src="/assets/img/close.png">
+        </div>
         <div class="headline">
             <span>Contacts</span>
             <img src="/assets/img/blue_line.png" alt="">
             <span>Better with a team</span>
+            <img src="/assets/img/Vector 5.png">
         </div>
-        <div class="detail">
-            <div class="circle_name">
-                <div class="circle_detail" [style.background-color]="userService.user_details.color">
-                    {{userService.user_details.initials}}</div>
-                <div class="name_edit">
-                   
+        <div class="contact_detail" [class.show_contact_details]="userService.show_contact && screen_width > 1200"
+            [class.remove_popup]="globalService.animation && userService.open_delete_user && userService.request_successful">
+            <div class="detail">
+                <div class="circle_name">
+                    <div class="circle_detail" [style.background-color]="userService.user_details.color">
+                        {{userService.user_details.initials}}</div>
+                    <div class="name_edit">
                         <span>{{userService.user_details.user}}</span>
-                       
-                
-
-                    <div class="edit_delete">
-                        <div class="edit_delete_child" (click)="openPopup('edit')" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
-                            <img src="/assets/img/edit.png" alt="">
-                            <span>Edit</span>
+                        <div class="edit_delete">
+                            <div class="edit_delete_child" (click)="openPopup('edit')"
+                                (click)="globalService.stopPropagation($event)"
+                                [class.edit_invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                                <img src="/assets/img/edit.png" alt="">
+                                <span>Edit</span>
+                            </div>
+                            <div class="edit_delete_child" (click)="openPopup('delete')"
+                                (click)="globalService.stopPropagation($event)"
+                                [class.edit_invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                                <img src="/assets/img/delete.png" alt="">
+                                <span>Delete</span>
+                            </div>
+                            <span *ngIf="!userService.user_details.user_contact">Registered user</span>
+                            <span *ngIf="userService.user_details.user_contact">Contact</span>
                         </div>
-                        <div class="edit_delete_child" (click)="openPopup('delete')" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
-                            <img src="/assets/img/delete.png" alt="">
-                            <span>Delete</span>
-                        </div>
-                        <span *ngIf="!userService.user_details.user_contact">Registered user</span>
-                        <span *ngIf="userService.user_details.user_contact">Contact</span>
                     </div>
                 </div>
-            </div>
-            <div class="information">
-                <span>Contact Information</span>
-                <div class="email_phone">
-                    <span>Email</span>
-                
-                    <a class="email-link" href="mailto:{{userService.user_details.email}}">{{userService.user_details.email}}</a>
-                </div>
-                <div class="email_phone">
-                    <span>Phone</span>
-                   <a href="tel:{{userService.user_details.phone}}" style="text-decoration: none;">{{userService.user_details.phone}}</a>
-                    <span style="font-size: 16px" *ngIf="!userService.user_details.phone">No number assigned</span>
-                </div>
-                <div *ngIf="userService.user_details.user_contact" class="email_phone">
-                    <span>Contact created by :</span>
-                    <span class="creator" (click)="showCreator()">
-                        {{userService.getUserName()}}
-                        <div *ngIf="userService.user.email == userService.creator.email" >(you)</div>
-                    </span> 
-                   
+                <div class="information">
+                    <span>Contact Information</span>
+                    <div class="email_phone">
+                        <span>Email</span>
+
+                        <a class="email-link"
+                            href="mailto:{{userService.user_details.email}}">{{userService.user_details.email}}</a>
+                    </div>
+                    <div class="email_phone">
+                        <span>Phone</span>
+                        <a href="tel:{{userService.user_details.phone}}"
+                            style="text-decoration: none;">{{userService.user_details.phone}}</a>
+                        <span style="font-size: 16px" *ngIf="!userService.user_details.phone">No number assigned</span>
+                    </div>
+                    <div *ngIf="userService.user_details.user_contact" class="email_phone">
+                        <span>Contact created by :</span>
+                        <span class="creator" (click)="showCreator()">
+                            {{userService.getUserName()}}
+                            <div *ngIf="userService.user.email == userService.creator.email">(you)</div>
+                        </span>
+
+                    </div>
                 </div>
             </div>
         </div>
