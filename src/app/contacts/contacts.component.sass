@@ -84,7 +84,6 @@
     background-color: #2A3647
     &:hover
         background: #2A3647 !important
-        
 
 .contact_list
     display: flex
@@ -203,6 +202,7 @@
             filter: invert(56%) sepia(95%) saturate(1065%) hue-rotate(165deg) brightness(92%) contrast(92%)
 
 .email_phone
+    width: max-content
     gap: 15px
     display: flex
     flex-direction: column
@@ -237,9 +237,9 @@
     display: none
     cursor: pointer
     z-index: 1
-    position: fixed
-    bottom: 100px
-    right: 50px
+    position: absolute
+    bottom: 30px
+    right: 30px
     border-radius: 100%
     transition: 150ms
     width: 56px
@@ -255,7 +255,7 @@
     background-color: #F6F7F8
     z-index: 2
     display: flex !important
-    animation: slide_in 0.3s ease-in-out
+    animation: slide_in 0.2s ease-in-out
     height: 100%
     width: 100%
     position: absolute
@@ -281,8 +281,8 @@
             filter: invert(56%) sepia(95%) saturate(1065%) hue-rotate(165deg) brightness(92%) contrast(92%)
 
 .edit_contact_menu
-    position: absolute
-    bottom: 45px
+    position: fixed
+    bottom: 120px
     right: 50px
     z-index: 1
     font-size: 16px
@@ -304,7 +304,23 @@
         background-color: #29ABE2
 
 .hide_contact_mobile
-    animation: slide_out 0.3s ease-in-out
+    animation: slide_out 0.2s ease-in-out
+
+.position_fixed
+    position: fixed
+    bottom: 100px
+    animation: hide_menu 0.25s ease-in-out
+
+@keyframes hide_menu
+    
+    0%
+        opacity: 0
+
+    80%
+        opacity: 0
+
+    100%
+        opacity: 1
 
 @keyframes slide_out
     0%
@@ -365,7 +381,6 @@
     .add_contact_mobile
         @include flex
 
-
     .header
         display: none
 
@@ -378,9 +393,10 @@
     .headline
         margin-top: 140px
 
-@media (max-width: 510px)
     .contact_list
-        padding: 100px 0 50px 0
+        padding: 100px 0 100px 0
+
+@media (max-width: 510px)
 
     .contact_div
         padding: 15px

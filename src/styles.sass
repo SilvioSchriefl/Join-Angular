@@ -203,7 +203,7 @@ input[type=number]
         img
             filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%)
 
-.request_successful
+.request
     display: none
     position: absolute
     bottom: 0
@@ -249,7 +249,6 @@ input[type=number]
     animation: slide_in 300ms ease-in-out
     display: flex !important
     transition: 300ms
-    z-index: 7
 
 .remove_popup
     animation: slide_out 300ms ease-in-out
@@ -345,9 +344,6 @@ input[type=number]
         opacity: 0
 
 @media (max-width: 510px)
-
-    .show_shadow
-        background-color: transparent
 
     .blue_button
         height: 40px

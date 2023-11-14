@@ -2,7 +2,6 @@
     <div class="add_contact_mobile" (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
         <img src="/assets/img/person_add.png">
     </div>
-    
     <div class="sidebar">
         <div class="header">
             <div class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
@@ -37,14 +36,15 @@
     <div class="contact_detail_main"
         [class.hide_contact_mobile]="animation && userService.show_contact && screen_width <= 1200"
         [class.show_contact_mobile]="userService.show_contact && screen_width <= 1200">
-        <div  class="add_contact_mobile" (click)="openContactMenu()" (click)="globalService.stopPropagation($event)" [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+        <div class="add_contact_mobile" (click)="openContactMenu()" (click)="globalService.stopPropagation($event)" [class.position_fixed]="userService.show_contact" [class.d_none]="animation"
+            [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
             <img src="/assets/img/more_vert.png">
         </div>
-        
-<!-------------------------------------------------------Mobile Menu--------------------------------------------------------------------------->
-        
-        <div class="edit_contact_menu" [class.show_popup]="globalService.open_contact_menu" (click)="globalService.stopPropagation($event)"
-            [class.remove_popup]="globalService.animation">
+
+        <!-------------------------------------------------------Mobile Menu--------------------------------------------------------------------------->
+
+        <div class="edit_contact_menu" [class.show_popup]="globalService.open_contact_menu"
+            (click)="globalService.stopPropagation($event)" [class.remove_popup]="globalService.animation">
             <div class="menu_point" (click)="openPopup('edit')">
                 <img src="/assets/img/edit.png" alt="">
                 <span>Edit</span>
@@ -55,7 +55,7 @@
             </div>
         </div>
 
-<!--------------------------------------------------------------------------------------------------------------------------------------->
+        <!--------------------------------------------------------------------------------------------------------------------------------------->
 
         <div *ngIf="screen_width <= 1200" class="close close_contact" (click)="closeContactViewMobile()">
             <img src="/assets/img/close.png">
@@ -67,7 +67,7 @@
             <img src="/assets/img/Vector 5.png">
         </div>
         <div class="contact_detail" [class.show_contact_details]="userService.show_contact && screen_width > 1200"
-            [class.remove_popup]="globalService.animation && userService.open_delete_user && userService.request_successful">
+            [class.remove_popup]="globalService.animation && userService.open_delete_user && userService.request_successful && screen_width > 1200">
             <div class="detail">
                 <div class="circle_name">
                     <div class="circle_detail" [style.background-color]="userService.user_details.color">

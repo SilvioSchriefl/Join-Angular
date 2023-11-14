@@ -73,8 +73,6 @@ export class ContactsComponent implements OnInit {
     this.userService.user_details.user_contact = this.userService.all_users[i].user_contact
     this.userService.user_details.created_by = this.userService.all_users[i].created_by
     this.userService.user_details.index = i
-    console.log(i);
-
   }
 
 
@@ -83,7 +81,7 @@ export class ContactsComponent implements OnInit {
     setTimeout(() => {
       this.userService.show_contact = false
       this.animation = false
-    }, 300)
+    }, 190)
 
 
   }

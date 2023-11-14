@@ -92,8 +92,8 @@
     </div>
 </div>
 <div *ngIf="userService.request_error" [class.show_request_status_success]="userService.request_error "
-    class="request_successful" style="background-color: red;">{{userService.error_type}}</div>
-<div [class.show_request_status_success]="userService.request_successful" class="request_successful">
+    class="request" style="background-color: red;">{{userService.error_type}}</div>
+<div [class.show_request_status_success]="userService.request_successful" class="request">
     <span *ngIf="userService.open_add_user">Contact created succesfully</span>
     <span *ngIf="userService.open_edit_user">Contact edited succesfully</span>
     <span *ngIf="userService.open_delete_user">Contact deleted succesfully</span>
