@@ -1,0 +1,10 @@
+<div (click)="globalService.stopPropagation($event)"  (click)="openMoveToMenu()" class="blue_button move_to">Move to</div>
+<div class="move_to_menu" [class.show_popup]="open_move_to_menu" (click)="globalService.stopPropagation($event)" [class.remove_popup]="animation" >
+    <div class="close close_move_to_menu" (click)="closeMoveToMenu()">
+        <img src="/assets/img/close.png">
+    </div>
+    <span (click)="globalService.stopPropagation($event)" (click)="setTaskstatus('todo')" class="menu_point">Todo</span>
+    <span (click)="globalService.stopPropagation($event)" (click)="setTaskstatus('progress')" class="menu_point">Progress</span>
+    <span (click)="globalService.stopPropagation($event)" (click)="setTaskstatus('await')" class="menu_point">Await</span>
+    <span (click)="globalService.stopPropagation($event)" (click)="setTaskstatus('done')" class="menu_point">Done</span>
+</div>

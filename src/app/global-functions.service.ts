@@ -13,6 +13,9 @@ export class GlobalFunctionsService  {
   animation: boolean = false
   screen_width: number = 0;
   open_contact_menu: boolean = false;
+  open_category: boolean = false
+  open_contacts: boolean = false
+  open_move_to_menu = false;
 
   
 
@@ -34,6 +37,7 @@ export class GlobalFunctionsService  {
         this.open_add_task,
         this.menu_open,
         this.open_contact_menu,
+        this.open_move_to_menu,
       ];
 
       for (const condition of conditions) {
@@ -49,6 +53,7 @@ export class GlobalFunctionsService  {
             else if (condition === this.open_add_task) this.open_add_task = false;
             else if (condition === this.menu_open) this.menu_open = false;
             else if (condition === this.open_contact_menu) this.open_contact_menu = false;
+            else if (condition === this.open_move_to_menu) this.open_move_to_menu = false;
             this.animation = false;
           }, 600);
         }

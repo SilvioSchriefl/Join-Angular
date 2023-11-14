@@ -34,18 +34,18 @@
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
                 <span>Assigned to</span>
-                <div *ngIf="!open_contacts" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
+                <div *ngIf="!globalService.open_contacts" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
                     (click)="toggleDropDownMenu('contact')">
                     <span>Select contacts to assign</span>
                    
                 </div>
-                <div *ngIf="open_contacts" class="input_title_hide" 
-                    [class.add_shadow]="open_contacts">
+                <div *ngIf="globalService.open_contacts" class="input_title_hide" 
+                    [class.add_shadow]="globalService.open_contacts">
                     <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value" (click)="globalService.stopPropagation($event)"
                         (ngModelChange)="handleValueChange($event)">
                  
                     <div class="contact_main" (click)="globalService.stopPropagation($event)"
-                        [class.show_element]="open_contacts">
+                        [class.show_element]="globalService.open_contacts">
                         <span class="no_contact" *ngIf="all_contacts.length == 0">No contact found</span>
                         <div class="contacts_scroll_div">
                             <div class="contact_div" [class.selected]="contact.selected"
@@ -123,7 +123,7 @@
                 <span>Category</span><span style="color: red">*</span>
                 <span class="d_none" [class.show_required]="category_error">This field is required</span>
             </div>
-            <div class="input_title_hide" [class.add_shadow]="open_category">
+            <div class="input_title_hide" [class.add_shadow]="globalService.open_category">
 
                 <div class="dropdown_menu" (click)="toggleDropDownMenu('category')" (click)="removeError('category')"
                     (click)="globalService.stopPropagation($event)">
@@ -138,7 +138,7 @@
                         </div>
                     </div>
                 </div>
-                <div [class.show_element]="open_category" [class.hide_element]="!open_category" class="contact_main">
+                <div [class.show_element]="globalService.open_category" [class.hide_element]="!globalService.open_category" class="contact_main">
                     <span class="no_contact" *ngIf="taskService.all_categorys.length == 0">No categorys</span>
                     <div class="contacts_scroll_div">
                         <div (click)="setCategory(i)" class="category_div"
@@ -169,7 +169,7 @@
 
             <!-----------------------------------------------------------------SUBTASK------------------------------------------------------------------------>
 
-            <div class="input_title" [class.d_none]="open_category">
+            <div class="input_title" [class.d_none]="globalService.open_category">
                 <span>Subtasks</span>
                 <input type="text" placeholder="Add subtask" [(ngModel)]="subtask_title">
                 <div class="add" (click)="addSubtask()">
@@ -228,12 +228,12 @@
         </div>
     </div>
     <div [class.show_request_status]="taskService.request_error && !userService.open_add_category && !userService.open_add_user"
-        [class.hide_request_status]="!taskService.request_error" class="request_successful"
+        [class.hide_request_status]="!taskService.request_error" class="request"
         style="background-color: red;">
         {{taskService.error_type}}
     </div>
     <div [class.show_request_status_success]="taskService.request_successful && !userService.open_add_category && !userService.open_add_user"
-        class="request_successful">
+        class="request">
         Task created successfully
     </div>
 </div>

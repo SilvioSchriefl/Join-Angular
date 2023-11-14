@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag, CdkDropList, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragStart, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { GlobalFunctionsService } from '../global-functions.service';
 import { Router } from '@angular/router';
 
@@ -351,6 +351,8 @@ export class BoardComponent implements OnInit {
   }
 
   toggleAddTaskPopUp(status: string) {
+    this.globalService.open_category = false
+    this.globalService.open_contacts = false
     this.globalService.animation = true
     setTimeout(() => this.globalService.open_add_task = false, 500);
     setTimeout(() => this.globalService.animation = false, 600);

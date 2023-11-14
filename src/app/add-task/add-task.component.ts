@@ -24,8 +24,6 @@ export class AddTaskComponent implements OnInit {
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
   all_contacts: any = []
-  open_category: boolean = false
-  open_contacts: boolean = false
   rotationValueC: string = 'rotate(0deg)';
   selected_category: any = []
   subtasks: any = []
@@ -58,16 +56,16 @@ export class AddTaskComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
- 
-    if (this.open_contacts) {
+
+    if (this.globalService.open_contacts) {
       if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
       else this.rotationValue = 'rotate(0deg)'
-      this.open_contacts = false;
+      this.globalService.open_contacts = false;
     }
-    if (this.open_category) {
+    if (this.globalService.open_category) {
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
       else this.rotationValueC = 'rotate(0deg)'
-      this.open_category = false
+      this.globalService.open_category = false
     }
   }
 
@@ -110,8 +108,8 @@ export class AddTaskComponent implements OnInit {
 
   toggleDropDownMenu(menu: string) {
     if (menu == 'contact') {
-      this.open_contacts = !this.open_contacts;
-      if (this.open_contacts) {
+      this.globalService.open_contacts = !this.globalService.open_contacts;
+      if (this.globalService.open_contacts) {
         this.all_contacts = this.userService.all_users
         this.search_value = ''
       }
@@ -119,12 +117,12 @@ export class AddTaskComponent implements OnInit {
       else this.rotationValue = 'rotate(0deg)'
     }
     if (menu == 'category') {
-      this.open_category = !this.open_category
+      this.globalService.open_category = !this.globalService.open_category
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
       else this.rotationValueC = 'rotate(0deg)'
     }
-    console.log(this.open_category);
-    
+    console.log(this.globalService.open_category);
+
   }
 
 
@@ -167,7 +165,7 @@ export class AddTaskComponent implements OnInit {
 
   setCategory(i: number) {
     this.selected_category = this.taskService.all_categorys[i]
-    this.open_category = false
+    this.globalService.open_category = false
     if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
     else this.rotationValueC = 'rotate(0deg)'
   }
@@ -223,6 +221,8 @@ export class AddTaskComponent implements OnInit {
     this.date = this.min_date
     this.prio = ''
     this.subtasks = []
+    this.globalService.open_category = false
+    this.globalService.open_contacts = false
   }
 
 

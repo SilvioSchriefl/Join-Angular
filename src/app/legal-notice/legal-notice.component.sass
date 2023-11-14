@@ -8,11 +8,11 @@
     overflow: hidden
     position: absolute
     left: calc(50% - 500px)
-    top: 10%
+    top: 150px
     height: 100vh
 
 .legal_scroll
-    height: 76%
+    height: 85%
     overflow: auto
     padding-right: 15px
 
@@ -39,3 +39,23 @@
 
 .back
     width: max-content
+
+@media (max-width: 1500px)
+
+    .legal_main
+        box-sizing: border-box
+        width: 100%
+        position: unset
+
+    .legal_scroll
+        height: 95%
+        padding: 150px 50px 100px 50px
+
+@media (max-width: 900px)
+
+    .headline
+        font-size: 47px
+
+    .legal_scroll
+        height: 95%
+        padding: 150px 30px 100px 30px

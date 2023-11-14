@@ -25,6 +25,7 @@ import { HelpViewComponent } from './help-view/help-view.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PolicyComponent } from './policy/policy.component';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
+import { MoveToComponent } from './move-to/move-to.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { RestorePasswordComponent } from './restore-password/restore-password.co
     LegalNoticeComponent,
     PolicyComponent,
     RestorePasswordComponent,
+    MoveToComponent,
 
   ],
   imports: [

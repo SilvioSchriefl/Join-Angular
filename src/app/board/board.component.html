@@ -72,6 +72,7 @@
                                     <img *ngIf="task.prio =='urgent'" src="/assets/img/prioUrgent.png">
                                     <img *ngIf="task.prio =='low'" src="/assets/img/prioLow.png">
                                 </div>
+                                <app-move-to *ngIf="screen_width < 1500" [task_index]="i" [status]="'todo'"></app-move-to>
                             </div>
                         </div>
                     </div>
@@ -129,6 +130,7 @@
                                     <img *ngIf="task.prio =='urgent'" src="/assets/img/prioUrgent.png">
                                     <img *ngIf="task.prio =='low'" src="/assets/img/prioLow.png">
                                 </div>
+                                <app-move-to *ngIf="screen_width < 1500" [task_index]="i" [status]="'progress'"></app-move-to>
                             </div>
                         </div>
                     </div>
@@ -185,6 +187,7 @@
                                     <img *ngIf="task.prio =='urgent'" src="/assets/img/prioUrgent.png">
                                     <img *ngIf="task.prio =='low'" src="/assets/img/prioLow.png">
                                 </div>
+                                <app-move-to *ngIf="screen_width < 1500" [task_index]="i" [status]="'await'"></app-move-to>
                             </div>
                         </div>
                     </div>
@@ -240,6 +243,7 @@
                                     <img *ngIf="task.prio =='urgent'" src="/assets/img/prioUrgent.png">
                                     <img *ngIf="task.prio =='low'" src="/assets/img/prioLow.png">
                                 </div>
+                                <app-move-to *ngIf="screen_width < 1500" [task_index]="i" [status]="'done'"></app-move-to>
                             </div>
                         </div>
                     </div>
@@ -515,7 +519,7 @@
         </div>
     </div>
 </div>
-<div [class.remove_popup]="globalService.animation"
+<div [class.remove_popup]="globalService.animation && !globalService.open_category && !globalService.open_contacts"
     [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component"
     *ngIf="globalService.open_add_task" [class.show_popup]="globalService.open_add_task"
     (click)="globalService.stopPropagation($event)">
@@ -526,10 +530,10 @@
 </div>
 
 <div *ngIf="this.globalService.open_task_details" [class.show_request_status]="taskService.request_error"
-    [class.hide_request_status]="!taskService.request_error" class="request_successful" style="background-color: red;">
+    [class.hide_request_status]="!taskService.request_error" class="request" style="background-color: red;">
     {{taskService.error_type}}</div>
 <div *ngIf="this.globalService.open_task_details || taskService.request_successful && !task_status_changed"
-    [class.show_request_status_success]="taskService.request_successful" class="request_successful">
+    [class.show_request_status_success]="taskService.request_successful" class="request">
     <span *ngIf="!deleted && !globalService.open_add_task">Task updated successfully</span>
     <span *ngIf="deleted && !globalService.open_add_task">Task deleted successfully</span>
     <span *ngIf="globalService.open_add_task">Task created successfully</span>

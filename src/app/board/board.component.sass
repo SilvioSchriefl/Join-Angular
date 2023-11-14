@@ -74,6 +74,7 @@
             box-shadow: 0px 0px 10px 3px #00000034
 
 .task_main
+    overflow-x: hidden
     position: relative
     box-sizing: border-box
     cursor: pointer
@@ -610,15 +611,17 @@ footer
         height: 15px
 
 .add_task_component
+    z-index: 8
     overflow: hidden
     height: 760px
     position: absolute
     top: calc(50% - 355px)
     left: calc(50% - 544px)
     border-radius: 30px
-    top: 10%
     background-color: #fff
     box-shadow: 0px 0px 4px 0px #0000001A
+
+
 
 @keyframes slide-up
     0%
