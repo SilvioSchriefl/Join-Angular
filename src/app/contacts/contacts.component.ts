@@ -24,6 +24,7 @@ export class ContactsComponent implements OnInit {
 
 
   async ngOnInit() {
+    console.log(this.userService.all_users)
     this.userService.show_contact = false
     this.screen_width = window.innerWidth
     await this.userService.getUsersAndContacts()

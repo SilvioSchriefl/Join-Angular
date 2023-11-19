@@ -32,7 +32,6 @@ export class BoardComponent implements OnInit {
   edit_task_due_date: string = ''
   edit_task_prio: string = ''
   edit_subtasks: any = []
-  task_status_changed: boolean = false
   selected_contacts: any = []
   screen_width: number = 0
 
@@ -56,15 +55,15 @@ export class BoardComponent implements OnInit {
       this.taskService.filterTaskbyStatus()
     });
     await this.taskService.getAllTasks()
-    this.taskService.filterTaskbyStatus() 
+    this.taskService.filterTaskbyStatus()
   }
 
 
-/**
- * checks whether and how many subtasks have been completed
- * @param true or false
- * @returns how many of the subtasks have been completed
- */
+  /**
+   * checks whether and how many subtasks have been completed
+   * @param true or false
+   * @returns how many of the subtasks have been completed
+   */
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
     let dones: any[] = []
@@ -164,11 +163,11 @@ export class BoardComponent implements OnInit {
   }
 
 
-/**
- * 
- * @param todo, progress, await or done  
- * @returns How many contacts are assigned as a number
- */
+  /**
+   * 
+   * @param todo, progress, await or done  
+   * @returns How many contacts are assigned as a number
+   */
   getNumberOfContacts(i: number, status: string) {
     let array = this.getArray(status)
     let number = array[i].assigned_emails.length
@@ -183,7 +182,7 @@ export class BoardComponent implements OnInit {
    * @param event div container is stored
    * @param status todo, progress, await or done  
    */
-  onItemDrop(event: CdkDragDrop<any>, status: string) {
+  async onItemDrop(event: CdkDragDrop<any>, status: string) {
     if (event.previousContainer === event.container) moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     else {
       transferArrayItem(
@@ -197,9 +196,10 @@ export class BoardComponent implements OnInit {
         id: event.container.data[event.currentIndex].id,
         status: status,
       }
-      this.taskService.updateTask(body)
-      this.task_status_changed = true
-      setTimeout(() => this.task_status_changed = false, 2000)
+    
+      await this.taskService.updateTask(body ,'itemDrop')
+
+      
     }
   }
 
@@ -235,6 +235,7 @@ export class BoardComponent implements OnInit {
    * Opens the menu for editing the task
    */
   openEditTask() {
+    this.edit_task_prio = this.detail_task[0].prio
     this.edit_subtasks = []
     this.globalService.open_edit_task = true
     this.selected_user_emails = [...this.detail_task[0].assigned_emails]
@@ -301,9 +302,9 @@ export class BoardComponent implements OnInit {
   }
 
 
-/**
- * sets the subtask status using a checkbox
- */
+  /**
+   * sets the subtask status using a checkbox
+   */
   updateSubtaskStatus(event: any, i: number) {
     let value = this.edit_subtasks[i].done
     if (value) this.edit_subtasks[i].done = false
@@ -380,7 +381,7 @@ export class BoardComponent implements OnInit {
       subtasks: this.edit_subtasks,
       id: this.detail_task[0].id
     }
-    await this.taskService.updateTask(body)
+    await this.taskService.updateTask(body, 'edit')
     if (this.taskService.request_successful) {
       this.globalService.open_dropdown = false
       setTimeout(() => {

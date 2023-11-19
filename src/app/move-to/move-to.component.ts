@@ -37,7 +37,7 @@ export class MoveToComponent {
       id: array[this.task_index].id,
       status: status,
     }
-    this.taskService.updateTask(body)
+    this.taskService.updateTask(body, 'moveTo')
   }
 
 

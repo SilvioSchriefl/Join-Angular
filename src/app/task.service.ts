@@ -121,12 +121,12 @@ export class TaskService {
   }
 
 
-  async updateTask(body: any) {
+  async updateTask(body: any, event: string) {
     let url = environment.baseUrl + 'task/'
     try {
       await lastValueFrom(this.http.patch(url, body))
       this.taskSubject.next(this.all_tasks);
-      this.setBoolians()
+      if(event != 'itemDrop') this.setBoolians()
     }
     catch (error) {
       this.request_error = true;
@@ -173,7 +173,7 @@ export class TaskService {
           id: task.id,
           assigned_emails: task.assigned_emails
         }
-        this.updateTask(body)
+        this.updateTask(body, 'contact')
       }
     });
   }

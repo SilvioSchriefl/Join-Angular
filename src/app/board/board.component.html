@@ -531,7 +531,7 @@
 <div *ngIf="this.globalService.open_task_details" [class.show_request_status]="taskService.request_error"
     [class.hide_request_status]="!taskService.request_error" class="request" style="background-color: red;">
     {{taskService.error_type}}</div>
-<div *ngIf="this.globalService.open_task_details || taskService.request_successful && !task_status_changed"
+<div *ngIf="this.globalService.open_task_details || taskService.request_successful"
     [class.show_request_status_success]="taskService.request_successful" class="request">
     <span *ngIf="!deleted && !globalService.open_add_task">Task updated successfully</span>
     <span *ngIf="deleted && !globalService.open_add_task">Task deleted successfully</span>
