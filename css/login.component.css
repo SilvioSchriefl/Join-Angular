@@ -112,4 +112,31 @@ input[type=checkbox] {
     opacity: 0;
     bottom: 0;
   }
+}
+@media (max-width: 900px) {
+  .content {
+    position: unset;
+    width: 100%;
+    padding: 0 25px;
+  }
+}
+@media (max-width: 700px) {
+  form {
+    width: 350px;
+  }
+}
+@media (max-width: 510px) {
+  .header {
+    font-size: 47px !important;
+  }
+}
+@media (max-width: 450px) {
+  form {
+    width: 280px;
+  }
+}
+@media (max-height: 850px) {
+  .login_div {
+    padding: 15px 0;
+  }
 }/*# sourceMappingURL=login.component.css.map */

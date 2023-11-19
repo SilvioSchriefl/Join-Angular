@@ -1,4 +1,8 @@
 <div class="help_main">
+    <div *ngIf="router.url === '/main/help' " class="blue_button back"
+    (click)="globalService.goBack()">
+    <img src="/assets/img/arrow-black.png">
+</div>
     <div class="help_scroll">
 
         <span class="headline">Help</span>

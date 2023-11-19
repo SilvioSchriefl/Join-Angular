@@ -1,9 +1,10 @@
 <div class="container">
     <div class="header">
-        <div *ngIf="router.url === '/private_policy' || router.url === '/legal_notice' " class="blue_button back" [routerLink]="['/login']">
-        <img src="/assets/img/arrow-black.png">
-        Back
-    </div>
+        <div *ngIf="router.url === '/private_policy' || router.url === '/legal_notice' " class="blue_button back"
+            [routerLink]="['/login']">
+            <img src="/assets/img/arrow-black.png">
+        </div>
+
 
     </div>
     <div class="logo-box">
@@ -12,21 +13,19 @@
         <img src="/assets/img/Capa_point.png" alt="" class="point-img">
     </div>
     <div class="mobile-start-animation">
-        <img class="mobile-logo-animation" src="assets/img/menu-logo.png">
+        <img class="mobile-logo-animation" src="/assets/img/menu-logo.png">
     </div>
-    
+
 </div>
-<div class="join_user"  *ngIf="router.url === '/login'" >
+<div class="join_user" *ngIf="router.url === '/login'">
     <span>Not a Join user?</span>
-    <button (click)="signUp()" class="blue_button" >Sign up</button>
-   
+    <button (click)="signUp()" class="blue_button">Sign up</button>
+
 </div>
-<div class="imprint" *ngIf="router.url === '/login' || router.url === '/sign_up'" >
+<div class="imprint" *ngIf="router.url === '/login' || router.url === '/sign_up'">
     <span (click)="navigateTo('legal_notice')">Legal Notice</span>
-    <span  (click)="navigateTo('private_policy')">Privacy Policy</span>
+    <span (click)="navigateTo('private_policy')">Privacy Policy</span>
 </div>
 <div class="router">
     <router-outlet></router-outlet>
 </div>
-
-

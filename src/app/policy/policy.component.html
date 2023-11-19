@@ -1,6 +1,9 @@
 
 <div class="policy_main">
-   
+    <div *ngIf="router.url === '/main/private_policy' " class="blue_button back"
+    (click)="globalService.goBack()">
+    <img src="/assets/img/arrow-black.png">
+    </div>
     <div class="policy_scroll">
         <div class="headline">Privacy Policy</div>
         <div>

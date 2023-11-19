@@ -1,4 +1,8 @@
 <div class="legal_main">
+    <div *ngIf="router.url === '/main/legal_notice' " class="blue_button back"
+    (click)="globalService.goBack()">
+            <img src="/assets/img/arrow-black.png">
+        </div>
     <div class="legal_scroll">
         <span class="headline">Legal Notice</span>
         <div class="imprint">

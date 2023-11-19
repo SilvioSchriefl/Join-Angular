@@ -1,8 +1,9 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { TaskService } from '../task.service';
 import { Router } from '@angular/router';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 @Component({
   selector: 'app-summary',
@@ -11,19 +12,22 @@ import { Router } from '@angular/router';
 })
 export class SummaryComponent implements OnInit {
 
+
+  screen_width: number = 0;
   greeting: string = ''
   urgent_count!: number
   months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  dead_line:string = ''
+  dead_line: string = ''
 
 
   constructor(
     public userService: UserService,
     public taskService: TaskService,
     private router: Router,
+    public globalService: GlobalFunctionsService
   ) { }
 
 
@@ -33,7 +37,7 @@ export class SummaryComponent implements OnInit {
   async ngOnInit() {
     this.setGreeting();
     await this.taskService.getAllTasks()
-     this.taskService.filterTaskbyStatus()
+    this.taskService.filterTaskbyStatus()
     await this.getTasksUrgent()
     await this.userService.getUsersAndContacts()
     await this.getDeadline()
@@ -71,11 +75,11 @@ export class SummaryComponent implements OnInit {
   async getDeadline() {
     let dates: any = []
     this.taskService.all_tasks.forEach((task: any) => dates.push(task.due_date))
-    const currentDate: any = new Date(); 
+    const currentDate: any = new Date();
     let nearestFutureDate = null;
     let minTimeDifference = Infinity;
     for (const dateStr of dates) {
-      const date: any = new Date(dateStr);   
+      const date: any = new Date(dateStr);
       const timeDifference = date - currentDate
       if (timeDifference > 0 && timeDifference < minTimeDifference) {
         nearestFutureDate = date;
@@ -86,7 +90,7 @@ export class SummaryComponent implements OnInit {
       const month = this.months[nearestFutureDate.getMonth()];
       const day = nearestFutureDate.getDate();
       const year = nearestFutureDate.getFullYear();
-      this.dead_line =  month +' ' + day + ', ' + year
+      this.dead_line = month + ' ' + day + ', ' + year
     } else this.dead_line = 'No upcoming deadline'
   }
 

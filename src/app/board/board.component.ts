@@ -56,9 +56,7 @@ export class BoardComponent implements OnInit {
       this.taskService.filterTaskbyStatus()
     });
     await this.taskService.getAllTasks()
-    this.taskService.filterTaskbyStatus()
-    console.log(this.taskService.all_tasks);
-    
+    this.taskService.filterTaskbyStatus() 
   }
 
 
@@ -161,7 +159,6 @@ export class BoardComponent implements OnInit {
   updateSelectedContacts(email: string) {
     let user_index = this.userService.all_users.findIndex((user: { email: string; }) => user.email === email);
     let index = this.selected_contacts.findIndex((contact: any) => contact.email === email)
-    console.log(index)
     if (index != -1) this.selected_contacts.splice(index, 1)
     else this.selected_contacts.push(this.userService.all_users[user_index])
   }
@@ -470,6 +467,7 @@ export class BoardComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.screen_width = window.innerWidth;
+    this.globalService.screen_width = window.innerWidth;
   }
 }
 

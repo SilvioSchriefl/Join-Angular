@@ -43,8 +43,6 @@ export class SignUpComponent {
     else {
       let color = this.userService.setUsercolor()
       let initials = this.userService.getInitials(this.user_name)
-      console.log(initials);
-      
       await this.auth.signUp(this.user_email, this.password1, this.user_name, color, initials)
       if (this.auth.request_successful) {
         setTimeout(() => {

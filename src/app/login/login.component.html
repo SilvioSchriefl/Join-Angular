@@ -33,7 +33,6 @@
         </form>
     </div>
 </div>
-<div [class.show_request_status_success]="auth.request_successful" class="request">Hello
-    {{userService.current_user?.user_name}}</div>
 <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error"
-    class="request_successful" style="background-color: red;">Email or password incorrect</div>
+    class="request_successful" style="background-color: red;">Email or password incorrect
+</div>

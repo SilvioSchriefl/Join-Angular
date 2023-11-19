@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { RouteGuardService } from '../route-guard.service';
 import { UserService } from '../user.service';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 
 
@@ -20,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public route: Router,
-    private http: HttpClient,
     public auth: AuthService,
     public guard: RouteGuardService,
     public userService: UserService,
+    public globalService: GlobalFunctionsService
   ) { }
 
 
@@ -48,7 +49,9 @@ export class LoginComponent implements OnInit {
     else await this.auth.guestLogin()
     if (this.auth.request_successful) {
       this.guard.authenticated = true;
-      setTimeout(() => this.route.navigateByUrl('/main/summary'), 2000);
+      this.globalService.log_in = true;
+      setTimeout(() => this.globalService.log_in = false, 2500);
+      this.route.navigateByUrl('/main/summary')
     }
     else {
       console.log('login failed');

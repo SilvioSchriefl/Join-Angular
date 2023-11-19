@@ -26,6 +26,7 @@ import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { PolicyComponent } from './policy/policy.component';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
 import { MoveToComponent } from './move-to/move-to.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { MoveToComponent } from './move-to/move-to.component';
 
   ],
   providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,

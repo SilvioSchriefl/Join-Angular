@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="greet_main">
+    <div class="greet_main"  [class.show_popup]="globalService.log_in && globalService.screen_width > 1350" [class.hide_greetting]="globalService.screen_width <= 1350">
       <span>{{greeting}}</span>
       <span>{{userService.current_user.user_name}}</span>
     </div>

@@ -1,5 +1,6 @@
-import { HostListener, Injectable } from '@angular/core';
+import { HostListener, Injectable, OnInit } from '@angular/core';
 import { UserService } from './user.service';
+import { Location } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class GlobalFunctionsService {
   open_contacts: boolean = false
   open_move_to_menu = false;
   open_dropdown = false;
+  log_in: boolean = false;
 
 
 
@@ -25,7 +27,9 @@ export class GlobalFunctionsService {
    */
   constructor(
     public userService: UserService,
+    private location: Location
   ) {
+    this.screen_width = window.innerWidth
     window.addEventListener('click', (event) => {
       const conditions = [
         this.userService.open_add_user,
@@ -62,10 +66,13 @@ export class GlobalFunctionsService {
     });
   }
 
-
+  
   stopPropagation(event: Event) {
     event.stopPropagation();
   };
 
 
+  goBack() {
+    this.location.back();
+  }
 }

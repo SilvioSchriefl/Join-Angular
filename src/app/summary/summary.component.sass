@@ -4,7 +4,6 @@
     justify-content: center
 
 .summery_main
-
     position: absolute
     left: calc(50% - 490px)
     top: calc(50% - 364px)
@@ -128,15 +127,19 @@
     justify-content: space-between
 
 .detail_greet
+    position: relative
     display: flex
     gap: 50px
     height: 605px
 
 .greet_main
-    height: 100%
-    justify-content: center
+    z-index: 7
+    position: absolute
+    top: 235px
+    left: 630px
     display: flex
     flex-direction: column
+    width: max-content
     :nth-child(1)
         font-size: 47px
         font-weight: 500
@@ -145,15 +148,49 @@
         font-weight: 700
         color: #29ABE2
 
-@media (max-width: 1350px)
+.hide_greetting
+    animation: slide_in_fadeout 2.5s
+    left: calc(50% - 100px)
+    top: calc(50% - 100px)
+    z-index: -1
 
-    .greet_main
-        display: none
+@keyframes slide_in_fadeout
+    0%
+        transform: translateX(200%)
+        opacity: 1
+        z-index: 7
+
+    20%
+        transform: translateX(0%)
+        opacity: 1
+        z-index: 7
+
+    80%
+        transform: translateX(0%)
+        opacity: 1
+        z-index: 7
+
+    100%
+        transform: translateX(0%)
+        opacity: 0
+        z-index: -1
+
+@media (max-width: 1350px)
 
     .summery_main
         left: calc(50% - 291px)
 
+
 @media (max-width: 700px)
+
+    .greet_main
+        :nth-child(1)
+            font-size: 37px 
+        :nth-child(2)
+            font-size: 54px
+
+        
+           
 
     .header
         gap: 16px

@@ -95,10 +95,7 @@ export class AddTaskComponent implements OnInit {
     if (this.selected_users.includes(contact.email)) {
       let index = this.selected_users.indexOf(contact.email);
       this.selected_users.splice(index, 1);
-    } else {
-      this.selected_users.push(contact.email);
-    }
-    console.log(this.selected_users);
+    } else  this.selected_users.push(contact.email);  
   }
 
 

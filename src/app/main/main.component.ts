@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 
 @Component({
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./main.component.sass']
 })
 export class MainComponent {
+
+  constructor(
+    public globalService: GlobalFunctionsService
+  ) {}
 
   
 /**

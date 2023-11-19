@@ -260,7 +260,7 @@
     [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !globalService.open_dropdown"
     [class.show_popup]="globalService.open_task_details">
     <div class="task_detail_scroll">
-        <div class="close" (click)="closeTaskDetails()">
+        <div class="blue_button close_button" (click)="closeTaskDetails()">
             <img src="/assets/img/close.png">
         </div>
         <div class="category" [style.background-color]="detail_task[0].category_color">{{detail_task[0].category_title}}
@@ -356,7 +356,7 @@
 <div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)"
     [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !globalService.open_dropdown">
     <div class="task_detail_scroll">
-        <div class="close" (click)="backToTaskDetails()" style="top: 19px"
+        <div class="blue_button close_button" (click)="backToTaskDetails()" style="top: 19px"
             (click)="globalService.stopPropagation($event)">
             <img src="/assets/img/close.png">
         </div>

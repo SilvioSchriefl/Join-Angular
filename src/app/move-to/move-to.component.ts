@@ -45,7 +45,6 @@ export class MoveToComponent {
    * opens the move to menu
    */
   openMoveToMenu() {
-    console.log(this.task_index, this.status);
     this.open_move_to_menu = true;
   }
 

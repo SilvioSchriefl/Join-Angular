@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalFunctionsService } from '../global-functions.service';
 
 @Component({
   selector: 'app-legal-notice',
@@ -8,7 +9,10 @@ import { Router } from '@angular/router';
 })
 export class LegalNoticeComponent {
 
-  constructor(public router: Router,) {
+  constructor(
+    public router: Router,
+    public globalService: GlobalFunctionsService
+    ) {
     
   }
 }
