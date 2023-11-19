@@ -20,7 +20,7 @@
                 </div>
                 <div class="contact" (click)="showContact(i)"
                     [class.active_contact]="userService.user_details.email == user.email"
-                    *ngIf="user.email != userService.current_user.email">
+                    *ngIf="user.email != userService.current_user.email && user.user_id != '10'">
                     <div class="circle" [style.background-color]="user.color"><span>{{user.initials}}</span> </div>
                     <div class="user_email_name">
                         <div class="name">
