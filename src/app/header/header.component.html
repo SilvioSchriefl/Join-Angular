@@ -2,14 +2,16 @@
     <img class="logo_mobile" src="/assets/img/logo_mobile.png">
     <span class="headline">Kanban Project Management Tool</span>
     <div class="circle_main">
-        <img src="/assets/img/help.png" (click)="openHelpView()" >
-        <div [style.background-color]="userService.user.color" class="circle" (click)="toggleLogoutMenu()" (click)="globalService.stopPropagation($event)">
-           {{userService.user.initials}}
+        <img src="/assets/img/help.png" (click)="openHelpView()">
+        <div [style.background-color]="userService.current_user.color" class="circle" (click)="toggleLogoutMenu()"
+            (click)="globalService.stopPropagation($event)">
+            {{userService.current_user.initials}}
         </div>
     </div>
-    <div class="logout" [class.show_popup]="globalService.menu_open" [class.remove_popup]="globalService.animation" >
-       <span (click)="navigateTo('legal_notice')">Legal Notice</span>
-       <span (click)="navigateTo('private_policy')">Privacy Policy</span>
-        <span (click)="auth.logOut()" >Log out</span>
+    <div class="logout" [class.show_popup]="globalService.menu_open" [class.remove_popup]="globalService.animation"
+        (click)="globalService.stopPropagation($event)">
+        <span (click)="closeMenu()" [routerLink]="['/main/legal_notice']">Legal Notice</span>
+        <span (click)="closeMenu()" [routerLink]="['/main/private_policy']" >Privacy Policy</span>
+        <span (click)="auth.logOut()">Log out</span>
     </div>
 </div>

@@ -48,7 +48,7 @@ export class TaskService {
     let body = {
       'title': this.userService.category_title,
       'color': this.userService.setUsercolor(),
-      'creator_email': this.userService.user.email
+      'creator_email': this.userService.current_user.email
     }
     try {
       let response = await lastValueFrom(this.http.post(url, body));
@@ -159,5 +159,22 @@ export class TaskService {
     this.globalService.animation = true
     setTimeout(() =>  this.request_successful = false , 2000);
     setTimeout(() =>  this.globalService.animation = false , 2100);
+  }
+
+
+  updateAssignedTaskContacts(email: string) {
+    console.log(email);
+    
+    this.all_tasks.forEach((task:any) => {
+      if(task.assigned_emails.includes(email)) {
+        let i = task.assigned_emails.indexOf(email)
+        task.assigned_emails.splice(i, 1);
+        let body = {
+          id: task.id,
+          assigned_emails: task.assigned_emails
+        }
+        this.updateTask(body)
+      }
+    });
   }
 }

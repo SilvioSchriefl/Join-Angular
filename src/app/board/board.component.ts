@@ -19,7 +19,6 @@ export class BoardComponent implements OnInit {
   drag_start: boolean = false
   detail_task: any = []
   checkBox_value: boolean = false
-  open_dropdown: boolean = false
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
   selected_user_emails: any = []
@@ -58,13 +57,16 @@ export class BoardComponent implements OnInit {
     });
     await this.taskService.getAllTasks()
     this.taskService.filterTaskbyStatus()
+    console.log(this.taskService.all_tasks);
+    
   }
 
 
-
-
-
-
+/**
+ * checks whether and how many subtasks have been completed
+ * @param true or false
+ * @returns how many of the subtasks have been completed
+ */
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
     let dones: any[] = []
@@ -75,6 +77,11 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * calculates the subtasks completed in percent
+   * @param true or false 
+   * @returns Subtasks completed in percent
+   */
   getSubtaskProgressPercent(i: number, status: string) {
     let array = this.getArray(status)
     let dones: any[] = []
@@ -86,6 +93,11 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * determines the assigned contacts based on the emails
+   * @param todo, progress, await or done 
+   * @returns assigned contacts
+   */
   getAssignendContacts(i: number, status: string) {
     let array = this.getArray(status);
     let assignend_contacts: any = [];
@@ -98,6 +110,11 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   * @param todo, progress, await, detail or done  
+   * @returns Depending on the task status entered, the associated array
+   */
   getArray(status: string) {
     if (status == 'detail') return this.detail_task
     if (status == 'todo') return this.taskService.task_status_todo
@@ -107,6 +124,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * fills the array with the assigned contacts based on the emails
+   */
   getContactsForEditView() {
     let edit_contacts = [...this.userService.all_users]
     edit_contacts.forEach((user: { [x: string]: any; email: any; }) => {
@@ -117,6 +137,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * adds the email of the assigned contact to an array. If this already exists, it will be removed again
+   */
   selectContact(email: string, i: number) {
     this.updateSelectedContacts(email)
     let contact_selected = this.contact_selection_list[i].selected
@@ -132,6 +155,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * Adds the selected users to the visual display array or removes them if they already exist
+   */
   updateSelectedContacts(email: string) {
     let user_index = this.userService.all_users.findIndex((user: { email: string; }) => user.email === email);
     let index = this.selected_contacts.findIndex((contact: any) => contact.email === email)
@@ -141,7 +167,11 @@ export class BoardComponent implements OnInit {
   }
 
 
-
+/**
+ * 
+ * @param todo, progress, await or done  
+ * @returns How many contacts are assigned as a number
+ */
   getNumberOfContacts(i: number, status: string) {
     let array = this.getArray(status)
     let number = array[i].assigned_emails.length
@@ -149,6 +179,13 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * four moves the selected task into the corresponding array in which the task was stored
+   * The task status is then passed on to the backend and saved
+   * 
+   * @param event div container is stored
+   * @param status todo, progress, await or done  
+   */
   onItemDrop(event: CdkDragDrop<any>, status: string) {
     if (event.previousContainer === event.container) moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     else {
@@ -180,7 +217,12 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   *  Opens the task menu section and fills the variables with the data of the selected task
+   * @param status todo, progress, await or done  
+   */
   openTaskDetail(i: number, status: string) {
+    this.selected_contacts = []
     this.detail_task[0] = []
     let array = [...this.getArray(status)]
     this.detail_task[0] = array[i]
@@ -192,6 +234,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * Opens the menu for editing the task
+   */
   openEditTask() {
     this.edit_subtasks = []
     this.globalService.open_edit_task = true
@@ -201,6 +246,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * closes the task menu section
+   */
   closeTaskDetails() {
     this.globalService.animation = true
     setTimeout(() => this.globalService.open_task_details = false, 500);
@@ -208,29 +256,38 @@ export class BoardComponent implements OnInit {
   }
 
 
-  openContact() {
-
-  }
-
-
+  /**
+   * closes the edit task menu section
+   */
   backToTaskDetails() {
     this.globalService.open_edit_task = false
   }
 
 
+  /**
+   * sets the priority in the edit task menu
+   * @param prio urgent, medium or low
+   */
   setPrio(prio: string) {
     this.edit_task_prio = prio
   }
 
 
+  /**
+   * close and open the drop down menu and adjust the direction of the arrows
+   */
   toggleDropDownMenu() {
-    this.open_dropdown = !this.open_dropdown;
-    if (this.open_dropdown) this.search_value = ''
+    this.globalService.open_dropdown = !this.globalService.open_dropdown;
+    if (this.globalService.open_dropdown) this.search_value = ''
     if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
     else this.rotationValue = 'rotate(0deg)'
   }
 
 
+  /**
+   * close and open the drop down menu and adjust the direction of the arrows
+   * @param value search text
+   */
   async handleValueChangeOnSearch(value: any, object: string) {
     if (object == 'contact') {
       this.contact_selection_list = this.userService.all_users.filter((user: { user_name: string }) =>
@@ -247,14 +304,19 @@ export class BoardComponent implements OnInit {
   }
 
 
+/**
+ * sets the subtask status using a checkbox
+ */
   updateSubtaskStatus(event: any, i: number) {
     let value = this.edit_subtasks[i].done
     if (value) this.edit_subtasks[i].done = false
     else this.edit_subtasks[i].done = true
-    console.log(this.taskService.task_status_done)
   }
 
 
+  /**
+   * adds a subtask to the task
+   */
   addSubtask() {
     if (this.subtask_title.length > 0) {
       let subtask = {
@@ -267,6 +329,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * deletes the subtask
+   */
   deleteSubtask(i: number) {
     this.delete_index = i
     this.deleted = true
@@ -277,16 +342,17 @@ export class BoardComponent implements OnInit {
   }
 
 
-  detailTaskContactList() {
-
-  }
-
-
+  /**
+   * 
+   */
   closeEditSubtask(i: number) {
     this.edit_subtasks[i].selected = false
   }
 
 
+  /**
+   * closes the input field for editing the subtask
+   */
   openEditSubtask(i: number) {
     this.edit_subtasks.forEach((subtask: any) => subtask.selected = false)
     this.edit_subtasks[i].selected = true
@@ -294,12 +360,18 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * saves the edited suibtask
+   */
   saveEditSubtask(i: number) {
     this.edit_subtasks[i].title = this.edited_subtask_title
     this.edit_subtasks[i].selected = false
   }
 
 
+  /**
+   * creates the body for the backend and forwards it to it and closes the open input fields for editing the subtask
+   */
   async updateEditTask() {
     this.edit_subtasks.forEach((subtask: any) => subtask.selected = false)
     let body = {
@@ -313,6 +385,7 @@ export class BoardComponent implements OnInit {
     }
     await this.taskService.updateTask(body)
     if (this.taskService.request_successful) {
+      this.globalService.open_dropdown = false
       setTimeout(() => {
         this.globalService.open_edit_task = false
         this.globalService.open_task_details = false
@@ -321,6 +394,9 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * opens the add task menu
+   */
   openAddContact() {
     this.userService.user_name = ''
     this.userService.user_email = ''
@@ -329,6 +405,11 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * determines the task to be deleted and forwards it to the backend where it is deleted
+   * @param id task-id
+   * @param status todo, progress, await or done  
+   */
   async deleteTask(id: string, status: string) {
     let array = this.getArray(status)
     let index = this.detail_task[0].array_index
@@ -344,13 +425,20 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * Empties the input field for searching
+   */
   async clearSearchInputField() {
     this.task_search_value = ''
     await this.taskService.getAllTasks()
     this.taskService.filterTaskbyStatus()
   }
 
-  toggleAddTaskPopUp(status: string) {
+
+  /**
+   * closes the add task menu
+   */
+  closeAddTaskPopUp() {
     this.globalService.open_category = false
     this.globalService.open_contacts = false
     this.globalService.animation = true
@@ -359,6 +447,10 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * opens the add task menu. If the width is less than 600 pixels, it is forwarded to the add task component
+   * @param status todo, progress, await or done  
+   */
   openAddTask(status: string) {
     if (this.screen_width < 600) {
       this.router.navigateByUrl('main/add_task_board')
@@ -371,6 +463,10 @@ export class BoardComponent implements OnInit {
   }
 
 
+  /**
+   * Determines the screen width when changing the window
+   * @param event window resize
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.screen_width = window.innerWidth;

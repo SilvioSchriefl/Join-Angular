@@ -26,6 +26,10 @@ export class MoveToComponent {
   }
 
 
+  /**
+   * changes the task status and saves it in the backend
+   * @param status todo, progress, await or done
+   */
   setTaskstatus(status: string) {
     let array = this.getArray(this.status);
     this.open_move_to_menu = false;
@@ -37,12 +41,20 @@ export class MoveToComponent {
   }
 
 
+  /**
+   * opens the move to menu
+   */
   openMoveToMenu() {
     console.log(this.task_index, this.status);
     this.open_move_to_menu = true;
   }
 
 
+  /**
+   * 
+   * @param todo, progress, await, detail or done  
+   * @returns Depending on the task status entered, the associated array
+   */
   getArray(status: string) {
     if (status == 'todo') return this.taskService.task_status_todo
     if (status == 'progress') return this.taskService.task_status_in_progress
@@ -51,6 +63,9 @@ export class MoveToComponent {
   }
 
 
+  /**
+   * close the move to menu
+   */
   closeMoveToMenu() {
     this.animation = true
     setTimeout(() => this.animation = false, 500);
@@ -58,6 +73,9 @@ export class MoveToComponent {
   }
 
 
+  /**
+   * closes the move to menu when clicked outside the menu
+   */
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
     if (this.open_move_to_menu) {
@@ -65,6 +83,5 @@ export class MoveToComponent {
       setTimeout(() => this.animation = false, 500);
       setTimeout(() => this.open_move_to_menu = false, 600);
     }
-
   }
 }

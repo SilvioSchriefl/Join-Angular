@@ -10,7 +10,7 @@ import { GlobalFunctionsService } from './global-functions.service';
 })
 export class UserService {
   show_contact: boolean = false;
-  user: any
+  current_user: any
   all_users: any
   open_add_user: boolean = false;
   open_edit_user: boolean = false;
@@ -46,6 +46,10 @@ export class UserService {
   ) { }
 
 
+  /**
+   * choose a color at random
+   * @returns hex color
+   */
   setUsercolor() {
     let colors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FF0000', '#00FF00', '#A52A2A', '#808080', '#FFC0CB', '#800080', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B']
     let random_index = Math.floor(Math.random() * colors.length);
@@ -53,6 +57,11 @@ export class UserService {
   }
 
 
+  /**
+   * determines the user's initials
+   * @param name user-name
+   * @returns initials of the user
+   */
   getInitials(name: string) {
     let initials = ''
     const words = name.split(' ');
@@ -63,6 +72,9 @@ export class UserService {
   }
 
 
+  /**
+   * determines all users and created contacts and merges them
+   */
   async getUsersAndContacts() {
     const usersUrl = environment.baseUrl + 'users/';
     const contactsUrl = environment.baseUrl + 'contacts/';
@@ -81,11 +93,17 @@ export class UserService {
   }
 
 
+  /**
+   * sorts the users by alphabet
+   */
   sortUserByLetter() {
     this.all_users.sort((a: { user_name: string; }, b: { user_name: any; }) => a.user_name.localeCompare(b.user_name));
   }
 
 
+  /**
+   * checks whether all conditions are met to create a contact. This is then saved in the backend
+   */
   async addContact() {
     if (this.user_name == '') this.user_name_empty = true
     if (!this.user_email) this.email_valid = false
@@ -110,6 +128,9 @@ export class UserService {
   }
 
 
+/**
+ * Contact is saved in the backend
+ */
   async saveContact(url: string, body: { email: string; phone: string; user_name: string; color: string; initials: string; }) {
     let response = await lastValueFrom(this.http.post(url, body));
     this.request_successful = true;
@@ -122,6 +143,9 @@ export class UserService {
   }
 
 
+  /**
+   * determines the type of error
+   */
   handleError(error: any) {
     if (this.open_add_user) {
       if (error.error.email) this.error_type = error.error.email;
@@ -136,6 +160,9 @@ export class UserService {
   }
 
 
+  /**
+   * saves an edited contact in the backend
+   */
   async editContact() {
     let i = this.user_details.index
     const url = environment.baseUrl + 'edit_contact/' + this.user_details.id + '/'
@@ -159,12 +186,13 @@ export class UserService {
       }, 2000);
     } catch (error: any) {
       this.handleError(error)
-      console.log(error);
-      
     }
   }
 
 
+  /**
+   * deletes a contact in the backend
+   */
   async deleteContact() {
     let i = this.user_details.index;
     let url = environment.baseUrl + 'delete_contact/' + this.user_details.id + '/';
@@ -184,6 +212,9 @@ export class UserService {
   }
 
 
+  /**
+   * updates the data of the opened and changed contact
+   */
   updateUserDetail(response: any) {
     this.user_details.user = response.user_name
     this.user_details.email = response.email
@@ -191,6 +222,10 @@ export class UserService {
   }
 
 
+  /**
+   * determines the user who created the opened contact
+   * @returns contact creator
+   */
   getUserName() {
     if (this.user_details.user !== '') {
       let users = this.all_users.filter((user: { user_contact: boolean; }) => user.user_contact === false);
@@ -199,7 +234,7 @@ export class UserService {
       this.creator = users[user_index];
       this.creator_index = this.all_users.findIndex((user: any) => user.email === this.creator.email)
       if (user_index !== -1) return users[user_index].user_name;
-      else return 'Benutzer nicht gefunden'; // Oder einen anderen Standardwert 
+      else return 'user not found'; 
     }
   }
 }

@@ -27,6 +27,9 @@ export class SummaryComponent implements OnInit {
   ) { }
 
 
+  /**
+   * collects various data
+   */
   async ngOnInit() {
     this.setGreeting();
     await this.taskService.getAllTasks()
@@ -36,6 +39,10 @@ export class SummaryComponent implements OnInit {
     await this.getDeadline()
   }
 
+
+  /**
+   * gives the appropriate greeting
+   */
   setGreeting() {
     const currentTime = new Date().getHours();
     if (currentTime < 12) {
@@ -48,14 +55,19 @@ export class SummaryComponent implements OnInit {
   }
 
 
+  /**
+   * determines all urgent tasks
+   */
   async getTasksUrgent() {
-    console.log(this.taskService.all_tasks[0].due_date)
     let urgent_count = []
     urgent_count = this.taskService.all_tasks.filter((task: { prio: string; }) => task.prio === 'urgent')
     this.urgent_count = urgent_count.length
   }
 
 
+  /**
+   * determines the closest deadline
+   */
   async getDeadline() {
     let dates: any = []
     this.taskService.all_tasks.forEach((task: any) => dates.push(task.due_date))
@@ -79,6 +91,9 @@ export class SummaryComponent implements OnInit {
   }
 
 
+  /**
+   * forwards to board
+   */
   openBoard() {
     this.router.navigateByUrl('/main/board')
   }

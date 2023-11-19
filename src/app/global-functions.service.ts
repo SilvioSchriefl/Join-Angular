@@ -1,10 +1,10 @@
-import { HostListener, Injectable  } from '@angular/core';
+import { HostListener, Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class GlobalFunctionsService  {
+export class GlobalFunctionsService {
 
   menu_open: boolean = false;
   open_task_details: boolean = false
@@ -16,16 +16,16 @@ export class GlobalFunctionsService  {
   open_category: boolean = false
   open_contacts: boolean = false
   open_move_to_menu = false;
+  open_dropdown = false;
 
-  
 
+
+  /**
+   * Closes open popups when clicked outside of the popup
+   */
   constructor(
     public userService: UserService,
   ) {
-
-   
-  
-
     window.addEventListener('click', (event) => {
       const conditions = [
         this.userService.open_add_user,
@@ -38,11 +38,12 @@ export class GlobalFunctionsService  {
         this.menu_open,
         this.open_contact_menu,
         this.open_move_to_menu,
+        this.open_dropdown,
       ];
-
       for (const condition of conditions) {
         if (condition) {
           this.animation = true;
+          this.open_dropdown = false;
           setTimeout(() => {
             if (condition === this.userService.open_add_user) this.userService.open_add_user = false;
             else if (condition === this.userService.open_edit_user) this.userService.open_edit_user = false;
@@ -61,11 +62,6 @@ export class GlobalFunctionsService  {
     });
   }
 
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    this.screen_width = window.innerWidth;
-  }
 
   stopPropagation(event: Event) {
     event.stopPropagation();

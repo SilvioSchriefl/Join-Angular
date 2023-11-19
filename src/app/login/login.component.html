@@ -2,7 +2,7 @@
     <div class="login_div">
         <span class="header">Log in</span>
         <img src="/assets/img/Vector 5.png" alt="">
-        <form (ngSubmit)="logIn()">
+        <form>
             <div class="input_field">
                 <input type="email" name="email" placeholder="Email" [(ngModel)]="email">
                 <img src="/assets/img/letter-icon.png" alt="">
@@ -25,16 +25,15 @@
                     </label>
                     <label for="myCheckbox">Remember me</label>
                 </div>
-                <span (click)="goToRestorePassword()" class="password">Forgott may password</span>
             </div>
             <div class="button_div">
-                <button class="blue_button" type="submit">Log in</button>
-                <button class="white_button">Guest Log in</button>
+                <button (click)="logIn('user')" class="blue_button">Log in</button>
+                <button (click)="logIn('guest')" class="white_button">Guest Log in</button>
             </div>
         </form>
     </div>
-    <div [class.show_request_status]="auth.request_successful" class="request_successful">Hello
-        {{userService.user?.user_name}}</div>
-    <div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error"
-        class="request_successful" style="background-color: red;">Email or password incorrect</div>
 </div>
+<div [class.show_request_status_success]="auth.request_successful" class="request">Hello
+    {{userService.current_user?.user_name}}</div>
+<div [class.show_request_status]="auth.request_error" [class.hide_request_status]="!auth.request_error"
+    class="request_successful" style="background-color: red;">Email or password incorrect</div>

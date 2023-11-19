@@ -14,16 +14,16 @@
             <span  *ngIf="user_name_empty" class="error">Required</span>
         </div>
         <div class="input_field">
-            <input type="email" placeholder="Email" [(ngModel)]="user_email" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')" maxlength="40">
+            <input type="email" placeholder="Email" [(ngModel)]="user_email" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged()" maxlength="40">
             <img src="/assets/img/letter-icon.png" alt="">
             <span class="error" *ngIf="!email_valid" >Please enter a valid email address</span>
         </div>
         <div class="input_field">
-            <input type="password" placeholder="Password" [(ngModel)]="password1" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')" (focus)="inputFocus()">
+            <input type="password" placeholder="Password" [(ngModel)]="password1" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged()" (focus)="inputFocus()">
             <img src="/assets/img/lock-icon.png" alt="">
         </div>
         <div class="input_field">
-            <input type="password" placeholder="Confirm Password" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged($event, 'email')" (focus)="inputFocus()">
+            <input type="password" placeholder="Confirm Password" [(ngModel)]="password2" [ngModelOptions]="{standalone: true}" (ngModelChange)="dataChanged()" (focus)="inputFocus()">
             <img src="/assets/img/lock-icon.png" alt="">
             <span  *ngIf="!password_match" class="error">Ups! your password don’t match</span>
         </div>

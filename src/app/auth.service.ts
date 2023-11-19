@@ -24,6 +24,9 @@ export class AuthService {
   ) { }
 
 
+  /**
+   * logs the user into the backend with email and password
+   */
   async loginWithEmailAndPassword(email: string, password: string) {
     const url = environment.baseUrl + 'log_in/';
     const body = {
@@ -32,13 +35,12 @@ export class AuthService {
     };
     try {
       let response: any = await lastValueFrom(this.http.post(url, body));
-      this.userService.user = response
+      this.userService.current_user = response
       if (this.remember_me) await this.setLocalStorage(response)
       else this.token = response.token
       this.request_successful = true;
       setTimeout(() => this.request_successful = false, 3000);
       this.remember_me = false
-      console.log(response);
     } catch (error) {
       this.request_error = true;
       setTimeout(() => this.request_error = false, 3000);
@@ -47,6 +49,9 @@ export class AuthService {
   }
 
 
+/**
+ * saves the data of the logged in user in local storage
+ */
   async setLocalStorage(response: any) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('user_name', response.user_name);
@@ -58,6 +63,9 @@ export class AuthService {
   }
 
 
+  /**
+   * creates a new user in the backend
+   */
   async signUp(email: string, password: string, name: string, color: string, initials: string) {
     const url = environment.baseUrl + 'sign_up/';
     const body = {
@@ -80,11 +88,13 @@ export class AuthService {
   }
 
 
+  /**
+   * logs out the current user
+   */
   async logOut() {
-
     const url = environment.baseUrl + 'log_out/';
     const body = {
-      "email": this.userService.user.email,
+      "email": this.userService.current_user.email,
     };
     try {
       let response = await lastValueFrom(this.http.post(url, body));
@@ -99,6 +109,9 @@ export class AuthService {
   }
 
 
+  /**
+   * deletes the current user's data from the local storage
+   */
   removeDataFromLocalStorage() {
     localStorage.removeItem('token');
     localStorage.removeItem('user_name');
@@ -108,5 +121,13 @@ export class AuthService {
     localStorage.removeItem('initials');
     localStorage.removeItem('phone');
     this.token = ''
+  }
+
+
+  /**
+   * logs the guest in
+   */
+  async guestLogin() {
+    await this.loginWithEmailAndPassword('guest@guest.com', '123')
   }
 }

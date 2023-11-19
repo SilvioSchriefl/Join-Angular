@@ -22,5 +22,4 @@ export class StartScreenComponent implements OnInit {
   navigateTo(link: string) {
     this.router.navigateByUrl(`/${link}`)
   }
-
 }

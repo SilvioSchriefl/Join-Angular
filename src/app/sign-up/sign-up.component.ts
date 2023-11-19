@@ -17,7 +17,7 @@ export class SignUpComponent {
   password2!: string
   test: boolean = false
   regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
-  email_valid: boolean = false
+  email_valid: boolean = true
   password_match: boolean = true
   checkBox_value: boolean = false
   acceept_policy: boolean = false
@@ -32,7 +32,9 @@ export class SignUpComponent {
   ) { }
 
 
-
+/**
+ * checks whether all conditions are met so that a user can be created. A new user will then be created
+ */
   async signUp() {
     if (!this.checkBox_value)  this.policy_denied = true;
     if (this.user_name.length < 1) this.user_name_empty = true
@@ -53,27 +55,43 @@ export class SignUpComponent {
   }
 
 
-
+/**
+ * redirects to login
+ */
   backToLogin() {
     this.router.navigateByUrl('/login');
   }
 
 
+  /**
+   * redirects to private_policy
+   */
   goToPolicy() {
     this.router.navigateByUrl('/private_policy');
   }
 
-  dataChanged(value: string, inputfield: string) {
+
+  /**
+   * checks whether a valid email has been entered
+   */
+  dataChanged() {
     this.email_valid = this.regexEmail.test(this.user_email)
    
   }
 
+
+  /**
+   * sets the status of the checkbox for the private policy
+   */
   handleValueChange() {
     this.acceept_policy = this.checkBox_value
     if (this.acceept_policy) this.policy_denied = false
   }
 
 
+  /**
+   * Removes the error messages when the input field is clicked
+   */
   inputFocus() {
     this.user_name_empty = false
     this.password_match = true

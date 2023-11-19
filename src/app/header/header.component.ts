@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
 
 
 
+  /**
+   * checks whether data is available in the local storage. if so, the storage data is used
+   */
   ngOnInit() {
     let user_name = localStorage.getItem('user_name')
     if (user_name) {
@@ -34,10 +37,14 @@ export class HeaderComponent implements OnInit {
         color: localStorage.getItem('color'),
         initials: localStorage.getItem('initials'),
       }
-      this.userService.user = user
+      this.userService.current_user = user
     }
   }
 
+
+  /**
+   * opens and closes the profile menu
+   */
   toggleLogoutMenu() {
     if (this.globalService.menu_open){
       this.animation = true
@@ -47,17 +54,21 @@ export class HeaderComponent implements OnInit {
       }  , 300)
     } 
     else this.globalService.menu_open = true
-    
   }
 
 
+  /**
+   * This opens the help page
+   */
   openHelpView() {
     this.router.navigateByUrl('/main/help')
   }
 
 
-  navigateTo(link: string) {
+  /**
+   * close the logout menu
+   */
+  closeMenu() {
     this.globalService.menu_open = false
-    this.router.navigateByUrl(`/main/${link}`)
   }
 }

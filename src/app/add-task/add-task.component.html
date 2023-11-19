@@ -51,7 +51,7 @@
                             <div class="contact_div" [class.selected]="contact.selected"
                                 *ngFor="let contact of all_contacts; let i = index" (click)="selectContact(i)">
                                 <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                                {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
+                                {{contact.user_name}} <span *ngIf="contact.email == userService.current_user.email">(you)</span>
                                 <input type="checkbox" class="checkbox">
                                 <label class="checkbox">
                                     <input class="checkbox__input" type="checkbox" [checked]="contact.selected">
@@ -64,11 +64,12 @@
                             </div>
                         </div>
                         <footer>
-                            <div class="blue_button" (click)="openAddContact()"
+                            <div *ngIf="userService.current_user.user_id != '10'" class="blue_button" (click)="openAddContact()"
                                 (click)="globalService.stopPropagation($event)">
                                 <span>Add new contact</span>
                                 <img src="/assets/img/person_add.png">
                             </div>
+                            <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
                         </footer>
                     </div>
                 </div>
@@ -149,7 +150,7 @@
                             <div class="delete_category_main">
 
                                 <div class="delete" (click)="deleteCategory(i)"
-                                    *ngIf="userService.user.email == category.creator_email"
+                                    *ngIf="userService.current_user.email == category.creator_email"
                                     (click)="globalService.stopPropagation($event)">
                                     <img src="/assets/img/delete.png">
                                 </div>
@@ -158,11 +159,12 @@
                         </div>
                     </div>
                     <footer>
-                        <div class="blue_button" (click)="openAddCategory()"
+                        <div *ngIf="userService.current_user.user_id != '10'" class="blue_button" (click)="openAddCategory()"
                             (click)="globalService.stopPropagation($event)">
                             <span>Add new category</span>
                             <img src="/assets/img/person_add.png">
                         </div>
+                        <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new category</div>
                     </footer>
                 </div>
             </div>

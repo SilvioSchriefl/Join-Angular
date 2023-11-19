@@ -1,4 +1,11 @@
 <div class="container">
+    <div class="header">
+        <div *ngIf="router.url === '/private_policy' || router.url === '/legal_notice' " class="blue_button back" [routerLink]="['/login']">
+        <img src="/assets/img/arrow-black.png">
+        Back
+    </div>
+
+    </div>
     <div class="logo-box">
         <img src="/assets/img/Capa_dark.png" alt="" class="dark-img">
         <img src="/assets/img/Capa_white_whitout.png" alt="" class="white-img">
@@ -16,7 +23,10 @@
 </div>
 <div class="imprint" *ngIf="router.url === '/login' || router.url === '/sign_up'" >
     <span (click)="navigateTo('legal_notice')">Legal Notice</span>
-    <span (click)="navigateTo('private_policy')">Privacy Policy</span>
+    <span  (click)="navigateTo('private_policy')">Privacy Policy</span>
 </div>
-<router-outlet class="content" ></router-outlet>
+<div class="router">
+    <router-outlet></router-outlet>
+</div>
+
 

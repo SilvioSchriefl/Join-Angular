@@ -46,6 +46,7 @@ export class AddTaskComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.clearAll()
     await this.taskService.getCategorys()
     this.getCurrentDate()
     await this.userService.getUsersAndContacts()
@@ -54,9 +55,11 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+/**
+ * When you click on the screen, close the contact menu and the category menu and set the arrows in the appropriate direction
+ */
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
-
     if (this.globalService.open_contacts) {
       if (this.rotationValue == 'rotate(0deg)') this.rotationValue = 'rotate(180deg)'
       else this.rotationValue = 'rotate(0deg)'
@@ -70,6 +73,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+/**
+ * determines the current date
+ */
   getCurrentDate() {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -80,11 +86,14 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * determines whether the contact has already been selected and deletes it or adds it
+   */
   selectContact(i: number) {
     this.handleTaskView(i)
     let contact = this.userService.all_users[i];
-    if (this.selected_users.includes(contact)) {
-      let index = this.selected_users.indexOf(contact);
+    if (this.selected_users.includes(contact.email)) {
+      let index = this.selected_users.indexOf(contact.email);
       this.selected_users.splice(index, 1);
     } else {
       this.selected_users.push(contact.email);
@@ -93,19 +102,25 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * displays the selected contacts visually
+   */
   handleTaskView(i: number) {
     let contact = this.userService.all_users[i];
     if (this.selected_contacts_list.includes(contact)) {
       const index = this.selected_contacts_list.indexOf(contact);
       this.selected_contacts_list.splice(index, 1);
-      this.userService.all_users[i].selected = false
+      this.all_contacts[i].selected = false
     } else {
-      this.userService.all_users[i].selected = true
+      this.all_contacts[i].selected = true
       this.selected_contacts_list.push(contact);
     }
   }
 
 
+  /**
+   * Closes and opens the Contact and Category menus and changes the direction of the menu arrow accordingly
+   */
   toggleDropDownMenu(menu: string) {
     if (menu == 'contact') {
       this.globalService.open_contacts = !this.globalService.open_contacts;
@@ -121,11 +136,14 @@ export class AddTaskComponent implements OnInit {
       if (this.rotationValueC == 'rotate(0deg)') this.rotationValueC = 'rotate(180deg)'
       else this.rotationValueC = 'rotate(0deg)'
     }
-    console.log(this.globalService.open_category);
-
   }
 
 
+  /**
+   * filters the contacts based on the letters entered
+   * 
+   * @param search text 
+   */
   handleValueChange(value: any) {
     this.all_contacts = this.userService.all_users.filter((user: { user_name: string }) =>
       user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
@@ -133,11 +151,19 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * sets the priorities
+   * 
+   * @param urgent, medium or low 
+   */
   setPrio(prio: string) {
     this.prio = prio
   }
 
 
+  /**
+   * opens the add user menu
+   */
   openAddContact() {
     this.userService.user_name = ''
     this.userService.user_email = ''
@@ -146,12 +172,18 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * opens the add category menu
+   */
   openAddCategory() {
     this.userService.category_title = ''
     this.userService.open_add_category = true
   }
 
 
+  /**
+   *  deletes the selected category
+   */
   deleteCategory(i: number) {
     this.delete_index = i
     this.deleted = true
@@ -163,6 +195,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   *  assigns the selected category to the variable and closes the menu
+   */
   setCategory(i: number) {
     this.selected_category = this.taskService.all_categorys[i]
     this.globalService.open_category = false
@@ -171,6 +206,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * adds a new subtask to the task
+   */
   addSubtask() {
     if (this.subtask_title.length > 0) {
       let subtask = {
@@ -183,6 +221,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * deletes the selected subtask
+   */
   deleteSubtask(i: number) {
     this.delete_index = i
     this.deleted = true
@@ -193,6 +234,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * opens the input field for editing the subtask
+   */
   openEditSubtask(i: number) {
     this.subtasks.forEach((subtask: any) => subtask.selected = false)
     this.subtasks[i].selected = true
@@ -200,17 +244,26 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * saves the edited subtask
+   */
   saveEditSubtask(i: number) {
     this.subtasks[i].title = this.edited_subtask_title
     this.subtasks[i].selected = false
   }
 
 
+  /**
+   * closes the input field for editing the subtask
+   */
   closeEditSubtask(i: number) {
     this.subtasks[i].selected = false
   }
 
 
+  /**
+   * resets the add task menu to the initial value
+   */
   clearAll() {
     this.selected_category = []
     this.selected_contacts = []
@@ -226,6 +279,10 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * Checks whether all conditions are met to create a task
+   * creates the body for the backend and passes it on to it. It is then forwarded to the board
+   */
   async createTask() {
     if (this.task_title.length === 0) this.title_error = true
     if (this.selected_category.length === 0) this.category_error = true
@@ -242,7 +299,6 @@ export class AddTaskComponent implements OnInit {
       prio: this.prio,
     }
     await this.taskService.addTask(body)
-
     if (this.taskService.request_successful) {
       this.clearAll()
       setTimeout(() => {
@@ -253,6 +309,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
+  /**
+   * removes the error messages
+   */
   removeError(error: string) {
     if (error == 'title') this.title_error = false
     if (error == 'category') this.category_error = false

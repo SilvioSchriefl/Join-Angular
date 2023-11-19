@@ -9,13 +9,10 @@ import { Component } from '@angular/core';
 export class MainComponent {
 
   
-
- 
-
+/**
+ * deletes the data from local storage
+ */
   logout() {
     localStorage.removeItem('token');
   }
-
-
-  
 }

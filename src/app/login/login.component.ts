@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
     public userService: UserService,
   ) { }
 
+
+  /**
+   * checks whether a token is stored in local storage. If so, it is redirected to main/summary
+   */
   ngOnInit(): void {
     let token = localStorage.getItem('token');
     if (token) {
@@ -35,24 +39,25 @@ export class LoginComponent implements OnInit {
   }
 
 
-  goToRestorePassword() {
-    this.route.navigateByUrl('restore_pw');
-  }
-
-  async logIn() {
-    await this.auth.loginWithEmailAndPassword(this.email, this.password)
+  /**
+   * logs in the user or the guest user
+   * @param loginType user or guest
+   */
+  async logIn(loginType: string) {
+    if(loginType === 'user' ) await this.auth.loginWithEmailAndPassword(this.email, this.password)
+    else await this.auth.guestLogin()
     if (this.auth.request_successful) {
       this.guard.authenticated = true;
-      setTimeout(() => {
-        this.route.navigateByUrl('/main/summary');
-      }, 2500);
+      setTimeout(() => this.route.navigateByUrl('/main/summary'), 2000);
     }
     else {
-      console.log(' login failed');
+      console.log('login failed');
     }
   }
 
-  
+  /**
+   * sets the remember me status
+   */
   handleValueChange(event: Event) {
     this.auth.remember_me = this.checkBox_value
   }

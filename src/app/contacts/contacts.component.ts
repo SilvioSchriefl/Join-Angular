@@ -24,6 +24,7 @@ export class ContactsComponent implements OnInit {
 
 
   async ngOnInit() {
+    this.userService.show_contact = false
     this.screen_width = window.innerWidth
     await this.userService.getUsersAndContacts()
     this.userService.user_details = {
@@ -40,12 +41,21 @@ export class ContactsComponent implements OnInit {
   }
 
 
+  /**
+   * Determines the screen width when changing the window
+   * @param event window resize
+   */
   @HostListener('window:resize', ['$event'])
   onResize(event: any): void {
     this.screen_width = window.innerWidth;
   }
 
 
+  /**
+   * determines whether the next user has a different initial letter
+   * @param name user-name
+   * @returns true or false
+   */
   checkForNewFirstLetter(name: string, i: number) {
     if (i === 0) return true;
     else {
@@ -57,11 +67,19 @@ export class ContactsComponent implements OnInit {
   }
 
 
+  /**
+   * 
+   * @param name user-name
+   * @returns first letter of trhe user-name
+   */
   getLetter(name: string) {
     return name.charAt(0).toUpperCase()
   }
 
 
+  /**
+   * fills the variables with the data of the selected contact and displays it
+   */
   showContact(i: number) {
     this.userService.show_contact = true
     this.userService.user_details.user = this.userService.all_users[i].user_name
@@ -76,6 +94,9 @@ export class ContactsComponent implements OnInit {
   }
 
 
+  /**
+   * closes the mobile contact view
+   */
   closeContactViewMobile() {
     this.animation = true
     setTimeout(() => {
@@ -87,6 +108,10 @@ export class ContactsComponent implements OnInit {
   }
 
 
+  /**
+   * opens the respective popup based on the transmitted parameter
+   * @param popup add, edit or delete
+   */
   openPopup(popup: string) {
     this.globalService.open_contact_menu = false
     this.userService.user_name = ''
@@ -103,12 +128,18 @@ export class ContactsComponent implements OnInit {
   }
 
 
+  /**
+   *  opens the contact menu for the mobile view
+   */
   openContactMenu() {
-    if(!this.userService.user_details.user_contact || this.userService.user.user_id != this.userService.user_details.created_by) return
+    if(!this.userService.user_details.user_contact || this.userService.current_user.user_id != this.userService.user_details.created_by) return
     else this.globalService.open_contact_menu = true
   }
 
 
+  /**
+   * shows the user who created the contact
+   */
   showCreator() {
     this.showContact(this.userService.creator_index)
   }

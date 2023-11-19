@@ -257,7 +257,7 @@
 
 
 <div class="task_detail_main" *ngIf="globalService.open_task_details" (click)="globalService.stopPropagation($event) "
-    [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !open_dropdown"
+    [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !globalService.open_dropdown"
     [class.show_popup]="globalService.open_task_details">
     <div class="task_detail_scroll">
         <div class="close" (click)="closeTaskDetails()">
@@ -304,8 +304,7 @@
                 <div class="detail_contacts_scroll">
                     <span class="no_subtask" *ngIf="detail_task[0].assigned_emails.length == 0">No contacts
                         assigned</span>
-                    <div class="contacts_list" *ngFor="let contact of getAssignendContacts(0, 'detail')"
-                        (click)="openContact()">
+                    <div class="contacts_list" *ngFor="let contact of getAssignendContacts(0, 'detail')">
                         <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
                         <span>{{contact.user_name}}</span>
                     </div>
@@ -338,13 +337,13 @@
             </div>
         </div>
         <div class="edit_buttons_main">
-            <div class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)"
+            <div [class.edit_invalid]="userService.current_user.user_id == '10'" class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)"
                 [class.no_pointer_events]="taskService.request_successful || taskService.request_error">
                 <img src="/assets/img/delete.png" alt="">
                 Delete
             </div>
             <img src="/assets/img/Vector 3.png" alt="">
-            <div class="edit_buttons" (click)="openEditTask()">
+            <div [class.edit_invalid]="userService.current_user.user_id == '10'" class="edit_buttons" (click)="openEditTask()">
                 <img src="/assets/img/edit.png" alt="">
                 Edit
             </div>
@@ -355,7 +354,7 @@
 <!---------------------------------------------------------------EDIT TASK------------------------------------------------------------------->
 
 <div *ngIf="globalService.open_edit_task" class="task_detail_main" (click)="globalService.stopPropagation($event)"
-    [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !open_dropdown">
+    [class.z_index]="userService.open_add_user" [class.remove_popup]="globalService.animation && !globalService.open_dropdown">
     <div class="task_detail_scroll">
         <div class="close" (click)="backToTaskDetails()" style="top: 19px"
             (click)="globalService.stopPropagation($event)">
@@ -407,22 +406,22 @@
         <!---------------------------------------------------------------EDIT CONTACTS---------------------------------------------------------------->
         <div class="details_input">
             <span>Assigned to</span>
-            <div *ngIf="!open_dropdown" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
+            <div *ngIf="!globalService.open_dropdown" (click)="globalService.stopPropagation($event)" class="dropdown_menu"
                 (click)="toggleDropDownMenu()">
                 <span>Select contacts to assign</span>
                 <div class="dropdown">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
             </div>
-            <div *ngIf="open_dropdown" class="input_title_hide" (click)="globalService.stopPropagation($event)"
-                [class.add_shadow]="open_dropdown">
+            <div *ngIf="globalService.open_dropdown" class="input_title_hide" (click)="globalService.stopPropagation($event)"
+                [class.add_shadow]="globalService.open_dropdown">
                 <input type="text" style="z-index: 2" placeholder="Search contact" [(ngModel)]="search_value"
                     (ngModelChange)="handleValueChangeOnSearch($event, 'contact')">
                 <div class="dropdown_search" (click)="toggleDropDownMenu()">
                     <img src="/assets/img/arrow_drop_down.png" [style.transform]="rotationValue">
                 </div>
                 <div class="contact_main" (click)="globalService.stopPropagation($event)"
-                    [class.show_element]="open_dropdown">
+                    [class.show_element]="globalService.open_dropdown">
                     <div class="contacts_scroll_div">
                         <span class="no_contact" *ngIf="contact_selection_list.length == 0">No contact found</span>
                         <div class="contact_div" [class.selected]="contact.selected"
@@ -430,7 +429,7 @@
                             (click)="selectContact(contact.email, i)">
                             <div class="circle_name">
                                 <div class="circle" [style.background-color]="contact.color">{{contact.initials}}</div>
-                                {{contact.user_name}} <span *ngIf="contact.email == userService.user.email">(you)</span>
+                                {{contact.user_name}} <span *ngIf="contact.email == userService.current_user.email">(you)</span>
                             </div>
                             <label class="checkbox">
                                 <input class="checkbox__input" type="checkbox" [checked]="contact.selected"
@@ -523,7 +522,7 @@
     [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component"
     *ngIf="globalService.open_add_task" [class.show_popup]="globalService.open_add_task"
     (click)="globalService.stopPropagation($event)">
-    <div class="close " (click)="toggleAddTaskPopUp('todo')">
+    <div class="close " (click)="closeAddTaskPopUp()">
         <img src="/assets/img/close.png">
     </div>
     <app-add-task></app-add-task>

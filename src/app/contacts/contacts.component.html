@@ -4,22 +4,23 @@
     </div>
     <div class="sidebar">
         <div class="header">
-            <div class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)">
+            <div *ngIf="userService.current_user.user_id != '10'" class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)" >
                 <div class="add_button">
                     <span>Add new contact</span>
                     <img src="/assets/img/person_add.png" alt="">
                 </div>
             </div>
+            <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
         </div>
         <div class="contact_list">
             <div class="contact_div" *ngFor="let user of userService.all_users; let i = index">
                 <div class="contact_line"
-                    *ngIf="checkForNewFirstLetter(user.user_name, i) && user.email != userService.user.email">
+                    *ngIf="checkForNewFirstLetter(user.user_name, i) && user.email != userService.current_user.email">
                     <span>{{getLetter(user.user_name)}}</span>
                 </div>
                 <div class="contact" (click)="showContact(i)"
                     [class.active_contact]="userService.user_details.email == user.email"
-                    *ngIf="user.email != userService.user.email">
+                    *ngIf="user.email != userService.current_user.email">
                     <div class="circle" [style.background-color]="user.color"><span>{{user.initials}}</span> </div>
                     <div class="user_email_name">
                         <div class="name">
@@ -37,7 +38,7 @@
         [class.hide_contact_mobile]="animation && userService.show_contact && screen_width <= 1200"
         [class.show_contact_mobile]="userService.show_contact && screen_width <= 1200">
         <div class="add_contact_mobile" (click)="openContactMenu()" (click)="globalService.stopPropagation($event)" [class.position_fixed]="userService.show_contact" [class.d_none]="animation"
-            [class.invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+            [class.invalid]="!userService.user_details.user_contact || userService.current_user.user_id != userService.user_details.created_by">
             <img src="/assets/img/more_vert.png">
         </div>
 
@@ -77,13 +78,13 @@
                         <div class="edit_delete">
                             <div class="edit_delete_child" (click)="openPopup('edit')"
                                 (click)="globalService.stopPropagation($event)"
-                                [class.edit_invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                                [class.edit_invalid]="!userService.user_details.user_contact || userService.current_user.user_id != userService.user_details.created_by">
                                 <img src="/assets/img/edit.png" alt="">
                                 <span>Edit</span>
                             </div>
                             <div class="edit_delete_child" (click)="openPopup('delete')"
                                 (click)="globalService.stopPropagation($event)"
-                                [class.edit_invalid]="!userService.user_details.user_contact || userService.user.user_id != userService.user_details.created_by">
+                                [class.edit_invalid]="!userService.user_details.user_contact || userService.current_user.user_id != userService.user_details.created_by">
                                 <img src="/assets/img/delete.png" alt="">
                                 <span>Delete</span>
                             </div>
@@ -110,7 +111,7 @@
                         <span>Contact created by :</span>
                         <span class="creator" (click)="showCreator()">
                             {{userService.getUserName()}}
-                            <div *ngIf="userService.user.email == userService.creator.email">(you)</div>
+                            <div *ngIf="userService.current_user.email == userService.creator.email">(you)</div>
                         </span>
 
                     </div>
