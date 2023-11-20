@@ -111,7 +111,7 @@ export class UserService {
     else {
       let color = this.setUsercolor()
       let initials = this.getInitials(this.user_name)
-      const url = environment.baseUrl + 'add_contact/'
+      const url = environment.baseUrl + 'contacts/'
       const body = {
         "email": this.user_email,
         "phone": this.user_phone,
