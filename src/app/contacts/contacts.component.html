@@ -14,8 +14,8 @@
         </div>
         <div class="contact_list">
             <div class="contact_div" *ngFor="let user of userService.all_users; let i = index">
-                <div class="contact_line"
-                    *ngIf="checkForNewFirstLetter(user.user_name, i) && user.email != userService.current_user.email">
+                <div  class="contact_line"
+                    *ngIf="checkForNewFirstLetter(user.user_name, i) && user.email != userService.current_user.email && userService.current_user.user_id == '10'">
                     <span>{{getLetter(user.user_name)}}</span>
                 </div>
                 <div class="contact" (click)="showContact(i)"
