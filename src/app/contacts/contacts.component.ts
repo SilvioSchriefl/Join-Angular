@@ -58,11 +58,13 @@ export class ContactsComponent implements OnInit {
    * @returns true or false
    */
   checkForNewFirstLetter(name: string, i: number) {
+    let test = this.userService.all_users.filter((user: { user_name: string; }) => user.user_name.charAt(0).toUpperCase() == 'G')
+    if (test.length == 1 && name == 'Guest') return false
     if (i === 0) return true;
     else {
       let firstLetter = name.charAt(0).toUpperCase()
       let previous_firstLetter = this.userService.all_users[i - 1].user_name.charAt(0).toUpperCase();
-      if (firstLetter !== previous_firstLetter) return true;
+      if (firstLetter !== previous_firstLetter && name) return true;
       else return false;
     }
   }
