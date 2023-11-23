@@ -163,8 +163,6 @@ export class TaskService {
 
 
   updateAssignedTaskContacts(email: string) {
-    console.log(email);
-    
     this.all_tasks.forEach((task:any) => {
       if(task.assigned_emails.includes(email)) {
         let i = task.assigned_emails.indexOf(email)

@@ -41,7 +41,7 @@
                             [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
                             <div (click)="openTaskDetail(i, 'todo')" class="task_main"
                                 (click)="globalService.stopPropagation($event)"
-                                *ngFor="let task of taskService.task_status_todo; let i = index" cdkDrag
+                                *ngFor="let task of taskService.task_status_todo; let i = index" cdkDrag [cdkDragDisabled]="screen_width <= 1500"
                                 (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                                 <div class="category" [style.background-color]="task.category_color">
                                     {{task.category_title}}
@@ -99,7 +99,7 @@
                             [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
                             <div (click)="openTaskDetail(i, 'progress')" class="task_main"
                                 (click)="globalService.stopPropagation($event)"
-                                *ngFor="let task of taskService.task_status_in_progress; let i = index" cdkDrag
+                                *ngFor="let task of taskService.task_status_in_progress; let i = index" cdkDrag [cdkDragDisabled]="screen_width <= 1500"
                                 (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                                 <div class="category" [style.background-color]="task.category_color">
                                     {{task.category_title}}
@@ -156,7 +156,7 @@
                             [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
                             <div (click)="openTaskDetail(i, 'await')" class="task_main"
                                 (click)="globalService.stopPropagation($event)"
-                                *ngFor="let task of taskService.task_status_await; let i = index" cdkDrag
+                                *ngFor="let task of taskService.task_status_await; let i = index" cdkDrag [cdkDragDisabled]="screen_width <= 1500"
                                 (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                                 <div class="category" [style.background-color]="task.category_color">
                                     {{task.category_title}}
@@ -212,7 +212,7 @@
                             [cdkDropListConnectedTo]="['todo', 'progress', 'await','done']">
                             <div (click)="openTaskDetail(i, 'done')" class="task_main"
                                 (click)="globalService.stopPropagation($event)"
-                                *ngFor="let task of taskService.task_status_done; let i = index" cdkDrag
+                                *ngFor="let task of taskService.task_status_done; let i = index" cdkDrag [cdkDragDisabled]="screen_width <= 1500"
                                 (cdkDragStarted)="onDragStarted($event)" (cdkDragEnded)="onDragEnded($event)">
                                 <div class="category" [style.background-color]="task.category_color">
                                     {{task.category_title}}
