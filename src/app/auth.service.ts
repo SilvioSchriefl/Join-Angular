@@ -15,6 +15,7 @@ export class AuthService {
   request_error: boolean = false
   request_successful: boolean = false
   error_type: string = ''
+  
 
 
   constructor(
@@ -44,7 +45,7 @@ export class AuthService {
     } catch (error) {
       this.request_error = true;
       setTimeout(() => this.request_error = false, 3000);
-      console.log(error);
+      console.error;
     }
   }
 

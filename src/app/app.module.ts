@@ -27,6 +27,7 @@ import { PolicyComponent } from './policy/policy.component';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
 import { MoveToComponent } from './move-to/move-to.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
   ],
   imports: [
+    MatProgressSpinnerModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

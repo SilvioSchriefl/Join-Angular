@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   email!: string
   password!: string
   checkBox_value!: boolean
+  loading: boolean = false
+  guest_loading: boolean = false
 
   constructor(
     public route: Router,
@@ -45,23 +47,30 @@ export class LoginComponent implements OnInit {
    * @param loginType user or guest
    */
   async logIn(loginType: string) {
-    if(loginType === 'user' ) await this.auth.loginWithEmailAndPassword(this.email, this.password)
-    else await this.auth.guestLogin()
-    if (this.auth.request_successful) {
-      this.guard.authenticated = true;
-      this.globalService.log_in = true;
-      setTimeout(() => this.globalService.log_in = false, 2500);
-      this.route.navigateByUrl('/main/summary')
+    if (loginType === 'user') {
+      this.loading = true
+      await this.auth.loginWithEmailAndPassword(this.email, this.password)
     }
     else {
-      console.log('login failed');
+      this.guest_loading = true
+      await this.auth.guestLogin()
+    }
+      if (this.auth.request_successful) {
+        this.guard.authenticated = true;
+        this.globalService.log_in = true;
+        setTimeout(() => this.globalService.log_in = false, 2500);
+        this.route.navigateByUrl('/main/summary')
+      }
+      else console.log('login failed');
+      this.loading = false
+      this.guest_loading = false
+    }
+
+
+    /**
+     * sets the remember me status
+     */
+    handleValueChange(event: Event) {
+      this.auth.remember_me = this.checkBox_value
     }
   }
-
-  /**
-   * sets the remember me status
-   */
-  handleValueChange(event: Event) {
-    this.auth.remember_me = this.checkBox_value
-  }
-}

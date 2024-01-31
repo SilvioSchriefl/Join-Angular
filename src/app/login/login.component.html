@@ -16,7 +16,7 @@
                 <div>
                     <label class="checkbox">
                         <input class="checkbox__input" type="checkbox" [(ngModel)]="checkBox_value"
-                            [ngModelOptions]="{standalone: true}" (change)="handleValueChange($event)">
+                            [ngModelOptions]="{standalone: true}" (change)="handleValueChange($event)" >
                         <svg class="checkbox__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
                             <rect width="21" height="21" x=".5" y=".5" fill="#FFF" stroke="#000" rx="3" />
                             <path class="tick" stroke="#29ABE2" fill="none" stroke-linecap="round" stroke-width="4"
@@ -27,8 +27,14 @@
                 </div>
             </div>
             <div class="button_div">
-                <button (click)="logIn('user')" class="blue_button">Log in</button>
-                <button (click)="logIn('guest')" class="white_button">Guest Log in</button>
+                <button (click)="logIn('user')" class="blue_button">
+                    <span *ngIf="!loading "> Log in</span>
+                    <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
+                </button>
+                <button (click)="logIn('guest')" class="white_button">
+                    <span *ngIf="!guest_loading">Guest Log in</span>
+                    <mat-spinner class="spinner" *ngIf="guest_loading"></mat-spinner>
+                </button>
             </div>
         </form>
     </div>
