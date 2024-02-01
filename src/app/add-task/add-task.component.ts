@@ -55,9 +55,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
-/**
- * When you click on the screen, close the contact menu and the category menu and set the arrows in the appropriate direction
- */
+  /**
+   * When you click on the screen, close the contact menu and the category menu and set the arrows in the appropriate direction
+   */
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
     if (this.globalService.open_contacts) {
@@ -73,9 +73,9 @@ export class AddTaskComponent implements OnInit {
   }
 
 
-/**
- * determines the current date
- */
+  /**
+   * determines the current date
+   */
   getCurrentDate() {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
@@ -95,7 +95,7 @@ export class AddTaskComponent implements OnInit {
     if (this.selected_users.includes(contact.email)) {
       let index = this.selected_users.indexOf(contact.email);
       this.selected_users.splice(index, 1);
-    } else  this.selected_users.push(contact.email);  
+    } else this.selected_users.push(contact.email);
   }
 
 
@@ -312,5 +312,11 @@ export class AddTaskComponent implements OnInit {
   removeError(error: string) {
     if (error == 'title') this.title_error = false
     if (error == 'category') this.category_error = false
+  }
+
+
+  getTooltip(): string {
+    if (this.task_title.length == 0 || this.selected_category.length == 0) return 'Title and category are required!'
+    else return ''
   }
 }

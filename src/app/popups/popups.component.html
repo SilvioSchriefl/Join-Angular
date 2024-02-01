@@ -1,4 +1,4 @@
-<div class="shadow" [class.remove_shadow]="globalService.animation"
+<div class="shadow" [class.remove_shadow]="globalService.animation" (click)="closeAddTask()"
     [class.show_shadow]="userService.open_add_user || globalService.open_add_task || globalService.open_edit_task || this.globalService.open_task_details || userService.open_edit_user || userService.open_delete_user || userService.open_add_category ">
     <div [class.remove_popup]="globalService.animation" class="popup_main"
         (click)="globalService.stopPropagation($event)"

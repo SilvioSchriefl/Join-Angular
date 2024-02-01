@@ -11,6 +11,7 @@ import { GlobalFunctionsService } from '../global-functions.service';
 })
 export class PopupsComponent {
 
+
   regexEmail = new RegExp('^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$');
 
   constructor(
@@ -66,8 +67,8 @@ export class PopupsComponent {
     if (this.userService.open_edit_user) await this.userService.editContact()
     if (this.userService.open_delete_user) {
       await this.deleteAndUpdateTask()
-      if(this.userService.show_contact) this.userService.show_contact = false
-    } 
+      if (this.userService.show_contact) this.userService.show_contact = false
+    }
     if (this.userService.open_add_category && this.userService.category_title.length > 0) await this.taskService.addCategory()
     if (this.userService.request_successful) {
       this.globalService.animation = true
@@ -81,7 +82,19 @@ export class PopupsComponent {
    */
   async deleteAndUpdateTask() {
     await this.userService.deleteContact()
-    if(this.userService.request_successful) this.taskService.updateAssignedTaskContacts(this.userService.user_details.email)
+    if (this.userService.request_successful) this.taskService.updateAssignedTaskContacts(this.userService.user_details.email)
   }
 
+
+  /**
+   * Closes the add task functionality, including animations and dropdown.
+   */
+  closeAddTask() {
+    this.globalService.animation = true;
+    this.globalService.open_dropdown = false;
+    setTimeout(() => {
+      this.globalService.open_add_task = false;
+      this.globalService.animation = false;
+    }, 600);
+  }
 }

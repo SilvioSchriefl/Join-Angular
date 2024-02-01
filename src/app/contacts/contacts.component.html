@@ -5,12 +5,12 @@
     <div class="sidebar">
         <div class="header">
             <div *ngIf="userService.current_user.user_id != '10'" class="blue_button " (click)="openPopup('add')" (click)="globalService.stopPropagation($event)" >
-                <div class="add_button">
+                <div class="add_button" >
                     <span>Add new contact</span>
                     <img src="/assets/img/person_add.png" alt="">
                 </div>
             </div>
-            <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
+            <div *ngIf="userService.current_user.user_id == '10'" matTooltip="Please register first" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
         </div>
         <div class="contact_list">
             <div class="contact_div" *ngFor="let user of userService.all_users; let i = index">

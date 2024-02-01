@@ -336,7 +336,7 @@
                 </div>
             </div>
         </div>
-        <div class="edit_buttons_main">
+        <div class="edit_buttons_main" [matTooltip]="getTooltip()" matTooltipPosition="right">
             <div [class.edit_invalid]="userService.current_user.user_id == '10'" class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)"
                 [class.no_pointer_events]="taskService.request_successful || taskService.request_error">
                 <img src="/assets/img/delete.png" alt="">
@@ -520,8 +520,7 @@
 </div>
 <div [class.remove_popup]="globalService.animation && !globalService.open_category && !globalService.open_contacts"
     [class.z_index]="userService.open_add_user || userService.open_add_category" class="add_task_component"
-    *ngIf="globalService.open_add_task" [class.show_popup]="globalService.open_add_task"
-    (click)="globalService.stopPropagation($event)">
+    *ngIf="globalService.open_add_task" [class.show_popup]="globalService.open_add_task">
     <div class="close " (click)="closeAddTaskPopUp()">
         <img src="/assets/img/close.png">
     </div>

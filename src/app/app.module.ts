@@ -11,7 +11,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthService } from './auth.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MainComponent } from './main/main.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
@@ -27,7 +27,8 @@ import { PolicyComponent } from './policy/policy.component';
 import { RestorePasswordComponent } from './restore-password/restore-password.component';
 import { MoveToComponent } from './move-to/move-to.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
   ],
   imports: [
+    MatTooltipModule,
     MatProgressSpinnerModule,
     BrowserModule,
     AppRoutingModule,
@@ -63,13 +65,13 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
       multi: true
-     }
+    }
   ],
   bootstrap: [AppComponent]
 })

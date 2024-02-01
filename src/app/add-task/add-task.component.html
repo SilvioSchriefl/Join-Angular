@@ -69,7 +69,7 @@
                                 <span>Add new contact</span>
                                 <img src="/assets/img/person_add.png">
                             </div>
-                            <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
+                            <div matTooltip="Please register first" *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
                         </footer>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                             <span>Add new category</span>
                             <img src="/assets/img/person_add.png">
                         </div>
-                        <div *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new category</div>
+                        <div matTooltip="Please register first" *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new category</div>
                     </footer>
                 </div>
             </div>
@@ -218,7 +218,7 @@
         </div>
         <div class="send_buttons">
             <div (click)="clearAll()" class="white_button">Clear</div>
-            <div class="blue_button" (click)="createTask()"
+            <div [matTooltip]="getTooltip()"  class="blue_button" (click)="createTask()"
                 [class.invalid]="task_title.length == 0 || selected_category.length == 0">
                 Create Task
                 <img src="/assets/img/check.png" alt="">

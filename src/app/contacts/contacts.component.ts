@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-contacts',
@@ -14,7 +15,7 @@ export class ContactsComponent implements OnInit {
   letter: string = '';
   sort_letter: string = '';
   screen_width: number = 0;
-  animation:boolean = false;
+  animation: boolean = false;
 
 
   constructor(
@@ -135,7 +136,7 @@ export class ContactsComponent implements OnInit {
    *  opens the contact menu for the mobile view
    */
   openContactMenu() {
-    if(!this.userService.user_details.user_contact || this.userService.current_user.user_id != this.userService.user_details.created_by) return
+    if (!this.userService.user_details.user_contact || this.userService.current_user.user_id != this.userService.user_details.created_by) return
     else this.globalService.open_contact_menu = true
   }
 

@@ -196,10 +196,10 @@ export class BoardComponent implements OnInit {
         id: event.container.data[event.currentIndex].id,
         status: status,
       }
-    
-      await this.taskService.updateTask(body ,'itemDrop')
 
-      
+      await this.taskService.updateTask(body, 'itemDrop')
+
+
     }
   }
 
@@ -286,15 +286,15 @@ export class BoardComponent implements OnInit {
    * close and open the drop down menu and adjust the direction of the arrows
    * @param value search text
    */
-  async handleValueChangeOnSearch(value: any, object: string) {
+  async handleValueChangeOnSearch(value: string, object: string) {
     if (object == 'contact') {
       this.contact_selection_list = this.userService.all_users.filter((user: { user_name: string }) =>
         user.user_name.toLowerCase().includes(this.search_value.toLowerCase())
       );
     }
     if (object == 'task') {
-      this.taskService.all_tasks = this.taskService.all_tasks.filter((task: any) =>
-        task.title.toLowerCase().includes(this.task_search_value.toLowerCase())
+      this.taskService.all_tasks = this.taskService.all_tasks.filter((task: { title: string, description: string }) =>
+        task.title.toLowerCase().includes(this.task_search_value.toLowerCase()) || task.description.toLowerCase().includes(this.task_search_value.toLowerCase())
       );
       if (this.task_search_value.length == 0) await this.taskService.getAllTasks()
       this.taskService.filterTaskbyStatus()
@@ -305,7 +305,7 @@ export class BoardComponent implements OnInit {
   /**
    * sets the subtask status using a checkbox
    */
-  updateSubtaskStatus(event: any, i: number) {
+  updateSubtaskStatus(event: Event, i: number) {
     let value = this.edit_subtasks[i].done
     if (value) this.edit_subtasks[i].done = false
     else this.edit_subtasks[i].done = true
@@ -469,6 +469,17 @@ export class BoardComponent implements OnInit {
   onResize(event: any): void {
     this.screen_width = window.innerWidth;
     this.globalService.screen_width = window.innerWidth;
+  }
+
+
+  /**
+   * This function returns a tooltip message based on the current user's ID.
+   *
+   * @return {string} The tooltip message
+   */
+  getTooltip(): string {
+    if (this.userService.current_user.user_id == '10') return 'Please register first'
+    else return ''
   }
 }
 

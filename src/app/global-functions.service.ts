@@ -38,7 +38,6 @@ export class GlobalFunctionsService {
         this.userService.open_add_category,
         this.open_edit_task,
         this.open_task_details,
-        this.open_add_task,
         this.menu_open,
         this.open_contact_menu,
         this.open_move_to_menu,
@@ -55,7 +54,6 @@ export class GlobalFunctionsService {
             else if (condition === this.userService.open_add_category) this.userService.open_add_category = false;
             else if (condition === this.open_edit_task) this.open_edit_task = false;
             else if (condition === this.open_task_details) this.open_task_details = false;
-            else if (condition === this.open_add_task) this.open_add_task = false;
             else if (condition === this.menu_open) this.menu_open = false;
             else if (condition === this.open_contact_menu) this.open_contact_menu = false;
             else if (condition === this.open_move_to_menu) this.open_move_to_menu = false;
