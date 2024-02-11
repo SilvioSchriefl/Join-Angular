@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="button_div">
-                <button (click)="logIn('user')" class="blue_button">
+                <button (click)="logIn('user')" class="blue_button" [class.invalid]="email == '' || password == '' ">
                     <span *ngIf="!loading "> Log in</span>
                     <mat-spinner class="spinner" *ngIf="loading"></mat-spinner>
                 </button>

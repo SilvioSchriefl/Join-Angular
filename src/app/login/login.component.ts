@@ -15,8 +15,8 @@ import { GlobalFunctionsService } from '../global-functions.service';
 })
 export class LoginComponent implements OnInit {
 
-  email!: string
-  password!: string
+  email: string = ''
+  password: string = ''
   checkBox_value!: boolean
   loading: boolean = false
   guest_loading: boolean = false
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
    * @param loginType user or guest
    */
   async logIn(loginType: string) {
+    if (this.email =='' || this.password == '') return
     if (loginType === 'user') {
       this.loading = true
       await this.auth.loginWithEmailAndPassword(this.email, this.password)
