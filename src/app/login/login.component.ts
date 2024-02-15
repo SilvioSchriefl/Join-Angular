@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
    * @param loginType user or guest
    */
   async logIn(loginType: string) {
-    if (this.email =='' || this.password == '') return
+    if (this.email =='' || this.password == '' && loginType === 'user') return
     if (loginType === 'user') {
       this.loading = true
       await this.auth.loginWithEmailAndPassword(this.email, this.password)
