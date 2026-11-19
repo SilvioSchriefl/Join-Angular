@@ -1,27 +1,46 @@
-# JoinAngular
+# Join – Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.1.
+Angular-Frontend für **Join**, ein Kanban-Board für Teams nach dem Vorbild von Trello.
+Entstanden 2023 während meiner Ausbildung zum Entwickler bei der Developer Akademie.
 
-## Development server
+Das zugehörige Backend (Django REST API) liegt hier:
+[SilvioSchriefl/Join_Backend](https://github.com/SilvioSchriefl/Join_Backend)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Funktionen
 
-## Code scaffolding
+- **Board** mit Spalten für den Arbeitsstand; Aufgaben per Drag & Drop verschieben,
+  auf dem Handy über ein eigenes „Verschieben nach“-Menü
+- **Aufgaben anlegen** mit Beschreibung, Fälligkeitsdatum, Priorität, Kategorie,
+  zugewiesenen Personen und Unteraufgaben
+- **Übersicht** (Summary) mit den wichtigsten Zahlen zum Board
+- **Kontakte** anlegen, bearbeiten und löschen
+- **Konto:** Registrierung, Login, Gast-Login, Logout
+- Geschützte Bereiche über einen Route Guard; ein HTTP-Interceptor hängt das Login-Token an
+  jede Anfrage
+- Hilfe-Seite, Impressum und Datenschutz
+- Responsive für Desktop und Handy
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Die Seite „Passwort vergessen“ ist als Oberfläche vorhanden, im Backend aber nicht angebunden.
 
-## Build
+## Technik
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Angular 16, TypeScript
+- Angular Material und Angular CDK (Drag & Drop)
+- RxJS, Angular Router, HttpClient mit Interceptor und Route Guard
+- SASS
 
-## Running unit tests
+## Lokal starten
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Voraussetzungen: Node.js und die Angular CLI (`npm install -g @angular/cli`).
 
-## Running end-to-end tests
+```bash
+git clone https://github.com/SilvioSchriefl/Join-Angular.git
+cd Join-Angular
+npm install
+ng serve
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Danach im Browser `http://localhost:4200/` öffnen.
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Die Adresse des Backends steht in `src/app/enviroments/enviroments.ts`. Für ein lokal laufendes
+Backend dort `http://127.0.0.1:8000/` eintragen.
