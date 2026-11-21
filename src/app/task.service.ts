@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { GlobalFunctionsService } from './global-functions.service';
-import { Category, Task } from './interfaces';
+import { Category, NewTask, Task, TaskStatus } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class TaskService {
   request_successful: boolean = false;
   request_error: boolean = false;
   error_type: string = ''
-  task_status: string = ''
+  task_status: TaskStatus = 'todo'
   private taskSubject = new BehaviorSubject<Task[]>(this.all_tasks);
 
 
@@ -94,7 +94,7 @@ export class TaskService {
   }
 
 
-  async addTask(body: any) {
+  async addTask(body: NewTask) {
     let url = environment.baseUrl + 'task/'
     try {
       let response = await lastValueFrom(this.http.post<Task>(url, body));

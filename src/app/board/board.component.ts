@@ -442,7 +442,7 @@ export class BoardComponent implements OnInit {
    * opens the add task menu. If the width is less than 600 pixels, it is forwarded to the add task component
    * @param status todo, progress, await or done  
    */
-  openAddTask(status: TaskStatus | 'detail') {
+  openAddTask(status: TaskStatus) {
     if (this.screen_width < 600) {
       this.router.navigateByUrl('main/add_task_board')
       setTimeout(() => this.taskService.task_status = status, 200)

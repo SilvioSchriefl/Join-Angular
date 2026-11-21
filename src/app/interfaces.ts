@@ -27,6 +27,9 @@ export interface Task {
   subtasks: Subtask[];
 }
 
+/** Eine neue Aufgabe, bevor sie gespeichert ist: id und created_at vergibt das Backend */
+export type NewTask = Omit<Task, 'id' | 'created_at'>;
+
 export interface Category {
   id: number;
   title: string;
