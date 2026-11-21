@@ -13,8 +13,8 @@ export class UserService {
   show_contact: boolean = false;
   current_user!: CurrentUser
 
-  /** ID des Gast-Kontos in der Datenbank (Login über "Guest Log in") */
-  readonly guestUserId = 10
+  /** E-Mail des Gast-Kontos (Login über "Guest Log in") */
+  readonly guestEmail = 'guest@guest.com'
 
   /** ID des eingeloggten Benutzers als Zahl (im localStorage liegt sie als Text) */
   get currentUserId(): number {
@@ -23,7 +23,7 @@ export class UserService {
 
   /** true, wenn gerade der Gast eingeloggt ist */
   get isGuest(): boolean {
-    return this.currentUserId === this.guestUserId
+    return this.current_user?.email === this.guestEmail
   }
   all_users: Person[] = []
   open_add_user: boolean = false;
