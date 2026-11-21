@@ -1,4 +1,4 @@
-import { Person, Subtask } from '../interfaces';
+import { Person, Subtask, TaskStatus } from '../interfaces';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
@@ -64,7 +64,7 @@ export class BoardComponent implements OnInit {
    * @param true or false
    * @returns how many of the subtasks have been completed
    */
-  getSubtaskProgress(i: number, status: string) {
+  getSubtaskProgress(i: number, status: TaskStatus | 'detail') {
     let array = this.getArray(status)
     return array[i].subtasks.filter((subtask: Subtask) => subtask.done).length
   }
@@ -75,7 +75,7 @@ export class BoardComponent implements OnInit {
    * @param true or false 
    * @returns Subtasks completed in percent
    */
-  getSubtaskProgressPercent(i: number, status: string) {
+  getSubtaskProgressPercent(i: number, status: TaskStatus | 'detail') {
     let subtasks: Subtask[] = this.getArray(status)[i].subtasks
     if (subtasks.length === 0) return 0
     let done_count = subtasks.filter((subtask: Subtask) => subtask.done).length
@@ -88,7 +88,7 @@ export class BoardComponent implements OnInit {
    * @param todo, progress, await or done 
    * @returns assigned contacts
    */
-  getAssignendContacts(i: number, status: string) {
+  getAssignendContacts(i: number, status: TaskStatus | 'detail') {
     let array = this.getArray(status);
     let assignend_contacts: any = [];
     let contact_emails = array[i].assigned_emails
@@ -105,7 +105,7 @@ export class BoardComponent implements OnInit {
    * @param todo, progress, await, detail or done  
    * @returns Depending on the task status entered, the associated array
    */
-  getArray(status: string) {
+  getArray(status: TaskStatus | 'detail') {
     if (status == 'detail') return this.detail_task
     if (status == 'todo') return this.taskService.task_status_todo
     if (status == 'progress') return this.taskService.task_status_in_progress
@@ -161,7 +161,7 @@ export class BoardComponent implements OnInit {
    * @param todo, progress, await or done  
    * @returns How many contacts are assigned as a number
    */
-  getNumberOfContacts(i: number, status: string) {
+  getNumberOfContacts(i: number, status: TaskStatus | 'detail') {
     let array = this.getArray(status)
     let number = array[i].assigned_emails.length
     return number - 2
@@ -175,7 +175,7 @@ export class BoardComponent implements OnInit {
    * @param event div container is stored
    * @param status todo, progress, await or done  
    */
-  async onItemDrop(event: CdkDragDrop<any>, status: string) {
+  async onItemDrop(event: CdkDragDrop<any>, status: TaskStatus) {
     if (event.previousContainer === event.container) moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     else {
       transferArrayItem(
@@ -211,7 +211,7 @@ export class BoardComponent implements OnInit {
    *  Opens the task menu section and fills the variables with the data of the selected task
    * @param status todo, progress, await or done  
    */
-  openTaskDetail(i: number, status: string) {
+  openTaskDetail(i: number, status: TaskStatus | 'detail') {
     this.selected_contacts = []
     this.detail_task[0] = []
     let array = [...this.getArray(status)]
@@ -401,7 +401,7 @@ export class BoardComponent implements OnInit {
    * @param id task-id
    * @param status todo, progress, await or done  
    */
-  async deleteTask(id: string, status: string) {
+  async deleteTask(id: string, status: TaskStatus | 'detail') {
     let array = this.getArray(status)
     let index = this.detail_task[0].array_index
     array.splice(index, 1)
@@ -442,7 +442,7 @@ export class BoardComponent implements OnInit {
    * opens the add task menu. If the width is less than 600 pixels, it is forwarded to the add task component
    * @param status todo, progress, await or done  
    */
-  openAddTask(status: string) {
+  openAddTask(status: TaskStatus | 'detail') {
     if (this.screen_width < 600) {
       this.router.navigateByUrl('main/add_task_board')
       setTimeout(() => this.taskService.task_status = status, 200)
