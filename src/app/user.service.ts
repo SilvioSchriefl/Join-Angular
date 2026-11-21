@@ -4,14 +4,28 @@ import { environment } from './enviroments/enviroments';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { GlobalFunctionsService } from './global-functions.service';
+import { Contact, CurrentUser, Person, User, isContact } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   show_contact: boolean = false;
-  current_user: any
-  all_users: any
+  current_user!: CurrentUser
+
+  /** ID des Gast-Kontos in der Datenbank (Login über "Guest Log in") */
+  readonly guestUserId = 10
+
+  /** ID des eingeloggten Benutzers als Zahl (im localStorage liegt sie als Text) */
+  get currentUserId(): number {
+    return Number(this.current_user?.user_id)
+  }
+
+  /** true, wenn gerade der Gast eingeloggt ist */
+  get isGuest(): boolean {
+    return this.currentUserId === this.guestUserId
+  }
+  all_users: Person[] = []
   open_add_user: boolean = false;
   open_edit_user: boolean = false;
   open_delete_user: boolean = false;
@@ -24,7 +38,7 @@ export class UserService {
   request_error: boolean = false;
   email_valid: boolean = true;
   user_name_empty: boolean = false;
-  all_contacts: any = [];
+  all_contacts: Contact[] = [];
   category_title: string = ''
   creator: any = []
   creator_index: number = 0
@@ -34,10 +48,10 @@ export class UserService {
     phone: '',
     initials: '',
     color: '',
-    id: '',
+    id: 0,
     user_contact: false,
     index: 0,
-    created_by: ''
+    created_by: null as number | null
   }
 
 
@@ -79,9 +93,9 @@ export class UserService {
     const usersUrl = environment.baseUrl + 'users/';
     const contactsUrl = environment.baseUrl + 'contacts/';
     try {
-      const usersResponse = await lastValueFrom(this.http.get(usersUrl));
-      const contactsResponse = await lastValueFrom(this.http.get(contactsUrl));
-      this.all_users = usersResponse;
+      const usersResponse = await lastValueFrom(this.http.get<User[]>(usersUrl));
+      const contactsResponse = await lastValueFrom(this.http.get<Contact[]>(contactsUrl));
+      this.all_users = [...usersResponse];
       this.all_contacts = contactsResponse;
       this.all_contacts.forEach((contact: any) => {
         this.all_users.push(contact);
@@ -132,7 +146,7 @@ export class UserService {
  * Contact is saved in the backend
  */
   async saveContact(url: string, body: { email: string; phone: string; user_name: string; color: string; initials: string; }) {
-    let response = await lastValueFrom(this.http.post(url, body));
+    let response = await lastValueFrom(this.http.post<Contact>(url, body));
     this.request_successful = true;
     setTimeout(() => {
       this.request_successful = false
@@ -175,7 +189,7 @@ export class UserService {
       "created_by": this.user_details.created_by
     };
     try {
-      let response = await lastValueFrom(this.http.put(url, body));
+      let response = await lastValueFrom(this.http.put<Contact>(url, body));
       this.request_successful = true;
       setTimeout(() => {
         this.request_successful = false
@@ -236,6 +250,7 @@ export class UserService {
       if (user_index !== -1) return users[user_index].user_name;
       else return 'user not found'; 
     }
+    return '';
   }
 }
 

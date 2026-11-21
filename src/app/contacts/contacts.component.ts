@@ -1,3 +1,4 @@
+import { isContact } from '../interfaces';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
@@ -35,10 +36,10 @@ export class ContactsComponent implements OnInit {
       phone: '',
       initials: '',
       color: '',
-      id: '',
+      id: 0,
       user_contact: false,
       index: 0,
-      created_by: ''
+      created_by: null
     }
   }
 
@@ -93,7 +94,8 @@ export class ContactsComponent implements OnInit {
     this.userService.user_details.phone = this.userService.all_users[i].phone
     this.userService.user_details.id = this.userService.all_users[i].id
     this.userService.user_details.user_contact = this.userService.all_users[i].user_contact
-    this.userService.user_details.created_by = this.userService.all_users[i].created_by
+    const person = this.userService.all_users[i]
+    this.userService.user_details.created_by = isContact(person) ? person.created_by : null
     this.userService.user_details.index = i
   }
 
@@ -136,7 +138,7 @@ export class ContactsComponent implements OnInit {
    *  opens the contact menu for the mobile view
    */
   openContactMenu() {
-    if (!this.userService.user_details.user_contact || this.userService.current_user.user_id != this.userService.user_details.created_by) return
+    if (!this.userService.user_details.user_contact || this.userService.currentUserId !== this.userService.user_details.created_by) return
     else this.globalService.open_contact_menu = true
   }
 

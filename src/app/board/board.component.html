@@ -337,13 +337,13 @@
             </div>
         </div>
         <div class="edit_buttons_main" [matTooltip]="getTooltip()" matTooltipPosition="right">
-            <div [class.edit_invalid]="userService.current_user.user_id == '10'" class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)"
+            <div [class.edit_invalid]="userService.isGuest" class="edit_buttons" (click)="deleteTask(detail_task[0].id, detail_task[0].status)"
                 [class.no_pointer_events]="taskService.request_successful || taskService.request_error">
                 <img src="/assets/img/delete.png" alt="">
                 Delete
             </div>
             <img src="/assets/img/Vector 3.png" alt="">
-            <div [class.edit_invalid]="userService.current_user.user_id == '10'" class="edit_buttons" (click)="openEditTask()">
+            <div [class.edit_invalid]="userService.isGuest" class="edit_buttons" (click)="openEditTask()">
                 <img src="/assets/img/edit.png" alt="">
                 Edit
             </div>

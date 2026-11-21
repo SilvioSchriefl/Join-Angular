@@ -64,12 +64,12 @@
                             </div>
                         </div>
                         <footer>
-                            <div *ngIf="userService.current_user.user_id != '10'" class="blue_button" (click)="openAddContact()"
+                            <div *ngIf="!userService.isGuest" class="blue_button" (click)="openAddContact()"
                                 (click)="globalService.stopPropagation($event)">
                                 <span>Add new contact</span>
                                 <img src="/assets/img/person_add.png">
                             </div>
-                            <div matTooltip="Please register first" *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
+                            <div matTooltip="Please register first" *ngIf="userService.isGuest" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new contact</div>
                         </footer>
                     </div>
                 </div>
@@ -159,12 +159,12 @@
                         </div>
                     </div>
                     <footer>
-                        <div *ngIf="userService.current_user.user_id != '10'" class="blue_button" (click)="openAddCategory()"
+                        <div *ngIf="!userService.isGuest" class="blue_button" (click)="openAddCategory()"
                             (click)="globalService.stopPropagation($event)">
                             <span>Add new category</span>
                             <img src="/assets/img/person_add.png">
                         </div>
-                        <div matTooltip="Please register first" *ngIf="userService.current_user.user_id == '10'" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new category</div>
+                        <div matTooltip="Please register first" *ngIf="userService.isGuest" (click)="globalService.stopPropagation($event)" class="blue_button invalid">Add new category</div>
                     </footer>
                 </div>
             </div>

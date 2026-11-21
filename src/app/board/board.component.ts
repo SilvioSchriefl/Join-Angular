@@ -478,7 +478,7 @@ export class BoardComponent implements OnInit {
    * @return {string} The tooltip message
    */
   getTooltip(): string {
-    if (this.userService.current_user.user_id == '10') return 'Please register first'
+    if (this.userService.isGuest) return 'Please register first'
     else return ''
   }
 }

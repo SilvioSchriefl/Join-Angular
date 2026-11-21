@@ -56,3 +56,24 @@ export interface Contact {
   /** nur im Frontend: im Auswahlmenü angehakt */
   selected?: boolean;
 }
+
+/** Benutzer und Kontakte zusammen – so wie in der Kontaktliste angezeigt */
+export type Person = User | Contact;
+
+/** Gibt true zurück, wenn die Person ein angelegter Kontakt ist (kein registrierter Benutzer) */
+export function isContact(person: Person): person is Contact {
+  return 'created_by' in person;
+}
+
+/**
+ * Der eingeloggte Benutzer, wie er nach dem Login im localStorage liegt.
+ * localStorage speichert nur Text, und ein fehlender Eintrag ergibt null.
+ */
+export interface CurrentUser {
+  user_name: string | null;
+  email: string | null;
+  user_id: string | null;
+  token: string | null;
+  color: string | null;
+  initials: string | null;
+}
