@@ -9,6 +9,8 @@ export type TaskPrio = 'urgent' | 'medium' | 'low';
 export interface Subtask {
   title: string;
   done: boolean;
+  /** nur im Frontend: wird gerade bearbeitet */
+  selected?: boolean;
 }
 
 export interface Task {
