@@ -64,7 +64,7 @@ export class BoardComponent implements OnInit {
    * @param true or false
    * @returns how many of the subtasks have been completed
    */
-  getSubtaskProgress(i: number, status: TaskStatus | 'detail') {
+  getSubtaskProgress(i: number, status: TaskStatus | 'detail'): number {
     let array = this.getArray(status)
     return array[i].subtasks.filter((subtask: Subtask) => subtask.done).length
   }
@@ -75,9 +75,9 @@ export class BoardComponent implements OnInit {
    * @param true or false 
    * @returns Subtasks completed in percent
    */
-  getSubtaskProgressPercent(i: number, status: TaskStatus | 'detail') {
+  getSubtaskProgressPercent(i: number, status: TaskStatus | 'detail'): string {
     let subtasks: Subtask[] = this.getArray(status)[i].subtasks
-    if (subtasks.length === 0) return 0
+    if (subtasks.length === 0) return '0%'
     let done_count = subtasks.filter((subtask: Subtask) => subtask.done).length
     return done_count * 100 / subtasks.length + '%'
   }
