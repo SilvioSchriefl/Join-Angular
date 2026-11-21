@@ -1,3 +1,4 @@
+import { Person, Subtask } from '../interfaces';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
@@ -15,14 +16,13 @@ export class BoardComponent implements OnInit {
 
   task_search_value: string = ''
   subtask_progress: string = ''
-  filtered_users: any = []
   drag_start: boolean = false
   detail_task: any = []
   checkBox_value: boolean = false
   rotationValue: string = 'rotate(0deg)'
   search_value: string = ''
-  selected_user_emails: any = []
-  contact_selection_list: any = []
+  selected_user_emails: string[] = []
+  contact_selection_list: Person[] = []
   subtask_title: string = ''
   edited_subtask_title: string = ''
   deleted: boolean = false
@@ -32,7 +32,7 @@ export class BoardComponent implements OnInit {
   edit_task_due_date: string = ''
   edit_task_prio: string = ''
   edit_subtasks: any = []
-  selected_contacts: any = []
+  selected_contacts: Person[] = []
   screen_width: number = 0
 
 
@@ -66,11 +66,7 @@ export class BoardComponent implements OnInit {
    */
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
-    let dones: any[] = []
-    let dones_true = []
-    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
-    dones_true = dones.filter((done: any) => done === true)
-    return dones_true.length
+    return array[i].subtasks.filter((subtask: Subtask) => subtask.done).length
   }
 
 
@@ -80,13 +76,10 @@ export class BoardComponent implements OnInit {
    * @returns Subtasks completed in percent
    */
   getSubtaskProgressPercent(i: number, status: string) {
-    let array = this.getArray(status)
-    let dones: any[] = []
-    let dones_true = []
-    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
-    dones_true = dones.filter((done: any) => done === true)
-    if (dones.length > 0) return dones_true.length * 100 / array[i].subtasks.length + '%';
-    else return 0
+    let subtasks: Subtask[] = this.getArray(status)[i].subtasks
+    if (subtasks.length === 0) return 0
+    let done_count = subtasks.filter((subtask: Subtask) => subtask.done).length
+    return done_count * 100 / subtasks.length + '%'
   }
 
 
@@ -126,9 +119,9 @@ export class BoardComponent implements OnInit {
    */
   getContactsForEditView() {
     let edit_contacts = [...this.userService.all_users]
-    edit_contacts.forEach((user: { [x: string]: any; email: any; }) => {
-      user['selected'] = this.detail_task[0].assigned_emails.includes(user.email);
-      if (user['selected'] === true) this.selected_contacts.push(user)
+    edit_contacts.forEach((user: Person) => {
+      user.selected = this.detail_task[0].assigned_emails.includes(user.email);
+      if (user.selected) this.selected_contacts.push(user)
     });
     this.contact_selection_list = edit_contacts;
   }
@@ -478,7 +471,7 @@ export class BoardComponent implements OnInit {
    * @return {string} The tooltip message
    */
   getTooltip(): string {
-    if (this.userService.current_user.user_id == '10') return 'Please register first'
+    if (this.userService.isGuest) return 'Please register first'
     else return ''
   }
 }

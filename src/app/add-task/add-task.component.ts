@@ -1,3 +1,4 @@
+import { Subtask, TaskPrio } from '../interfaces';
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { GlobalFunctionsService } from '../global-functions.service';
@@ -16,7 +17,7 @@ export class AddTaskComponent implements OnInit {
   description: string = '';
   date: string = ''
   min_date: string = ''
-  prio: string = ''
+  prio: TaskPrio | '' = ''
   checkBox_value: boolean = false
   selected_contacts: any = []
   selected_contacts_list: any = []
@@ -26,7 +27,7 @@ export class AddTaskComponent implements OnInit {
   all_contacts: any = []
   rotationValueC: string = 'rotate(0deg)';
   selected_category: any = []
-  subtasks: any = []
+  subtasks: Subtask[] = []
   subtask_title: string = ''
   edit_subtask: boolean = false
   edited_subtask_title: string = ''
@@ -153,7 +154,7 @@ export class AddTaskComponent implements OnInit {
    * 
    * @param urgent, medium or low 
    */
-  setPrio(prio: string) {
+  setPrio(prio: TaskPrio) {
     this.prio = prio
   }
 
