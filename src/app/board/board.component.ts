@@ -1,3 +1,4 @@
+import { Subtask } from '../interfaces';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { TaskService } from '../task.service';
 import { UserService } from '../user.service';
@@ -66,11 +67,7 @@ export class BoardComponent implements OnInit {
    */
   getSubtaskProgress(i: number, status: string) {
     let array = this.getArray(status)
-    let dones: any[] = []
-    let dones_true = []
-    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
-    dones_true = dones.filter((done: any) => done === true)
-    return dones_true.length
+    return array[i].subtasks.filter((subtask: Subtask) => subtask.done).length
   }
 
 
@@ -80,13 +77,10 @@ export class BoardComponent implements OnInit {
    * @returns Subtasks completed in percent
    */
   getSubtaskProgressPercent(i: number, status: string) {
-    let array = this.getArray(status)
-    let dones: any[] = []
-    let dones_true = []
-    array[i].subtasks.forEach((subtask: any) => dones.push(subtask.done));
-    dones_true = dones.filter((done: any) => done === true)
-    if (dones.length > 0) return dones_true.length * 100 / array[i].subtasks.length + '%';
-    else return 0
+    let subtasks: Subtask[] = this.getArray(status)[i].subtasks
+    if (subtasks.length === 0) return 0
+    let done_count = subtasks.filter((subtask: Subtask) => subtask.done).length
+    return done_count * 100 / subtasks.length + '%'
   }
 
 
