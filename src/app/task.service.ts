@@ -4,23 +4,24 @@ import { UserService } from './user.service';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { GlobalFunctionsService } from './global-functions.service';
+import { Category, Task } from './interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  task_status_in_progress: any = []
-  task_status_todo: any = []
-  task_status_done: any = []
-  task_status_await: any = []
-  all_categorys: any = [];
-  all_tasks: any = [];
+  task_status_in_progress: Task[] = []
+  task_status_todo: Task[] = []
+  task_status_done: Task[] = []
+  task_status_await: Task[] = []
+  all_categorys: Category[] = [];
+  all_tasks: Task[] = [];
   request_successful: boolean = false;
   request_error: boolean = false;
   error_type: string = ''
   task_status: string = ''
-  private taskSubject = new BehaviorSubject<string[]>(this.all_tasks);
+  private taskSubject = new BehaviorSubject<Task[]>(this.all_tasks);
 
 
   constructor(
@@ -36,10 +37,10 @@ export class TaskService {
 
 
   filterTaskbyStatus() {
-    this.task_status_todo = this.all_tasks.filter((task: any) => task.status === 'todo')
-    this.task_status_in_progress = this.all_tasks.filter((task: any) => task.status === 'progress')
-    this.task_status_await = this.all_tasks.filter((task: any) => task.status === 'await')
-    this.task_status_done = this.all_tasks.filter((task: any) => task.status === 'done')
+    this.task_status_todo = this.all_tasks.filter((task) => task.status === 'todo')
+    this.task_status_in_progress = this.all_tasks.filter((task) => task.status === 'progress')
+    this.task_status_await = this.all_tasks.filter((task) => task.status === 'await')
+    this.task_status_done = this.all_tasks.filter((task) => task.status === 'done')
   }
 
 
@@ -51,7 +52,7 @@ export class TaskService {
       'creator_email': this.userService.current_user.email
     }
     try {
-      let response = await lastValueFrom(this.http.post(url, body));
+      let response = await lastValueFrom(this.http.post<Category>(url, body));
       this.all_categorys.push(response)
       this.userService.request_successful = true;
       setTimeout(() => {
@@ -73,7 +74,7 @@ export class TaskService {
   async getCategorys() {
     let url = environment.baseUrl + 'category/';
     try {
-      let response = await lastValueFrom(this.http.get(url));
+      let response = await lastValueFrom(this.http.get<Category[]>(url));
       this.all_categorys = response
     }
     catch (error) {
@@ -96,7 +97,7 @@ export class TaskService {
   async addTask(body: any) {
     let url = environment.baseUrl + 'task/'
     try {
-      let response = await lastValueFrom(this.http.post(url, body));
+      let response = await lastValueFrom(this.http.post<Task>(url, body));
       this.all_tasks.push(response)
       this.taskSubject.next(this.all_tasks);
       this.setBoolians()
@@ -113,7 +114,7 @@ export class TaskService {
   async getAllTasks() {
     let url = environment.baseUrl + 'task/'
     try {
-      this.all_tasks = await lastValueFrom(this.http.get(url))
+      this.all_tasks = await lastValueFrom(this.http.get<Task[]>(url))
     }
     catch (error) {
       console.log(error);

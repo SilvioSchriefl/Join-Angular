@@ -1,3 +1,4 @@
+import { Task, TaskStatus } from '../interfaces';
 import { Component, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { GlobalFunctionsService } from '../global-functions.service';
@@ -14,7 +15,7 @@ export class MoveToComponent {
   animation: boolean = false;
   open_move_to_menu = false;
   @Input() task_index: number = 0;
-  @Input() status: string = ''
+  @Input() status: TaskStatus = 'todo'
 
 
   constructor(
@@ -30,7 +31,7 @@ export class MoveToComponent {
    * changes the task status and saves it in the backend
    * @param status todo, progress, await or done
    */
-  setTaskstatus(status: string) {
+  setTaskstatus(status: TaskStatus) {
     let array = this.getArray(this.status);
     this.open_move_to_menu = false;
     let body = {
@@ -51,14 +52,16 @@ export class MoveToComponent {
 
   /**
    * 
-   * @param todo, progress, await, detail or done  
+   * @param status todo, progress, await or done
    * @returns Depending on the task status entered, the associated array
    */
-  getArray(status: string) {
-    if (status == 'todo') return this.taskService.task_status_todo
-    if (status == 'progress') return this.taskService.task_status_in_progress
-    if (status == 'await') return this.taskService.task_status_await
-    if (status == 'done') return [...this.taskService.task_status_done]
+  getArray(status: TaskStatus): Task[] {
+    switch (status) {
+      case 'todo': return this.taskService.task_status_todo
+      case 'progress': return this.taskService.task_status_in_progress
+      case 'await': return this.taskService.task_status_await
+      case 'done': return [...this.taskService.task_status_done]
+    }
   }
 
 
