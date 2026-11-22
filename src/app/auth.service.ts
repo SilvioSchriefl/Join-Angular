@@ -129,6 +129,6 @@ export class AuthService {
    * logs the guest in
    */
   async guestLogin() {
-    await this.loginWithEmailAndPassword('guest@guest.com', '123')
+    await this.loginWithEmailAndPassword('guest@guest.com', '123') // Gast-Konto, siehe Backend: python manage.py create_guest
   }
 }
