@@ -3,6 +3,8 @@
 Angular-Frontend für **Join**, ein Kanban-Board für Teams nach dem Vorbild von Trello.
 Entstanden 2023 während meiner Ausbildung zum Entwickler bei der Developer Akademie.
 
+**Live ausprobieren: [join-sita.pages.dev](https://join-sita.pages.dev)** – mit „Guest Log in“ ohne Registrierung.
+
 Das zugehörige Backend (Django REST API) liegt hier:
 [SilvioSchriefl/Join_Backend](https://github.com/SilvioSchriefl/Join_Backend)
 
@@ -21,6 +23,11 @@ Das zugehörige Backend (Django REST API) liegt hier:
 - Responsive für Desktop und Handy
 
 Die Seite „Passwort vergessen“ ist als Oberfläche vorhanden, im Backend aber nicht angebunden.
+
+## Hosting
+
+- Frontend: Cloudflare Pages, wird bei jedem Merge auf `master` automatisch neu gebaut
+- Backend: PythonAnywhere ([Join_Backend](https://github.com/SilvioSchriefl/Join_Backend))
 
 ## Technik
 
